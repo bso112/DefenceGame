@@ -11,6 +11,25 @@ typedef struct tagVertex_Texture
 	D3DXVECTOR2			vTexUV;
 }VTXTEX;
 
+typedef struct tagVertex_Cube_Texture
+{
+	// 3차원 스페이스 상의 위치를 정의. (로컬스페이스)
+	D3DXVECTOR3			vPosition;
+	//큐브 텍스쳐의 UV는 x,y,z를 쓴다.
+	D3DXVECTOR3			vTexUV;
+}VTXCUBETEX;
+
+
+//터레인에서 씀
+typedef struct tagVertex_Normal_Texture
+{
+	// 3차원 스페이스 상의 위치를 정의. (로컬스페이스)
+	D3DXVECTOR3			vPosition;
+	D3DXVECTOR3			vNormal;
+	D3DXVECTOR2			vTexUV;
+}VTXNORTEX;
+
+
 typedef struct tagVertex_Texture_Viewport
 {
 	

@@ -106,6 +106,9 @@
     <Filter Include="01.Utility\03.Component\Component\Colider\01.Collider_Box">
       <UniqueIdentifier>{153d2ab1-9d11-4940-98fd-6bbec4b5a255}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\03.Component\Component\VIBuffer\Terrain">
+      <UniqueIdentifier>{95cebbd9-e928-46e8-b1c2-f4584d8a3a2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Engine_Struct.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="..\Headers\CollisionMgr.h">
       <Filter>01.Utility\06.CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_Terrain.h">
+      <Filter>01.Utility\03.Component\Component\VIBuffer\Terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -286,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\CollisionMgr.cpp">
       <Filter>01.Utility\06.CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp">
+      <Filter>01.Utility\03.Component\Component\VIBuffer\Terrain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -35,7 +35,7 @@ HRESULT CShader::Set_Value(D3DXHANDLE hParameter, void* pData, _uint iSize)
 	return m_pEffect->SetValue(hParameter, pData, iSize);	
 }
 
-HRESULT CShader::Set_Texture(D3DXHANDLE hParameter, LPDIRECT3DTEXTURE9 pTexture)
+HRESULT CShader::Set_Texture(D3DXHANDLE hParameter, IDirect3DBaseTexture9* pTexture)
 {
 	if (nullptr == m_pEffect)
 		return E_FAIL;

@@ -67,7 +67,7 @@ HRESULT CScene_Loading::Change_Scene()
 	case SCENE_MENU:
 		break;
 
-	case SCENE_STAGE:
+	case SCENE_STAGE1:
 		pScene = CScene_Stage::Create(m_pGraphic_Device);
 		break;
 

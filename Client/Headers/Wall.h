@@ -17,6 +17,8 @@ public:
 		const _tchar*		pName = nullptr;
 		const _tchar*		pTextureTag = nullptr;
 		SCENEID				eTextureSceneID = SCENE_END;
+		_uint			iShaderPass = 0;
+
 
 	}STATEDESC;
 protected:

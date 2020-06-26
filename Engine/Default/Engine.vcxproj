@@ -193,6 +193,7 @@
     <ClInclude Include="..\Headers\VIBuffer.h" />
     <ClInclude Include="..\Headers\VIBuffer_Cube.h" />
     <ClInclude Include="..\Headers\VIBuffer_Rect.h" />
+    <ClInclude Include="..\Headers\VIBuffer_Terrain.h" />
     <ClInclude Include="..\Headers\VIBuffer_ViewPort.h" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +223,7 @@
     <ClCompile Include="..\Codes\VIBuffer.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Cube.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Rect.cpp" />
+    <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_ViewPort.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

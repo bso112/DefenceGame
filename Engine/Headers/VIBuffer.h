@@ -26,6 +26,10 @@ protected: // For.VertexBuffer
 	_uint						m_iNumVertices = 0;
 	_ulong						m_dwFVF = 0;
 
+	_uint						m_iNumVerticesX = 0;
+	_uint						m_iNumVerticesY = 0;
+	_uint						m_iNumVerticesZ = 0;
+
 protected:
 	PDIRECT3DINDEXBUFFER9		m_pIBuffer = nullptr;
 	_uint						m_iIndexSize = 0;

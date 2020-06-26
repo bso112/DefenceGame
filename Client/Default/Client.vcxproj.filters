@@ -58,9 +58,6 @@
     <Filter Include="02.GameObject\Wall">
       <UniqueIdentifier>{463e62b2-f85b-4705-9f41-91b51838508f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\Brick">
-      <UniqueIdentifier>{4bfc3608-7b3f-4807-b668-7585476aa4aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.Utility">
       <UniqueIdentifier>{6e80a6a3-b600-4c73-8a3d-7c0049fccd73}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,12 @@
     </Filter>
     <Filter Include="02.GameObject\Trigger">
       <UniqueIdentifier>{e8c130c9-ba2f-4c37-b88f-e56ef110b4d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Cube">
+      <UniqueIdentifier>{4bfc3608-7b3f-4807-b668-7585476aa4aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Terrain">
+      <UniqueIdentifier>{34afd2c1-6437-4f2a-ab00-5dc04152938d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +166,10 @@
       <Filter>02.GameObject\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Cube.h">
-      <Filter>02.GameObject\Brick</Filter>
+      <Filter>02.GameObject\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Terrain.h">
+      <Filter>02.GameObject\Terrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +234,10 @@
       <Filter>02.GameObject\Trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Cube.cpp">
-      <Filter>02.GameObject\Brick</Filter>
+      <Filter>02.GameObject\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Terrain.cpp">
+      <Filter>02.GameObject\Terrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +258,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_ViewPort.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.fx">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

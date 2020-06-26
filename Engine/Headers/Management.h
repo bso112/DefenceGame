@@ -9,11 +9,13 @@
 #include "PipeLine.h"
 #include "VIBuffer_Cube.h"
 #include "VIBuffer_ViewPort.h"
+#include "VIBuffer_Terrain.h"
 #include "Collider.h"
 #include "Collider_Rect.h"
 #include "Collider_Box.h"
 #include "KeyMgr.h"
 #include "CollisionMgr.h"
+
 
 BEGIN(Engine)
 

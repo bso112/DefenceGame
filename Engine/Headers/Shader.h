@@ -16,7 +16,8 @@ public:
 	virtual HRESULT Ready_Component(void* pArg);
 public:
 	HRESULT Set_Value(D3DXHANDLE hParameter, void* pData, _uint iSize);
-	HRESULT Set_Texture(D3DXHANDLE hParameter, LPDIRECT3DTEXTURE9 pTexture);
+	//dds 파일과 jpg, png 파일의 로드방식은 다르기때문에 텍스쳐들의 상위인터페이스인 IDirect3DBaseTexture9으로 받는다.
+	HRESULT Set_Texture(D3DXHANDLE hParameter, IDirect3DBaseTexture9* pTexture);
 	
 public:
 	HRESULT Begin_Shader();

@@ -17,6 +17,7 @@ public:
 		const _tchar*	pTextureTag = nullptr;
 		SCENEID			eTextureSceneID = SCENE_END;
 		_uint			iTextureID = 0;
+		_uint			iShaderPass = 0;
 	}STATEDESC;
 protected:
 	explicit CTrigger(PDIRECT3DDEVICE9 pGraphic_Device);

@@ -15,9 +15,9 @@ CVIBuffer_Cube::CVIBuffer_Cube(const CVIBuffer_Cube & rhs)
 HRESULT CVIBuffer_Cube::Ready_Component_Prototype()
 {
 	//멤버변수 셋팅
-	m_iStride = sizeof(VTXTEX);
+	m_iStride = sizeof(VTXCUBETEX);
 	m_iNumVertices = 8;
-	m_dwFVF = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE2(0);
+	m_dwFVF = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
 
 	m_iNumPrimitive = 12;
 	m_iIndexSize = sizeof(_ushort);
@@ -29,34 +29,40 @@ HRESULT CVIBuffer_Cube::Ready_Component_Prototype()
 
 	//값 채우기
 
-	VTXTEX* pVertices = nullptr;
+	VTXCUBETEX* pVertices = nullptr;
 
 	if (FAILED(m_pVBuffer->Lock(0, 0, (void**)&pVertices, 0)))
 		return E_FAIL;
 
+	/*
+	큐브텍스쳐는 전개도처럼 되어있다. 
+	왼쪽면, 오른쪽면, 윗면, 아랫면, 앞면, 뒷면 순서다.
+	이때 UV는 원점 (0,0,0) 에서 각 정점으로 가는 방향벡터와 동일하다.
+	pVertices[0].vTexUV = pVertices[0].vPosition - _float3(0,0,0);
+	*/
 	pVertices[0].vPosition = m_pVerticesPos[0] = _float3(-0.5f, 0.5f, -0.5f);
-	pVertices[0].vTexUV = _float2(0.f, 0.f);
+	pVertices[0].vTexUV = pVertices[0].vPosition;
 
 	pVertices[1].vPosition = m_pVerticesPos[1] = _float3(0.5f, 0.5f, -0.5f);
-	pVertices[1].vTexUV = _float2(1.f, 0.f);
+	pVertices[1].vTexUV = pVertices[1].vPosition;
 
 	pVertices[2].vPosition = m_pVerticesPos[2] = _float3(0.5f, -0.5f, -0.5f);
-	pVertices[2].vTexUV = _float2(1.f, 1.f);
+	pVertices[2].vTexUV = pVertices[2].vPosition;
 
 	pVertices[3].vPosition = m_pVerticesPos[3] = _float3(-0.5f, -0.5f, -0.5f);
-	pVertices[3].vTexUV = _float2(0.f, 1.f);
+	pVertices[3].vTexUV = pVertices[3].vPosition;
 
-	pVertices[4].vPosition = m_pVerticesPos[0] = _float3(-0.5f, 0.5f, 0.5f);
-	pVertices[4].vTexUV = _float2(0.f, 0.f);
+	pVertices[4].vPosition = m_pVerticesPos[4] = _float3(-0.5f, 0.5f, 0.5f);
+	pVertices[4].vTexUV = pVertices[4].vPosition;
 
-	pVertices[5].vPosition = m_pVerticesPos[1] = _float3(0.5f, 0.5f, 0.5f);
-	pVertices[5].vTexUV = _float2(1.f, 0.f);
+	pVertices[5].vPosition = m_pVerticesPos[5] = _float3(0.5f, 0.5f, 0.5f);
+	pVertices[5].vTexUV = pVertices[5].vPosition;
 
-	pVertices[6].vPosition = m_pVerticesPos[2] = _float3(0.5f, -0.5f, 0.5f);
-	pVertices[6].vTexUV = _float2(1.f, 1.f);
+	pVertices[6].vPosition = m_pVerticesPos[6] = _float3(0.5f, -0.5f, 0.5f);
+	pVertices[6].vTexUV = pVertices[6].vPosition;
 
-	pVertices[7].vPosition = m_pVerticesPos[3] = _float3(-0.5f, -0.5f, 0.5f);
-	pVertices[7].vTexUV = _float2(0.f, 1.f);
+	pVertices[7].vPosition = m_pVerticesPos[7] = _float3(-0.5f, -0.5f, 0.5f);
+	pVertices[7].vTexUV = pVertices[7].vPosition;
 
 
 	if (FAILED(m_pVBuffer->Unlock()))
@@ -67,58 +73,31 @@ HRESULT CVIBuffer_Cube::Ready_Component_Prototype()
 	if (FAILED(m_pIBuffer->Lock(0, 0, (void**)&pIndices, 0)))
 		return E_FAIL;
 
-	pIndices[0] = 0;
-	pIndices[1] = 1;
-	pIndices[2] = 2;
+	_uint		iIndex = 0;
 
-	pIndices[3] = 0;
-	pIndices[4] = 2;
-	pIndices[5] = 3;
+	// +x
+	pIndices[iIndex++] = 1; pIndices[iIndex++] = 5; pIndices[iIndex++] = 6;
+	pIndices[iIndex++] = 1; pIndices[iIndex++] = 6; pIndices[iIndex++] = 2;
 
+	// -x
+	pIndices[iIndex++] = 4; pIndices[iIndex++] = 0; pIndices[iIndex++] = 3;
+	pIndices[iIndex++] = 4; pIndices[iIndex++] = 3; pIndices[iIndex++] = 7;
 
-	pIndices[6] = 4;
-	pIndices[7] = 0;
-	pIndices[8] = 3;
+	// y
+	pIndices[iIndex++] = 4; pIndices[iIndex++] = 5; pIndices[iIndex++] = 1;
+	pIndices[iIndex++] = 4; pIndices[iIndex++] = 1; pIndices[iIndex++] = 0;
 
-	pIndices[9] = 4;
-	pIndices[10] = 3;
-	pIndices[11] = 7;
+	// -y
+	pIndices[iIndex++] = 3; pIndices[iIndex++] = 2; pIndices[iIndex++] = 6;
+	pIndices[iIndex++] = 3; pIndices[iIndex++] = 6; pIndices[iIndex++] = 7;
 
+	// z
+	pIndices[iIndex++] = 5; pIndices[iIndex++] = 4; pIndices[iIndex++] = 7;
+	pIndices[iIndex++] = 5; pIndices[iIndex++] = 7; pIndices[iIndex++] = 6;
 
-	pIndices[12] = 1;
-	pIndices[13] = 5;
-	pIndices[14] = 6;
-
-	pIndices[15] = 1;
-	pIndices[16] = 6;
-	pIndices[17] = 2;
-
-
-	pIndices[18] = 4;
-	pIndices[19] = 5;
-	pIndices[20] = 1;
-
-	pIndices[21] = 4;
-	pIndices[22] = 1;
-	pIndices[23] = 0;
-
-
-	pIndices[24] = 6;
-	pIndices[25] = 7;
-	pIndices[26] = 3;
-
-	pIndices[27] = 6;
-	pIndices[28] = 3;
-	pIndices[29] = 2;
-
-
-	pIndices[30] = 5;
-	pIndices[31] = 4;
-	pIndices[32] = 7;
-
-	pIndices[33] = 5;
-	pIndices[34] = 7;
-	pIndices[35] = 6;
+	// -z
+	pIndices[iIndex++] = 0; pIndices[iIndex++] = 1; pIndices[iIndex++] = 2;
+	pIndices[iIndex++] = 0; pIndices[iIndex++] = 2; pIndices[iIndex++] = 3;
 
 	if (FAILED(m_pIBuffer->Unlock()))
 		return E_FAIL;
@@ -225,37 +204,6 @@ _bool CVIBuffer_Cube::Pick_Polygon(HWND hWnd, _matrix WorldMatrix, _float3 * pOu
 	if (FAILED(m_pVBuffer->Unlock()))
 		return false;
 
-
-	/*for (size_t i = 0; i < m_tStateDesc.iNumVerticesZ - 1; ++i)
-	{
-		for (size_t j = 0; j < m_tStateDesc.iNumVerticesX - 1; ++j)
-		{
-			_uint iIndex = i * m_tStateDesc.iNumVerticesX + j;
-
-			_uint iIndices[4] = {
-				{ iIndex + m_tStateDesc.iNumVerticesX },
-				{ iIndex + m_tStateDesc.iNumVerticesX + 1 },
-				{ iIndex + 1 },
-				{ iIndex },
-			};
-
-			_float		fU, fV, fDist;
-
-			// 우 상단 삼각형.
-			if (true == D3DXIntersectTri(&m_pVerticesPos[iIndices[1]], &m_pVerticesPos[iIndices[0]], &m_pVerticesPos[iIndices[2]], &vMousePivot, &vMouseRay, &fU, &fV, &fDist))
-			{
-				*pOut = m_pVerticesPos[iIndices[1]] + (m_pVerticesPos[iIndices[0]] - m_pVerticesPos[iIndices[1]]) * fU + (m_pVerticesPos[iIndices[2]] - m_pVerticesPos[iIndices[1]]) * fV;
-				//*pOut = vMousePivot + *D3DXVec3Normalize(&vMouseRay, &vMouseRay) * fDist;
-			}
-
-
-
-			// 좌 하단 삼각형.
-			if (true == D3DXIntersectTri(&m_pVerticesPos[iIndices[3]], &m_pVerticesPos[iIndices[2]], &m_pVerticesPos[iIndices[0]], &vMousePivot, &vMouseRay, &fU, &fV, &fDist))
-				int a = 10;
-		}
-
-	}*/
 
 	Safe_Release(pPipeLine);
 	return false;

@@ -165,7 +165,7 @@ HRESULT CTrigger::Render_GameObject()
 	if (FAILED(m_pShader->Begin_Shader()))
 		return E_FAIL;
 
-	if (FAILED(m_pShader->Begin_Pass(PASS_GOAL)))
+	if (FAILED(m_pShader->Begin_Pass(m_tDesc.iShaderPass)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBuffer->Render_VIBuffer()))

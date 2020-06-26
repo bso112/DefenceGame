@@ -11,6 +11,8 @@
 #include "MyImage.h"
 #include "GameEndPanel.h"
 #include "Image3D.h"
+#include "Texture.h"
+#include "Terrain.h"
 USING(Client)
 
 CMainApp::CMainApp()
@@ -31,7 +33,7 @@ HRESULT CMainApp::Ready_MainApp()
 	if (FAILED(Ready_Default_GameObject()))
 		return E_FAIL;
 
-	if (FAILED(Ready_Start_Scene(SCENE_STAGE)))
+	if (FAILED(Ready_Start_Scene(SCENE_STAGE1)))
 		return E_FAIL;
 
 	return S_OK;
@@ -114,7 +116,7 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Camera_Free", CCamera_Free::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Brick", CCube::Create(m_pGraphic_Device))))
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Cube", CCube::Create(m_pGraphic_Device))))
 		return E_FAIL;
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_MyButton", CMyButton::Create(m_pGraphic_Device))))
 		return E_FAIL;
@@ -128,7 +130,7 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Background", CBackGround::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Goal", CTrigger::Create(m_pGraphic_Device))))
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Trigger", CTrigger::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_GameEndPanel", CGameEndPanel::Create(m_pGraphic_Device))))
@@ -138,6 +140,8 @@ HRESULT CMainApp::Ready_Default_GameObject()
 		return E_FAIL;
 
 
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Terrain", CTerrain::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 
 
@@ -169,6 +173,9 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_ViewPort", CVIBuffer_ViewPort::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Terrain", CVIBuffer_Terrain::Create(m_pGraphic_Device, 129,129))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_Rect", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_Rect.fx"))))
 		return E_FAIL;
@@ -176,31 +183,48 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_ViewPort", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_ViewPort.fx"))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_Cube", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_Cube.fx"))))
+		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_Terrain", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_Terrain.fx"))))
+		return E_FAIL;
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Collider_Rect", CCollider_Rect::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Wall", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Wall/Wall%d.png", 1))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_BoxCollider", CCollider_Box::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+#pragma region TEXTURE
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Wall", CTexture::Create(m_pGraphic_Device ,L"../Bin/Resources/Textures/Wall/Wall%d.png", 1))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Background", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Background/background%d.jpg", 3))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Brick", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Brick/brick%d.jpg", 5))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Cube", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Brick/brick%d.jpg", 5))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Btn", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/Button/btn%d.png", 2))))
 		return E_FAIL;
 
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Goal", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/Goal/goal%d.png", 2))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Trigger", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/Trigger/trigger%d.png", 2))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Banner", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/Banner/banner%d.png", 1))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_BoxCollider", CCollider_Box::Create(m_pGraphic_Device))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_SkyBox", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/SkyBox/skybox%d.dds", 1, CTexture::TYPE_CUBE))))
 		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Terrain", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/Terrain/grass%d.tga", 1))))
+		return E_FAIL;
+
+
+#pragma endregion
+
+
 	return S_OK;
 }
 

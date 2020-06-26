@@ -36,7 +36,7 @@ HRESULT CCube::Ready_GameObject(void * pArg)
 	return E_FAIL;
 	
 
-	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Shader_Rect", L"Com_Shader_Rect", (CComponent**)&m_pShader)))
+	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Shader_Cube", L"Com_Shader_Cube", (CComponent**)&m_pShader)))
 		return E_FAIL;
 
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_VIBuffer_Cube", L"Com_VIBuffer_Cube", (CComponent**)&m_pVIBuffer)))
@@ -48,7 +48,7 @@ HRESULT CCube::Ready_GameObject(void * pArg)
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_BoxCollider", L"Com_Collider", (CComponent**)&m_pBoxCollider)))
 		return E_FAIL;
 
-	m_pTransform->SetUp_Position(_float3(m_tDesc.tBaseDesc.vPos.x, m_tDesc.tBaseDesc.vPos.y + 10.f, m_tDesc.tBaseDesc.vPos.z));
+	m_pTransform->SetUp_Position(m_tDesc.tBaseDesc.vPos);
 
 	m_pTransform->SetUp_Scale(m_tDesc.tBaseDesc.vSize);
 
@@ -91,7 +91,7 @@ HRESULT CCube::Render_GameObject()
 	matView = pEnginMgr->Get_Transform(D3DTS_VIEW);
 	matProj = pEnginMgr->Get_Transform(D3DTS_PROJECTION);
 
-	if (FAILED(m_pTexture->Set_TextureOnShader(m_pShader, "g_BaseTexture", m_tDesc.iTextureID)))
+	if (FAILED(m_pTexture->Set_TextureOnShader(m_pShader, "g_DiffuseTexture", m_tDesc.iTextureID)))
 		return E_FAIL;
 
 	if (FAILED(m_pShader->Set_Value("g_matWorld", &m_pTransform->Get_WorldMatrix(), sizeof(_matrix))))
@@ -104,7 +104,7 @@ HRESULT CCube::Render_GameObject()
 	if (FAILED(m_pShader->Begin_Shader()))
 		return E_FAIL;
 
-	if (FAILED(m_pShader->Begin_Pass(0)))
+	if (FAILED(m_pShader->Begin_Pass(m_tDesc.iShaderPass)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBuffer->Render_VIBuffer()))

@@ -42,7 +42,7 @@ HRESULT CGameEndPanel::Ready_GameObject(void* pArg)
 
 
 	CMyButton::STATEDESC btnDesc;
-	btnDesc.m_eSceneID = SCENE_STAGE;
+	btnDesc.m_eSceneID = SCENE_STAGE1;
 	btnDesc.m_tBaseDesc = BASEDESC(_float3((g_iWinSizeX >> 1) + 100.f, (g_iWinSizeY >> 1) + 100.f, 0.f), _float3(100.f, 100.f, 10.f));
 	btnDesc.m_iTextureSceneID = SCENE_STATIC;
 	btnDesc.m_pTextureTag = L"Component_Texture_Btn";
