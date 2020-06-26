@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Headers">
+      <UniqueIdentifier>{c563e25a-48cc-4791-a7d3-6b3a9f4a57cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Default">
+      <UniqueIdentifier>{f678c184-63a8-4cfa-954d-c3059debc9b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.MainApp">
+      <UniqueIdentifier>{7c2fc98c-f606-4759-b537-f86199e48fe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene">
+      <UniqueIdentifier>{777165f1-d674-4159-9a68-feb080583436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\00.Scene_Loading">
+      <UniqueIdentifier>{4b5ed366-1aa6-47e8-88e8-15e2a68db434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\01.Scene_Stage">
+      <UniqueIdentifier>{840ece28-c0ac-44d6-9155-3d01ddabc13b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\00.Scene_Loading\Loading">
+      <UniqueIdentifier>{5c446131-fe48-4280-80ad-d388ff7acdbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.ShaderFiles">
+      <UniqueIdentifier>{e20ca914-db13-45ea-83ea-f867ccc2de26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameManager">
+      <UniqueIdentifier>{e2dfb2ff-b9f8-41a9-9442-5f12b4bd2762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Level">
+      <UniqueIdentifier>{75fe4f1c-49cf-4c18-a92a-822be355c388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\03.Scene_Stage_3">
+      <UniqueIdentifier>{484a6d6b-6fac-4a4e-accd-b74fb8d1aaf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\02.Scene_Stage_2">
+      <UniqueIdentifier>{9b29bf61-cec4-4394-9506-06e661497c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\04.Scene_Stage_4">
+      <UniqueIdentifier>{aa797208-8fb4-459d-856b-d30a11deb080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject">
+      <UniqueIdentifier>{fb64fb1d-3a7d-4b82-88d7-be4c9dc80c87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\BackGround">
+      <UniqueIdentifier>{0ccbba01-374a-4c18-9044-f383cdf7a7fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Camera">
+      <UniqueIdentifier>{0f96bf52-5090-4c73-9ca7-0a0468de97e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Camera\Camera_Free">
+      <UniqueIdentifier>{65143fab-da9f-43cd-aa27-4ddf126fa78e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Camera\PipeLine">
+      <UniqueIdentifier>{af164e92-a22c-48c5-9381-b217db7c6b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Wall">
+      <UniqueIdentifier>{463e62b2-f85b-4705-9f41-91b51838508f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Brick">
+      <UniqueIdentifier>{4bfc3608-7b3f-4807-b668-7585476aa4aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Utility">
+      <UniqueIdentifier>{6e80a6a3-b600-4c73-8a3d-7c0049fccd73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Utility\00.Clock">
+      <UniqueIdentifier>{a7975227-3f0c-47bf-b2a8-490718d88fe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\GameEndPanel">
+      <UniqueIdentifier>{ff035084-27e3-4744-a798-a46bd1fc7e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI">
+      <UniqueIdentifier>{9d2e6977-59e0-481f-9c97-6aad1dc3dee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\Button">
+      <UniqueIdentifier>{d1571137-965b-4cea-864e-45c353c6554b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\Image">
+      <UniqueIdentifier>{5d4bb0d1-1507-44fb-9ab8-d3aeeec8d854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\Image3D">
+      <UniqueIdentifier>{10d92846-3e88-4e7b-9ee7-f0b564f6f06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Trigger">
+      <UniqueIdentifier>{e8c130c9-ba2f-4c37-b88f-e56ef110b4d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\MainApp.h">
+      <Filter>00.MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Client_Defines.h">
+      <Filter>99.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Scene_Loading.h">
+      <Filter>01.Scene\00.Scene_Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Loading.h">
+      <Filter>01.Scene\00.Scene_Loading\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Scene_Stage.h">
+      <Filter>01.Scene\01.Scene_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\BackGround.h">
+      <Filter>02.GameObject\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Camera_Free.h">
+      <Filter>02.GameObject\Camera\Camera_Free</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\GameManager.h">
+      <Filter>03.GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Level.h">
+      <Filter>04.Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Wall.h">
+      <Filter>02.GameObject\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="Client_Struct.h">
+      <Filter>99.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Scene_Stage2.h">
+      <Filter>01.Scene\02.Scene_Stage_2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Scene_Stage3.h">
+      <Filter>01.Scene\03.Scene_Stage_3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Scene_Stage4.h">
+      <Filter>01.Scene\04.Scene_Stage_4</Filter>
+    </ClInclude>
+    <ClInclude Include="MyButton.h">
+      <Filter>02.GameObject\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\MyImage.h">
+      <Filter>02.GameObject\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Clock.h">
+      <Filter>05.Utility\00.Clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\GameEndPanel.h">
+      <Filter>02.GameObject\GameEndPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Image3D.h">
+      <Filter>02.GameObject\UI\Image3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Trigger.h">
+      <Filter>02.GameObject\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Cube.h">
+      <Filter>02.GameObject\Brick</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\MainApp.cpp">
+      <Filter>00.MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Scene_Loading.cpp">
+      <Filter>01.Scene\00.Scene_Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Loading.cpp">
+      <Filter>01.Scene\00.Scene_Loading\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Scene_Stage.cpp">
+      <Filter>01.Scene\01.Scene_Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\BackGround.cpp">
+      <Filter>02.GameObject\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Camera_Free.cpp">
+      <Filter>02.GameObject\Camera\Camera_Free</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\GameManager.cpp">
+      <Filter>03.GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Level.cpp">
+      <Filter>04.Level</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Wall.cpp">
+      <Filter>02.GameObject\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Scene_Stage2.cpp">
+      <Filter>01.Scene\02.Scene_Stage_2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Scene_Stage3.cpp">
+      <Filter>01.Scene\03.Scene_Stage_3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Scene_Stage4.cpp">
+      <Filter>01.Scene\04.Scene_Stage_4</Filter>
+    </ClCompile>
+    <ClCompile Include="MyButton.cpp">
+      <Filter>02.GameObject\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\MyImage.cpp">
+      <Filter>02.GameObject\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Clock.cpp">
+      <Filter>05.Utility\00.Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\GameEndPanel.cpp">
+      <Filter>02.GameObject\GameEndPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Image3D.cpp">
+      <Filter>02.GameObject\UI\Image3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Trigger.cpp">
+      <Filter>02.GameObject\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Cube.cpp">
+      <Filter>02.GameObject\Brick</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Client.ico">
+      <Filter>98.Default</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>98.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>98.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_ViewPort.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
