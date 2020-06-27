@@ -10,6 +10,7 @@ private:
 	explicit CVIBuffer_Terrain(PDIRECT3DDEVICE9 pGraphic_Device);
 	explicit CVIBuffer_Terrain(const CVIBuffer_Terrain& rhs);
 	virtual ~CVIBuffer_Terrain() = default;
+
 public:
 	virtual HRESULT Ready_Component_Prototype(_uint iNumVerticesX, _uint iNumVerticesZ, _float fInterval);
 	virtual HRESULT Ready_Component(void* pArg);	

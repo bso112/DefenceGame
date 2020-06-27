@@ -253,6 +253,7 @@
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_ViewPort.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

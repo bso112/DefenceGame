@@ -11,6 +11,7 @@ CVIBuffer_Terrain::CVIBuffer_Terrain(const CVIBuffer_Terrain & rhs)
 
 }
 
+
 HRESULT CVIBuffer_Terrain::Ready_Component_Prototype(_uint iNumVerticesX, _uint iNumVerticesZ, _float fInterval)
 {
 	// 1. 어떤 정점, 어떤 인덱스들을 정의할건지. 

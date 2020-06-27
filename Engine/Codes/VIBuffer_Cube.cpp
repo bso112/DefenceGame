@@ -110,7 +110,7 @@ HRESULT CVIBuffer_Cube::Ready_Component(void * pArg)
 	return S_OK;
 }
 
-_bool CVIBuffer_Cube::Pick_Polygon(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
+_bool CVIBuffer_Cube::Picking(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
 {
 	if (!(GetKeyState(VK_LBUTTON) & 0x8000))
 		return false;

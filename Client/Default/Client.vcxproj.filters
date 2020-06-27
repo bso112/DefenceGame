@@ -263,5 +263,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.fx">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

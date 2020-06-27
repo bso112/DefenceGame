@@ -3,10 +3,6 @@ matrix		g_matWorld, g_matView, g_matProj;
 
 texture		g_DiffuseTexture;
 
-/*
-큐브를 구성하는 픽셀은 UV를 _float3로 쓴다. 따라서 쉐이더도 별개로 쓴다.
-*/
-
 sampler DiffuseSampler = sampler_state
 {
 	texture = g_DiffuseTexture;
@@ -18,6 +14,11 @@ sampler DiffuseSampler = sampler_state
 struct VS_IN
 {
 	float3		vPosition : POSITION;
+
+	/*
+	큐브를 구성하는 픽셀은 UV를 _float3로 쓴다. 따라서 쉐이더도 별개로 쓴다.
+	*/
+
 	float3		vTexUV : TEXCOORD0;
 };
 
