@@ -88,6 +88,9 @@
     <Filter Include="02.GameObject\Terrain">
       <UniqueIdentifier>{34afd2c1-6437-4f2a-ab00-5dc04152938d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\Sky">
+      <UniqueIdentifier>{c3bf244c-c92c-45e9-9388-67edb75e67b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -171,6 +174,9 @@
     <ClInclude Include="..\Headers\Terrain.h">
       <Filter>02.GameObject\Terrain</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Sky.h">
+      <Filter>02.GameObject\Sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -238,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Terrain.cpp">
       <Filter>02.GameObject\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Sky.cpp">
+      <Filter>02.GameObject\Sky</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

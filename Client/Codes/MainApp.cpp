@@ -13,6 +13,7 @@
 #include "Image3D.h"
 #include "Texture.h"
 #include "Terrain.h"
+#include "Sky.h"
 USING(Client)
 
 CMainApp::CMainApp()
@@ -143,7 +144,9 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Terrain", CTerrain::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Sky", CSky::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
 
 
 

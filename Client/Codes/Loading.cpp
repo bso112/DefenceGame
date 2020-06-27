@@ -6,7 +6,7 @@
 #include "Field.h"
 #include "BackGround.h"
 #include "MyImage.h"
-
+#include "Sky.h"
 USING(Client)
 
 CLoading::CLoading(PDIRECT3DDEVICE9 pGraphic_Device)
@@ -84,14 +84,14 @@ HRESULT CLoading::Loading_ForStageOne()
 	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Background", SCENE_STAGE1, L"Layer_Background", &tBackgroundDesc)))
 		return E_FAIL;
 
-	CCube::STATEDESC tCubeDesc;
-	tCubeDesc.eSceneID = SCENE_STAGE1;
-	tCubeDesc.eTextureSceneID = SCENE_STATIC;
-	tCubeDesc.iTextureID = 0;
-	tCubeDesc.pTextureTag = L"Component_Texture_SkyBox";
-	tCubeDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.f, 0.f), _float3(3.f, 3.f, 3.f));
-	tCubeDesc.iShaderPass = 1;
-	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Cube", SCENE_STAGE1, L"Layer_GameObject", &tCubeDesc)))
+	CSky::STATEDESC tSkyDesc;
+	tSkyDesc.eSceneID = SCENE_STAGE1;
+	tSkyDesc.eTextureSceneID = SCENE_STATIC;
+	tSkyDesc.iTextureID = 0;
+	tSkyDesc.pTextureTag = L"Component_Texture_SkyBox";
+	tSkyDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.f, 0.f), _float3(3.f, 3.f, 3.f));
+	tSkyDesc.iShaderPass = 1;
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Sky", SCENE_STAGE1, L"Layer_GameObject", &tSkyDesc)))
 		return E_FAIL;
 
 	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Terrain", SCENE_STAGE1, L"Layer_Terrain")))

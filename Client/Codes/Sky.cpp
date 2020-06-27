@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "Cube.h"
+#include "Sky.h"
 #include "KeyMgr.h"
 #include "GameManager.h"
 #include "Camera_Free.h"
 USING(Client)
 
 
-CCube::CCube(PDIRECT3DDEVICE9 pGraphic_Device)
+CSky::CSky(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CGameObject(pGraphic_Device)
 {
 }
 
-CCube::CCube(const CCube & rhs)
+CSky::CSky(const CSky & rhs)
 	: CGameObject(rhs)
 {
 }
 
-HRESULT CCube::Ready_GameObject_Prototype()
+HRESULT CSky::Ready_GameObject_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CCube::Ready_GameObject(void * pArg)
+HRESULT CSky::Ready_GameObject(void * pArg)
 {
 	if (nullptr != pArg)
 		memcpy(&m_tDesc, pArg, sizeof(STATEDESC));
@@ -33,8 +33,8 @@ HRESULT CCube::Ready_GameObject(void * pArg)
 		return E_FAIL;
 
 	if (FAILED(Add_Component(m_tDesc.eTextureSceneID, m_tDesc.pTextureTag, L"Com_Texture", (CComponent**)&m_pTexture)))
-	return E_FAIL;
-	
+		return E_FAIL;
+
 
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Shader_Cube", L"Com_Shader_Cube", (CComponent**)&m_pShader)))
 		return E_FAIL;
@@ -52,24 +52,28 @@ HRESULT CCube::Ready_GameObject(void * pArg)
 
 	m_pTransform->SetUp_Scale(m_tDesc.tBaseDesc.vSize);
 
+
+
 	return S_OK;
 }
 
-_int CCube::Update_GameObject(_double TimeDelta)
+_int CSky::Update_GameObject(_double TimeDelta)
 {
-	
 
-	if (nullptr == m_pBoxCollider	||
+	if (nullptr == m_pBoxCollider ||
 		nullptr == m_pTransform)
 		return E_FAIL;
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
+	CManagement* pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement) return -1;
+	m_pTransform->SetUp_Position(pManagement->Get_CamPosition());
 
 	return _int();
 }
 
-_int CCube::Late_Update_GameObject(_double TimeDelta)
+_int CSky::Late_Update_GameObject(_double TimeDelta)
 {
 	if (nullptr == m_pRenderer) return -1;
 	m_pRenderer->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this);
@@ -80,7 +84,7 @@ _int CCube::Late_Update_GameObject(_double TimeDelta)
 	return 0;
 }
 
-HRESULT CCube::Render_GameObject()
+HRESULT CSky::Render_GameObject()
 {
 
 	_matrix			matView, matProj;
@@ -120,31 +124,31 @@ HRESULT CCube::Render_GameObject()
 
 
 
-CCube * CCube::Create(PDIRECT3DDEVICE9 pGraphic_Device)
+CSky * CSky::Create(PDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CCube*	pInstance = new CCube(pGraphic_Device);
+	CSky*	pInstance = new CSky(pGraphic_Device);
 
 	if (FAILED(pInstance->Ready_GameObject_Prototype()))
 	{
-		MSG_BOX("Failed To Create CBrick");
+		MSG_BOX("Failed To Create CSky");
 		Safe_Release(pInstance);
 	}
 	return pInstance;
 }
 
-CGameObject * CCube::Clone_GameObject(void * pArg)
+CGameObject * CSky::Clone_GameObject(void * pArg)
 {
-	CCube*	pInstance = new CCube(*this);
+	CSky*	pInstance = new CSky(*this);
 
 	if (FAILED(pInstance->Ready_GameObject(pArg)))
 	{
-		MSG_BOX("Failed To Create CBrick");
+		MSG_BOX("Failed To Create CSky");
 		Safe_Release(pInstance);
 	}
 	return pInstance;
 }
 
-void CCube::Free()
+void CSky::Free()
 {
 
 	Safe_Release(m_pRenderer);

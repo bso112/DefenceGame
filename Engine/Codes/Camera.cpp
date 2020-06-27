@@ -17,29 +17,6 @@ CCamera::CCamera(const CCamera & rhs)
 
 }
 
-void CCamera::CameraZoomInOutSmooth()
-{
-	if (m_fDestCameraFovy > m_StateDesc.fFovy)
-	{
-		_float fCurFovyDegree = D3DXToDegree(m_StateDesc.fFovy);
-		_float fDestFovyDegree = D3DXToDegree(m_fDestCameraFovy);
-
-		m_StateDesc.fFovy = D3DXToRadian(++fCurFovyDegree);
-
-		if (fDestFovyDegree < fCurFovyDegree)
-			m_StateDesc.fFovy = m_fDestCameraFovy;
-	}
-	else if (m_fDestCameraFovy < m_StateDesc.fFovy)
-	{
-		_float fCurFovyDegree = D3DXToDegree(m_StateDesc.fFovy);
-		_float fDestFovyDegree = D3DXToDegree(m_fDestCameraFovy);
-
-		m_StateDesc.fFovy = D3DXToRadian(--fCurFovyDegree);
-
-		if (fDestFovyDegree > fCurFovyDegree)
-			m_StateDesc.fFovy = m_fDestCameraFovy;
-	}
-}
 
 HRESULT CCamera::Ready_GameObject_Prototype()
 {
@@ -51,8 +28,7 @@ HRESULT CCamera::Ready_GameObject(void * pArg)
 	if (nullptr != pArg)
 		memcpy(&m_StateDesc, pArg, sizeof(STATEDESC));
 
-	m_fDestCameraFovy = m_StateDesc.fFovy;
-
+	
 	m_pTransformCom = CTransform::Create(m_pGraphic_Device);
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
@@ -84,8 +60,6 @@ _int CCamera::Update_GameObject(_double TimeDelta)
 	if (nullptr == m_pPipeLine)
 		return -1;
 
-	if (m_fDestCameraFovy != m_StateDesc.fFovy)
-		CameraZoomInOutSmooth();
 
 	m_pPipeLine->Set_Transform(D3DTS_VIEW, m_pTransformCom->Get_WorldMatrixInverse());
 

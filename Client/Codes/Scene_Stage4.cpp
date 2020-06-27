@@ -32,12 +32,6 @@ HRESULT CScene_Stage4::Ready_Scene()
 	StateDesc.TransformDesc.SpeedPerSec = 5.f;
 	StateDesc.TransformDesc.RotatePerSec = D3DXToRadian(90.0f);
 
-	if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Camera_Free", SCENE_STAGE4, L"Layer_Camera", &StateDesc)))
-		return E_FAIL;
-
-	CCamera_Free* Camera = (CCamera_Free*)CManagement::Get_Instance()->Get_ObjectPointer(SCENE_STAGE4, L"Layer_Camera");
-	CMyButton* Btn = (CMyButton*)CManagement::Get_Instance()->Get_ObjectPointer(SCENE_STAGE4, L"GameObject");
-	Btn->Add_Listener([=]() { Camera->Set_DestCameraFovy(D3DXToRadian(60.f)); CGameManager::Get_Instance()->Set_IsGameStart(true);  Btn->Set_Dead(); });
 
 	return S_OK;
 }
