@@ -18,5 +18,7 @@ extern HWND g_hWnd;
 #include <time.h>
 #include "Client_Struct.h"
 
-#define	PASS_SKYBOX 0
+#define	PASS_SKYBOX 1
 #define PASS_DEFAULT 0
+
+extern HINSTANCE g_hInst;

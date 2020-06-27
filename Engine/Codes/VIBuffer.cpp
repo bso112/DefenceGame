@@ -18,6 +18,9 @@ CVIBuffer::CVIBuffer(const CVIBuffer & rhs)
 	, m_iNumIndices(rhs.m_iNumIndices)
 	, m_iNumPrimitive(rhs.m_iNumPrimitive)
 	, m_eIndexFormat(rhs.m_eIndexFormat)
+	, m_iNumVerticesX(rhs.m_iNumVerticesX)
+	, m_iNumVerticesY(rhs.m_iNumVerticesY)
+	, m_iNumVerticesZ(rhs.m_iNumVerticesZ)
 {
 	Safe_AddRef(m_pIBuffer);
 	Safe_AddRef(m_pVBuffer);	

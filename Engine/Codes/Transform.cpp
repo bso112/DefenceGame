@@ -70,6 +70,7 @@ HRESULT CTransform::Go_Straight(_double TimeDelta)
 	vLook = Get_State(CTransform::STATE_LOOK);
 	vPosition = Get_State(CTransform::STATE_POSITION);
 
+	_float3 tmp = *D3DXVec3Normalize(&vLook, &vLook) * _float(m_StateDesc.SpeedPerSec * TimeDelta);
 	// vPosition += 방향벡터1 * 스피드 * 타임델타.;
 	vPosition += *D3DXVec3Normalize(&vLook, &vLook) * _float(m_StateDesc.SpeedPerSec * TimeDelta);
 

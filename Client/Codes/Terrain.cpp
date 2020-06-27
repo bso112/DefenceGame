@@ -26,14 +26,14 @@ HRESULT CTerrain::Ready_GameObject(void * pArg)
 
 _int CTerrain::Update_GameObject(_double TimeDelta)
 {
-	/*if (GetKeyState(VK_LBUTTON) & 0x8000)
+	if (GetKeyState(VK_LBUTTON) & 0x8000)
 	{
 		_float3		vOut;
 		if (m_pVIBufferCom->Picking(g_hWnd, m_pTransformCom->Get_WorldMatrix(), &vOut))
 		{
 			int a = 10;
 		}
-	}*/
+	}
 
 	return _int();
 }

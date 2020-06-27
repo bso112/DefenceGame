@@ -15,6 +15,7 @@
 #include "Collider_Box.h"
 #include "KeyMgr.h"
 #include "CollisionMgr.h"
+#include "Input_Device.h"
 
 
 BEGIN(Engine)
@@ -34,6 +35,10 @@ public:
 #pragma region DEVICE
 public:
 	HRESULT Ready_Graphic_Device(HWND hWnd, CGraphic_Device::WINMODE eMode, _uint iBackSizeX, _uint iBackSizeY, PDIRECT3DDEVICE9* ppGraphic_Device);
+	HRESULT Ready_Input_Device(HINSTANCE hInst, HWND hWnd);
+	_byte Get_DIKeyState(_ubyte byKey);
+	_byte Get_DIMouseKeyState(CInput_Device::DIMOUSEKEY eMouseKey);
+	_long Get_DIMouseMoveState(CInput_Device::DIMOUSEMOVE eMouseMove);
 #pragma endregion
 
 #pragma region TIMER
@@ -96,6 +101,7 @@ private:
 	CPipeLine*			m_pPipeLine = nullptr;
 	CKeyMgr*			m_pKeyMgr = nullptr;
 	CCollisionMgr*		m_pCollisionMgr = nullptr;
+	CInput_Device*		m_pInput_Device = nullptr;
 
 
 public:

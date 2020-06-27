@@ -2,7 +2,7 @@
 #include "Transform.h"
 
 CCamera::CCamera(PDIRECT3DDEVICE9 pGraphic_Device)
-	: CGameObject(pGraphic_Device)	
+	: CGameObject(pGraphic_Device)
 	, m_pPipeLine(CPipeLine::Get_Instance())
 {
 	Safe_AddRef(m_pPipeLine);
@@ -17,7 +17,6 @@ CCamera::CCamera(const CCamera & rhs)
 
 }
 
-
 HRESULT CCamera::Ready_GameObject_Prototype()
 {
 	return S_OK;
@@ -28,7 +27,6 @@ HRESULT CCamera::Ready_GameObject(void * pArg)
 	if (nullptr != pArg)
 		memcpy(&m_StateDesc, pArg, sizeof(STATEDESC));
 
-	
 	m_pTransformCom = CTransform::Create(m_pGraphic_Device);
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
@@ -40,7 +38,7 @@ HRESULT CCamera::Ready_GameObject(void * pArg)
 
 	vPosition = m_StateDesc.vEye;
 	D3DXVec3Normalize(&vLook, &(m_StateDesc.vAt - m_StateDesc.vEye));
-		
+
 	D3DXVec3Cross(&vRight, &m_StateDesc.vAxisY, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
 
@@ -60,7 +58,6 @@ _int CCamera::Update_GameObject(_double TimeDelta)
 	if (nullptr == m_pPipeLine)
 		return -1;
 
-
 	m_pPipeLine->Set_Transform(D3DTS_VIEW, m_pTransformCom->Get_WorldMatrixInverse());
 
 	_matrix			ProjMatrix;
@@ -73,7 +70,7 @@ _int CCamera::Update_GameObject(_double TimeDelta)
 
 _int CCamera::Late_Update_GameObject(_double TimeDelta)
 {
-	
+
 
 	return _int();
 }
@@ -85,9 +82,8 @@ HRESULT CCamera::Render_GameObject()
 
 void CCamera::Free()
 {
-	Safe_Release(m_pPipeLine);
 	Safe_Release(m_pTransformCom);
-
+	Safe_Release(m_pPipeLine);
 
 	CGameObject::Free();
 }

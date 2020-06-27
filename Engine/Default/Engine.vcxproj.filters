@@ -109,6 +109,9 @@
     <Filter Include="01.Utility\03.Component\Component\VIBuffer\Terrain">
       <UniqueIdentifier>{95cebbd9-e928-46e8-b1c2-f4584d8a3a2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.System\02.Input">
+      <UniqueIdentifier>{3ee3fab6-db39-4adc-a354-07a33044469f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Engine_Struct.h">
@@ -210,6 +213,9 @@
     <ClInclude Include="..\Headers\VIBuffer_Terrain.h">
       <Filter>01.Utility\03.Component\Component\VIBuffer\Terrain</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Client\Headers\Input_Device.h">
+      <Filter>00.System\02.Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -295,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp">
       <Filter>01.Utility\03.Component\Component\VIBuffer\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Client\Codes\Input_Device.cpp">
+      <Filter>00.System\02.Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

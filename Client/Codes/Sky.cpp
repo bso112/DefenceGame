@@ -1,19 +1,17 @@
 #include "stdafx.h"
-#include "Sky.h"
-#include "KeyMgr.h"
-#include "GameManager.h"
-#include "Camera_Free.h"
-USING(Client)
-
+#include "..\Headers\Sky.h"
+#include "Management.h"
 
 CSky::CSky(PDIRECT3DDEVICE9 pGraphic_Device)
-	:CGameObject(pGraphic_Device)
+	: CGameObject(pGraphic_Device)
 {
+
 }
 
 CSky::CSky(const CSky & rhs)
 	: CGameObject(rhs)
 {
+
 }
 
 HRESULT CSky::Ready_GameObject_Prototype()
@@ -23,35 +21,8 @@ HRESULT CSky::Ready_GameObject_Prototype()
 
 HRESULT CSky::Ready_GameObject(void * pArg)
 {
-	if (nullptr != pArg)
-		memcpy(&m_tDesc, pArg, sizeof(STATEDESC));
-
-	CTransform::STATEDESC tTransformDesc;
-	tTransformDesc.RotatePerSec = D3DXToRadian(90.f);
-	tTransformDesc.SpeedPerSec = 5.0;
-	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &tTransformDesc)))
+	if (FAILED(Add_Component()))
 		return E_FAIL;
-
-	if (FAILED(Add_Component(m_tDesc.eTextureSceneID, m_tDesc.pTextureTag, L"Com_Texture", (CComponent**)&m_pTexture)))
-		return E_FAIL;
-
-
-	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Shader_Cube", L"Com_Shader_Cube", (CComponent**)&m_pShader)))
-		return E_FAIL;
-
-	if (FAILED(Add_Component(SCENE_STATIC, L"Component_VIBuffer_Cube", L"Com_VIBuffer_Cube", (CComponent**)&m_pVIBuffer)))
-		return E_FAIL;
-
-	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRenderer)))
-		return E_FAIL;
-
-	if (FAILED(Add_Component(SCENE_STATIC, L"Component_BoxCollider", L"Com_Collider", (CComponent**)&m_pBoxCollider)))
-		return E_FAIL;
-
-	m_pTransform->SetUp_Position(m_tDesc.tBaseDesc.vPos);
-
-	m_pTransform->SetUp_Scale(m_tDesc.tBaseDesc.vSize);
-
 
 
 	return S_OK;
@@ -59,70 +30,94 @@ HRESULT CSky::Ready_GameObject(void * pArg)
 
 _int CSky::Update_GameObject(_double TimeDelta)
 {
-
-	if (nullptr == m_pBoxCollider ||
-		nullptr == m_pTransform)
+	CManagement*	pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement)
 		return E_FAIL;
 
-	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
-
-	CManagement* pManagement = CManagement::Get_Instance();
-	if (nullptr == pManagement) return -1;
-	m_pTransform->SetUp_Position(pManagement->Get_CamPosition());
-
+	m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
 	return _int();
 }
 
 _int CSky::Late_Update_GameObject(_double TimeDelta)
 {
-	if (nullptr == m_pRenderer) return -1;
-	m_pRenderer->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this);
+	if (nullptr == m_pRendererCom)
+		return -1;
 
-	CManagement* pManagement = CManagement::Get_Instance();
-	if (nullptr == pManagement) return -1;
-	pManagement->Add_CollisionGroup(CCollisionMgr::COL_BOX, this);
-	return 0;
+
+	if (FAILED(m_pRendererCom->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this)))
+		return -1;
+
+	return _int();
 }
 
 HRESULT CSky::Render_GameObject()
 {
-
-	_matrix			matView, matProj;
-
-	CManagement* pEnginMgr = CManagement::Get_Instance();
-	if (nullptr == pEnginMgr) return E_FAIL;
-	matView = pEnginMgr->Get_Transform(D3DTS_VIEW);
-	matProj = pEnginMgr->Get_Transform(D3DTS_PROJECTION);
-
-	if (FAILED(m_pTexture->Set_TextureOnShader(m_pShader, "g_DiffuseTexture", m_tDesc.iTextureID)))
+	if (nullptr == m_pVIBufferCom ||
+		nullptr == m_pShaderCom)
 		return E_FAIL;
 
-	if (FAILED(m_pShader->Set_Value("g_matWorld", &m_pTransform->Get_WorldMatrix(), sizeof(_matrix))))
-		return E_FAIL;
-	if (FAILED(m_pShader->Set_Value("g_matView", &matView, sizeof(_matrix))))
-		return E_FAIL;
-	if (FAILED(m_pShader->Set_Value("g_matProj", &matProj, sizeof(_matrix))))
+	if (FAILED(SetUp_ConstantTable()))
 		return E_FAIL;
 
-	if (FAILED(m_pShader->Begin_Shader()))
-		return E_FAIL;
+	m_pShaderCom->Begin_Shader();
+	m_pShaderCom->Begin_Pass(PASS_SKYBOX);
 
-	if (FAILED(m_pShader->Begin_Pass(m_tDesc.iShaderPass)))
-		return E_FAIL;
+	m_pVIBufferCom->Render_VIBuffer();
 
-	if (FAILED(m_pVIBuffer->Render_VIBuffer()))
-		return E_FAIL;
+	m_pShaderCom->End_Pass();
+	m_pShaderCom->End_Shader();
 
-	if (FAILED(m_pShader->End_Pass()))
-		return E_FAIL;
-	if (FAILED(m_pShader->End_Shader()))
-		return E_FAIL;
 	return S_OK;
-
-
 }
 
+HRESULT CSky::Add_Component()
+{
+	// For.Com_Renderer
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRendererCom)))
+		return E_FAIL;
 
+	// For.Com_Transform
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransformCom)))
+		return E_FAIL;
+
+	// For.Com_Texture
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Texture_SkyBox", L"Com_Texture", (CComponent**)&m_pTextureCom)))
+		return E_FAIL;
+
+	// For.Com_VIBuffer
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_VIBuffer_Cube", L"Com_VIBuffer", (CComponent**)&m_pVIBufferCom)))
+		return E_FAIL;
+
+	// For.Com_Shader
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Shader_Cube", L"Com_Shader", (CComponent**)&m_pShaderCom)))
+		return E_FAIL;
+
+	m_pTransformCom->SetUp_Scale(_float3(5.f, 5.f, 5.f));
+	return S_OK;
+}
+
+HRESULT CSky::SetUp_ConstantTable()
+{
+	CManagement*	pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement)
+		return E_FAIL;
+
+	Safe_AddRef(pManagement);
+
+	m_pShaderCom->Set_Value("g_matWorld", &m_pTransformCom->Get_WorldMatrix(), sizeof(_matrix));
+	m_pShaderCom->Set_Value("g_matView", &pManagement->Get_Transform(D3DTS_VIEW), sizeof(_matrix));
+	m_pShaderCom->Set_Value("g_matProj", &pManagement->Get_Transform(D3DTS_PROJECTION), sizeof(_matrix));
+
+
+	if (FAILED(m_pTextureCom->Set_TextureOnShader(m_pShaderCom, "g_DiffuseTexture", 0)))
+		return E_FAIL;
+
+
+
+	Safe_Release(pManagement);
+
+	return S_OK;
+}
 
 CSky * CSky::Create(PDIRECT3DDEVICE9 pGraphic_Device)
 {
@@ -150,12 +145,11 @@ CGameObject * CSky::Clone_GameObject(void * pArg)
 
 void CSky::Free()
 {
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pShaderCom);
+	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pRendererCom);
+	Safe_Release(m_pTransformCom);
 
-	Safe_Release(m_pRenderer);
-	Safe_Release(m_pShader);
-	Safe_Release(m_pTexture);
-	Safe_Release(m_pTransform);
-	Safe_Release(m_pVIBuffer);
-	Safe_Release(m_pBoxCollider);
 	CGameObject::Free();
 }

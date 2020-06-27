@@ -105,7 +105,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,7 +139,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Client\Headers\Input_Device.h" />
     <ClInclude Include="..\Headers\Base.h" />
     <ClInclude Include="..\Headers\Camera.h" />
     <ClInclude Include="..\Headers\Collider.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="..\Headers\VIBuffer_ViewPort.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Client\Codes\Input_Device.cpp" />
     <ClCompile Include="..\Codes\Base.cpp" />
     <ClCompile Include="..\Codes\Camera.cpp" />
     <ClCompile Include="..\Codes\Collider.cpp" />

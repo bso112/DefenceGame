@@ -11,6 +11,7 @@ CManagement::CManagement()
 	, m_pPipeLine(CPipeLine::Get_Instance())
 	, m_pKeyMgr(CKeyMgr::Get_Instance())
 	, m_pCollisionMgr(CCollisionMgr::Get_Instance())
+	, m_pInput_Device(CInput_Device::Get_Instance())
 {
 	Safe_AddRef(m_pPipeLine);
 	Safe_AddRef(m_pComponent_Manager);
@@ -20,6 +21,7 @@ CManagement::CManagement()
 	Safe_AddRef(m_pGraphic_Device);
 	Safe_AddRef(m_pKeyMgr);
 	Safe_AddRef(m_pCollisionMgr);
+	Safe_AddRef(m_pInput_Device);
 }
 
 
@@ -41,33 +43,37 @@ HRESULT CManagement::Ready_Engine(_uint iNumScenes)
 	return S_OK;
 }
 
-_int CManagement::Update_Engine(_double TimeDelta)
-{
-	if (nullptr == m_pScene_Manager ||
-		nullptr == m_pObject_Manager ||
-		nullptr == m_pPipeLine)
-		return -1;
-
-	if (0x80000000 & m_pScene_Manager->Update_CurrentScene(TimeDelta))
-		return -1;
-
-
-	if (1 == m_pObject_Manager->Update_Object_Manager(TimeDelta))
-		return 1;
-
-	//Obj가 LateUpdate에서 콜리전매니저에 등록하기 때문에, 그 이후에 충돌체크해야한다.
-	//반대로 하면 오브젝트가 삭제될 경우 콜리전매니저에 dangling pointer가 생길것이다. 
-	if (FAILED(m_pCollisionMgr->CheckCollision()))
+	_int CManagement::Update_Engine(_double TimeDelta)
 	{
-		MSG_BOX("충돌처리 실패");
-		return -1;
+		if (nullptr == m_pScene_Manager ||
+			nullptr == m_pObject_Manager ||
+			nullptr == m_pPipeLine)
+			return -1;
+
+		if (0x80000000 & m_pScene_Manager->Update_CurrentScene(TimeDelta))
+			return -1;
+
+
+		if (1 == m_pObject_Manager->Update_Object_Manager(TimeDelta))
+			return 1;
+
+		//Obj가 LateUpdate에서 콜리전매니저에 등록하기 때문에, 그 이후에 충돌체크해야한다.
+		//반대로 하면 오브젝트가 삭제될 경우 콜리전매니저에 dangling pointer가 생길것이다. 
+		if (FAILED(m_pCollisionMgr->CheckCollision()))
+		{
+			MSG_BOX("충돌처리 실패");
+			return -1;
+		}
+
+		if (FAILED(m_pPipeLine->Update_PipeLine()))
+			return -1;
+
+		if (FAILED(m_pInput_Device->Set_Input_Device_State()))
+			return -1;
+
+
+		return _int();
 	}
-
-	if (FAILED(m_pPipeLine->Update_PipeLine()))
-		return -1;
-
-	return _int();
-}
 
 HRESULT CManagement::Render_Engine()
 {
@@ -107,6 +113,41 @@ HRESULT CManagement::Ready_Graphic_Device(HWND hWnd, CGraphic_Device::WINMODE eM
 
 	return m_pGraphic_Device->Ready_Graphic_Device(hWnd, eMode, iBackSizeX, iBackSizeY, ppGraphic_Device);
 }
+
+
+
+HRESULT CManagement::Ready_Input_Device(HINSTANCE hInst, HWND hWnd)
+{
+	if (nullptr == m_pInput_Device)
+		return E_FAIL;
+
+	return m_pInput_Device->Ready_Input_Device(hInst, hWnd);
+}
+
+_byte CManagement::Get_DIKeyState(_ubyte byKey)
+{
+	if (nullptr == m_pInput_Device)
+		return -1;
+
+	return m_pInput_Device->Get_DIKeyState(byKey);
+}
+
+_byte CManagement::Get_DIMouseKeyState(CInput_Device::DIMOUSEKEY eMouseKey)
+{
+	if (nullptr == m_pInput_Device)
+		return -1;
+
+	return m_pInput_Device->Get_DIMouseKeyState(eMouseKey);
+}
+
+_long CManagement::Get_DIMouseMoveState(CInput_Device::DIMOUSEMOVE eMouseMove)
+{
+	if (nullptr == m_pInput_Device)
+		return -1;
+
+	return m_pInput_Device->Get_DIMouseMoveState(eMouseMove);
+}
+
 
 #pragma endregion
 
@@ -301,4 +342,5 @@ void CManagement::Free()
 	Safe_Release(m_pKeyMgr);
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pCollisionMgr);
+	Safe_Release(m_pInput_Device);
 }

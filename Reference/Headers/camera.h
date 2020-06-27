@@ -31,9 +31,6 @@ protected:
 	explicit CCamera(const CCamera& rhs);
 	virtual ~CCamera() = default;
 public:
-	void	Set_CameraFovy(_float _fRadian) { m_StateDesc.fFovy = _fRadian; }
-
-public:
 	virtual HRESULT Ready_GameObject_Prototype();
 	virtual HRESULT Ready_GameObject(void* pArg);
 	virtual _int Update_GameObject(_double TimeDelta);
@@ -44,7 +41,6 @@ protected:
 	STATEDESC		m_StateDesc;
 protected:
 	CTransform*		m_pTransformCom = nullptr;
-
 public:
 	virtual CGameObject* Clone_GameObject(void* pArg) = 0;
 	virtual void Free();

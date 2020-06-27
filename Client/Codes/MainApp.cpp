@@ -50,6 +50,8 @@ _int CMainApp::Update_MainApp(_double TimeDelta)
 	if (nullptr == m_pManagement)
 		return -1;
 
+
+
 	return m_pManagement->Update_Engine(TimeDelta);
 }
 
@@ -90,6 +92,9 @@ HRESULT CMainApp::Ready_Default_Setting()
 
 	// 장치 초기화.
 	if (FAILED(m_pManagement->Ready_Graphic_Device(g_hWnd, CGraphic_Device::TYPE_WIN, g_iWinSizeX, g_iWinSizeY, &m_pGraphic_Device)))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Ready_Input_Device(g_hInst, g_hWnd)))
 		return E_FAIL;
 
 	return S_OK;
