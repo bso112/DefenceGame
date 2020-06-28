@@ -103,6 +103,18 @@
     <Filter Include="06.PickingMgr">
       <UniqueIdentifier>{8120b7bc-b324-48a7-9ac4-442a843f6fa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.Component">
+      <UniqueIdentifier>{321c95a4-744e-49aa-bb8e-dcd714d5be9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component\AIState">
+      <UniqueIdentifier>{b5114dbf-4278-44d0-869c-abc52001059e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component\AIState\Controller">
+      <UniqueIdentifier>{370ffeab-42ca-40be-af1a-87f0046dd8fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component\AIState\AIState">
+      <UniqueIdentifier>{ad26e587-6807-44bd-94b3-3320f6373e92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -195,6 +207,12 @@
     <ClInclude Include="..\Headers\PickingMgr.h">
       <Filter>06.PickingMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\AIStateController.h">
+      <Filter>06.Component\AIState\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\AIState.h">
+      <Filter>06.Component\AIState\AIState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -268,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="..\Codes\PickingMgr.cpp">
       <Filter>06.PickingMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\AIStateController.cpp">
+      <Filter>06.Component\AIState\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\AIState.cpp">
+      <Filter>06.Component\AIState\AIState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
