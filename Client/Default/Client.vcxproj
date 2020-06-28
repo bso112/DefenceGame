@@ -198,6 +198,7 @@
     <ClInclude Include="..\Headers\Level.h" />
     <ClInclude Include="..\Headers\Loading.h" />
     <ClInclude Include="..\Headers\MainApp.h" />
+    <ClInclude Include="..\Headers\Marine.h" />
     <ClInclude Include="..\Headers\MyImage.h" />
     <ClInclude Include="..\Headers\Scene_Loading.h" />
     <ClInclude Include="..\Headers\Scene_Stage.h" />
@@ -207,6 +208,8 @@
     <ClInclude Include="..\Headers\Sky.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
     <ClInclude Include="..\Headers\Trigger.h" />
+    <ClInclude Include="..\Headers\Unit.h" />
+    <ClInclude Include="..\Headers\Value.h" />
     <ClInclude Include="..\Headers\Wall.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Client_Struct.h" />
@@ -226,6 +229,7 @@
     <ClCompile Include="..\Codes\Level.cpp" />
     <ClCompile Include="..\Codes\Loading.cpp" />
     <ClCompile Include="..\Codes\MainApp.cpp" />
+    <ClCompile Include="..\Codes\Marine.cpp" />
     <ClCompile Include="..\Codes\MyImage.cpp" />
     <ClCompile Include="..\Codes\Scene_Loading.cpp" />
     <ClCompile Include="..\Codes\Scene_Stage.cpp" />
@@ -235,6 +239,7 @@
     <ClCompile Include="..\Codes\Sky.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />
     <ClCompile Include="..\Codes\Trigger.cpp" />
+    <ClCompile Include="..\Codes\Unit.cpp" />
     <ClCompile Include="..\Codes\Wall.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="MyButton.cpp" />

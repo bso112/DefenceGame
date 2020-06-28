@@ -70,10 +70,10 @@ _int CCamera_Free::Update_GameObject(_double TimeDelta)
 
 	if (0 < pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_WHEEL))
 	{
-		m_StateDesc.fFovy -= TimeDelta;
+		m_StateDesc.fFovy -= (_float)TimeDelta;
 	}
 	else if (0 > pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_WHEEL))
-		m_StateDesc.fFovy += TimeDelta;
+		m_StateDesc.fFovy += (_float)TimeDelta;
 
 	Safe_Release(pManagement);
 

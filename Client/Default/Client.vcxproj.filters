@@ -91,6 +91,21 @@
     <Filter Include="02.GameObject\Sky">
       <UniqueIdentifier>{c3bf244c-c92c-45e9-9388-67edb75e67b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Utility\01.Value">
+      <UniqueIdentifier>{f68027a6-788d-46b8-8e02-eea200a0230f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit">
+      <UniqueIdentifier>{7ddb5c67-28ae-4f87-9c15-d324e6b67ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit\00.Marine">
+      <UniqueIdentifier>{69ead615-b411-4dc8-8c72-0c90f9af5b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit\01.Firebat">
+      <UniqueIdentifier>{d93b5f7b-4691-46d6-be18-0ce7ebf25cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit\02.Walker">
+      <UniqueIdentifier>{03f7e775-533f-45a7-afd7-bed4abdba7a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -177,6 +192,15 @@
     <ClInclude Include="..\Headers\Sky.h">
       <Filter>02.GameObject\Sky</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Value.h">
+      <Filter>05.Utility\01.Value</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Unit.h">
+      <Filter>02.GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Marine.h">
+      <Filter>02.GameObject\Unit\00.Marine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -247,6 +271,12 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Sky.cpp">
       <Filter>02.GameObject\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Unit.cpp">
+      <Filter>02.GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Marine.cpp">
+      <Filter>02.GameObject\Unit\00.Marine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

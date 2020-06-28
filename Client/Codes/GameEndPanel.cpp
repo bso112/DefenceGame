@@ -37,7 +37,7 @@ HRESULT CGameEndPanel::Ready_GameObject(void* pArg)
 	if (nullptr == (pWinBanner = (CMyImage*)pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_MyImage", pEngineMgr->Get_CurrScene(), L"Layer_WinBanner", &bannerDesc)))
 		return E_FAIL;
 
-	pWinBanner->Expand(_float3(g_iWinSizeX, 128.f, 1.f), _float3(0.f, 500.f, 0.f));
+	pWinBanner->Expand(_float3((_float)g_iWinSizeX, 128.f, 1.f), _float3(0.f, 500.f, 0.f));
 
 
 
