@@ -63,13 +63,8 @@ HRESULT CVIBuffer::Render_VIBuffer()
 	return S_OK;
 }
 
-_bool CVIBuffer::Picking(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
+_bool CVIBuffer::Picking(POINT ptMouse, HWND hWnd, _matrix WorldMatrix, _float3 * pWorldOut)
 {
-	// 뷰포트 상의 마우스 위치를 구하자.
-	POINT		ptMouse;
-
-	GetCursorPos(&ptMouse);
-	ScreenToClient(hWnd, &ptMouse);
 
 	D3DVIEWPORT9		ViewPort;
 	m_pGraphic_Device->GetViewport(&ViewPort);
@@ -96,9 +91,9 @@ _bool CVIBuffer::Picking(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
 	_float3		vMousePivot = _float3(0.f, 0.f, 0.f);
 	_float3		vMouseRay = _float3(vMousePos.x, vMousePos.y, vMousePos.z) - vMousePivot;
 
+
 	_matrix ViewMatrix = pPipeLine->Get_Transform(D3DTS_VIEW);
 	D3DXMatrixInverse(&ViewMatrix, nullptr, &ViewMatrix);
-
 	// 월드스페이스 상의 마우스 레이, 마우스의 시작점을 구한다.
 	D3DXVec3TransformCoord(&vMousePivot, &vMousePivot, &ViewMatrix);
 	D3DXVec3TransformNormal(&vMouseRay, &vMouseRay, &ViewMatrix);
@@ -133,14 +128,21 @@ _bool CVIBuffer::Picking(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
 			if (D3DXIntersectTri(&m_pVerticesPos[iIndices[1]], &m_pVerticesPos[iIndices[0]], &m_pVerticesPos[iIndices[2]], &vMousePivot, &vMouseRay, &fU, &fV, &fDist))
 			{
 				// *pOut = m_pVerticesPos[iIndices[1]] + (m_pVerticesPos[iIndices[0]] - m_pVerticesPos[iIndices[1]]) * fU + (m_pVerticesPos[iIndices[2]] - m_pVerticesPos[iIndices[1]]) * fV;
-				*pOut = vMousePivot + *D3DXVec3Normalize(&vMouseRay, &vMouseRay) * fDist;
+				_float3 vLocalMouse = vMousePivot + *D3DXVec3Normalize(&vMouseRay, &vMouseRay) * fDist;
+				D3DXVec3TransformCoord(pWorldOut, &vLocalMouse, &WorldMatrix);
+				return true;
 			}
 
 
 
 			// 좌 하단 삼각형.
 			if (D3DXIntersectTri(&m_pVerticesPos[iIndices[3]], &m_pVerticesPos[iIndices[2]], &m_pVerticesPos[iIndices[0]], &vMousePivot, &vMouseRay, &fU, &fV, &fDist))
-				int a = 10;
+			{
+				// *pOut = m_pVerticesPos[iIndices[1]] + (m_pVerticesPos[iIndices[0]] - m_pVerticesPos[iIndices[1]]) * fU + (m_pVerticesPos[iIndices[2]] - m_pVerticesPos[iIndices[1]]) * fV;
+				_float3 vLocalMouse = vMousePivot + *D3DXVec3Normalize(&vMouseRay, &vMouseRay) * fDist;
+				D3DXVec3TransformCoord(pWorldOut, &vLocalMouse, &WorldMatrix);
+				return true;
+			}
 		}
 
 	}
@@ -148,7 +150,7 @@ _bool CVIBuffer::Picking(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
 
 	Safe_Release(pPipeLine);
 
-	return S_OK;
+	return false;
 }
 
 void CVIBuffer::Free()

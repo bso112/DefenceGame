@@ -25,9 +25,6 @@
     <Filter Include="97.ShaderFiles">
       <UniqueIdentifier>{e20ca914-db13-45ea-83ea-f867ccc2de26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.GameManager">
-      <UniqueIdentifier>{e2dfb2ff-b9f8-41a9-9442-5f12b4bd2762}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04.Level">
       <UniqueIdentifier>{75fe4f1c-49cf-4c18-a92a-822be355c388}</UniqueIdentifier>
     </Filter>
@@ -63,9 +60,6 @@
     </Filter>
     <Filter Include="05.Utility\00.Clock">
       <UniqueIdentifier>{a7975227-3f0c-47bf-b2a8-490718d88fe8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\GameEndPanel">
-      <UniqueIdentifier>{ff035084-27e3-4744-a798-a46bd1fc7e35}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\UI">
       <UniqueIdentifier>{9d2e6977-59e0-481f-9c97-6aad1dc3dee8}</UniqueIdentifier>
@@ -106,6 +100,9 @@
     <Filter Include="02.GameObject\Unit\02.Walker">
       <UniqueIdentifier>{03f7e775-533f-45a7-afd7-bed4abdba7a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.PickingMgr">
+      <UniqueIdentifier>{8120b7bc-b324-48a7-9ac4-442a843f6fa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -144,9 +141,6 @@
     <ClInclude Include="..\Headers\Camera_Free.h">
       <Filter>02.GameObject\Camera\Camera_Free</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\GameManager.h">
-      <Filter>03.GameManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Headers\Level.h">
       <Filter>04.Level</Filter>
     </ClInclude>
@@ -174,9 +168,6 @@
     <ClInclude Include="..\Headers\Clock.h">
       <Filter>05.Utility\00.Clock</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\GameEndPanel.h">
-      <Filter>02.GameObject\GameEndPanel</Filter>
-    </ClInclude>
     <ClInclude Include="..\Headers\Image3D.h">
       <Filter>02.GameObject\UI\Image3D</Filter>
     </ClInclude>
@@ -200,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Marine.h">
       <Filter>02.GameObject\Unit\00.Marine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\PickingMgr.h">
+      <Filter>06.PickingMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +221,6 @@
     <ClCompile Include="..\Codes\Camera_Free.cpp">
       <Filter>02.GameObject\Camera\Camera_Free</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\GameManager.cpp">
-      <Filter>03.GameManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Codes\Level.cpp">
       <Filter>04.Level</Filter>
     </ClCompile>
@@ -254,9 +245,6 @@
     <ClCompile Include="..\Codes\Clock.cpp">
       <Filter>05.Utility\00.Clock</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\GameEndPanel.cpp">
-      <Filter>02.GameObject\GameEndPanel</Filter>
-    </ClCompile>
     <ClCompile Include="..\Codes\Image3D.cpp">
       <Filter>02.GameObject\UI\Image3D</Filter>
     </ClCompile>
@@ -277,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Marine.cpp">
       <Filter>02.GameObject\Unit\00.Marine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PickingMgr.cpp">
+      <Filter>06.PickingMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

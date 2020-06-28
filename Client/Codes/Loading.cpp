@@ -7,6 +7,9 @@
 #include "BackGround.h"
 #include "MyImage.h"
 #include "Sky.h"
+#include "Marine.h"
+#include "PickingMgr.h"
+#include "Terrain.h"
 USING(Client)
 
 CLoading::CLoading(PDIRECT3DDEVICE9 pGraphic_Device)
@@ -87,7 +90,20 @@ HRESULT CLoading::Loading_ForStageOne()
 	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Sky", SCENE_STAGE1, L"Layer_GameObject")))
 	//	return E_FAIL;
 
-	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Terrain", SCENE_STAGE1, L"Layer_Terrain")))
+	CTerrain::STATEDESC tTerrainDesc;
+	tTerrainDesc._eSceneID = SCENE_STAGE1;
+	CTerrain* pTerrain = nullptr;
+	if (nullptr == (pTerrain = (CTerrain*)pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Terrain", SCENE_STAGE1, L"Layer_Terrain")))
+		return E_FAIL;
+	CPickingMgr::Get_Instance()->Ready_PickingMgr(pTerrain);
+
+	CMarine::STATEDESC tMarineDesc;
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.f, 0.f), _float3(2.f, 2.f, 2.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
 		return E_FAIL;
 
 	
@@ -95,7 +111,6 @@ HRESULT CLoading::Loading_ForStageOne()
 #pragma endregion
 
 
-	CGameManager::Get_Instance()->Set_CurrentLevel(0);
 
 	m_isFinished = true;
 
@@ -125,7 +140,6 @@ HRESULT CLoading::Loading_ForStageTwo()
 
 #pragma endregion
 
-	CGameManager::Get_Instance()->Set_CurrentLevel(1);
 	m_isFinished = true;
 
 	return S_OK;
@@ -154,8 +168,6 @@ HRESULT CLoading::Loading_ForStageTree()
 		return E_FAIL;
 
 #pragma endregion
-
-	CGameManager::Get_Instance()->Set_CurrentLevel(2);
 
 	m_isFinished = true;
 
@@ -186,7 +198,6 @@ HRESULT CLoading::Loading_ForStageFour()
 
 #pragma endregion
 
-	CGameManager::Get_Instance()->Set_CurrentLevel(3);
 
 	m_isFinished = true;
 
@@ -202,6 +213,7 @@ CLoading * CLoading::Create(PDIRECT3DDEVICE9 pGraphic_Device, SCENEID eSceneID)
 		MSG_BOX("Failed To Creating CLoading");
 		Safe_Release(pInstance);
 	}
+
 	return pInstance;
 }
 

@@ -11,7 +11,7 @@ public:
 	virtual HRESULT Ready_Component_Prototype();
 	virtual HRESULT Ready_Component(void* pArg);
 public:
-	virtual _bool Picking(HWND hWnd, _matrix WorldMatrix, _float3* pOut) override;
+	virtual _bool Picking(POINT pt, HWND hWnd, _matrix WorldMatrix, _float3* pOut) override;
 public:
 	static CVIBuffer_Cube*	Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CComponent*		Clone_Component(void * pArg);
