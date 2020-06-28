@@ -24,6 +24,7 @@ _int CUnit::Update_GameObject(_double TimeDelta)
 		{
 			m_bMoving = false;
 			m_iCurrDst = 0;
+			m_Route.clear();
 			return 0;
 		}
 

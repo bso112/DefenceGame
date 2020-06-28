@@ -73,6 +73,8 @@ HRESULT CTerrain::Render_GameObject()
 
 HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 {
+	_out.clear();
+
 	_int srcX = (_int)_src.x / TILESIZE;
 	_int srcZ = (_int)_src.z / TILESIZE;
 	_int dstX = (_int)_dst.x / TILESIZE;
@@ -348,9 +350,9 @@ HRESULT CTerrain::Ready_Nodes()
 	{
 		for (int j = 0; j < TILEX; ++j)
 		{
-			m_Nodes[j][i] = new NODE(INT_MAX, INT_MAX, INT_MAX, j, i, nullptr);
-			m_Nodes[j][i]->Set_Pos(_float3(j, 0, i));
-			m_Nodes[j][i]->Set_Movable(true);
+			m_Nodes[i][j] = new NODE(INT_MAX, INT_MAX, INT_MAX, j, i, nullptr);
+			m_Nodes[i][j]->Set_Pos(_float3(j, 0, i));
+			m_Nodes[i][j]->Set_Movable(true);
 
 		}
 	}
