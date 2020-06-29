@@ -2,8 +2,10 @@
 #include "Base.h"
 #include "Unit.h"
 
+
 BEGIN(Client)
-class CUnit;
+
+
 class CAIState abstract : public CBase
 {
 public:

@@ -47,8 +47,12 @@ _int CSky::Late_Update_GameObject(_double TimeDelta)
 	if (nullptr == pManagement)
 		return E_FAIL;
 
+	_float3 vCamPos = pManagement->Get_CamPosition();
+	_matrix viewMat = pManagement->Get_Transform(D3DTS_VIEW);
+	D3DXMatrixInverse(&viewMat, nullptr, &viewMat);
+	
 	//카메라가 움직이고 나서 카메라 위치로 가야한다.
-	m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
+	m_pTransformCom->SetUp_Position(_float3(viewMat.m[3][0], viewMat.m[3][1] - 0.5f, viewMat.m[3][2]));
 
 	return _int();
 }

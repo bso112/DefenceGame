@@ -88,18 +88,6 @@
     <Filter Include="05.Utility\01.Value">
       <UniqueIdentifier>{f68027a6-788d-46b8-8e02-eea200a0230f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\Unit">
-      <UniqueIdentifier>{7ddb5c67-28ae-4f87-9c15-d324e6b67ffa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\Unit\00.Marine">
-      <UniqueIdentifier>{69ead615-b411-4dc8-8c72-0c90f9af5b90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\Unit\01.Firebat">
-      <UniqueIdentifier>{d93b5f7b-4691-46d6-be18-0ce7ebf25cae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\Unit\02.Walker">
-      <UniqueIdentifier>{03f7e775-533f-45a7-afd7-bed4abdba7a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.PickingMgr">
       <UniqueIdentifier>{8120b7bc-b324-48a7-9ac4-442a843f6fa3}</UniqueIdentifier>
     </Filter>
@@ -114,6 +102,30 @@
     </Filter>
     <Filter Include="06.Component\AIState\AIState">
       <UniqueIdentifier>{ad26e587-6807-44bd-94b3-3320f6373e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable">
+      <UniqueIdentifier>{c6b01569-864f-4e55-8fc2-a98d07737271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Unit">
+      <UniqueIdentifier>{7ddb5c67-28ae-4f87-9c15-d324e6b67ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Unit\00.Marine">
+      <UniqueIdentifier>{69ead615-b411-4dc8-8c72-0c90f9af5b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Unit\01.Firebat">
+      <UniqueIdentifier>{d93b5f7b-4691-46d6-be18-0ce7ebf25cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Unit\02.Walker">
+      <UniqueIdentifier>{03f7e775-533f-45a7-afd7-bed4abdba7a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Building">
+      <UniqueIdentifier>{cf34c677-cf30-473b-822a-b6b691f0750f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Building\Barricade">
+      <UniqueIdentifier>{e8bcff0c-03f9-4081-99d9-7cca005b6ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Building\CommandCenter">
+      <UniqueIdentifier>{fe991a24-030b-4dde-bc30-7824f127599f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,14 +207,23 @@
     <ClInclude Include="..\Headers\Sky.h">
       <Filter>02.GameObject\Sky</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Building.h">
+      <Filter>02.GameObject\Interactable\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Barricade.h">
+      <Filter>02.GameObject\Interactable\Building\Barricade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\CommandCenter.h">
+      <Filter>02.GameObject\Interactable\Building\CommandCenter</Filter>
+    </ClInclude>
     <ClInclude Include="..\Headers\Value.h">
       <Filter>05.Utility\01.Value</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Unit.h">
-      <Filter>02.GameObject\Unit</Filter>
+      <Filter>02.GameObject\Interactable\Unit</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Marine.h">
-      <Filter>02.GameObject\Unit\00.Marine</Filter>
+      <Filter>02.GameObject\Interactable\Unit\00.Marine</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\PickingMgr.h">
       <Filter>06.PickingMgr</Filter>
@@ -213,6 +234,7 @@
     <ClInclude Include="..\Headers\AIState.h">
       <Filter>06.Component\AIState\AIState</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Interactable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -278,11 +300,20 @@
     <ClCompile Include="..\Codes\Sky.cpp">
       <Filter>02.GameObject\Sky</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\Building.cpp">
+      <Filter>02.GameObject\Interactable\Building</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Barricade.cpp">
+      <Filter>02.GameObject\Interactable\Building\Barricade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\CommandCenter.cpp">
+      <Filter>02.GameObject\Interactable\Building\CommandCenter</Filter>
+    </ClCompile>
     <ClCompile Include="..\Codes\Unit.cpp">
-      <Filter>02.GameObject\Unit</Filter>
+      <Filter>02.GameObject\Interactable\Unit</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Marine.cpp">
-      <Filter>02.GameObject\Unit\00.Marine</Filter>
+      <Filter>02.GameObject\Interactable\Unit\00.Marine</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\PickingMgr.cpp">
       <Filter>06.PickingMgr</Filter>
@@ -293,6 +324,7 @@
     <ClCompile Include="..\Codes\AIState.cpp">
       <Filter>06.Component\AIState\AIState</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\Interactable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -318,6 +350,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Solid.fx">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

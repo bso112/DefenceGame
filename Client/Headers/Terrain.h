@@ -24,8 +24,8 @@ private:
 		//¿Œµ¶Ω∫
 		_uint		X;
 		_uint		Z;
-		tagNode*	pParent = nullptr;
 		_bool		bMovable = false;
+		tagNode*	pParent = nullptr;
 
 		tagNode() {}
 		tagNode(_int _Gcost, _int _Hcost, _int _Fcost, _int _X, _int _Z, tagNode* _pParent)

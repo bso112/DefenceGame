@@ -28,6 +28,11 @@ public:
 	virtual HRESULT Render_GameObject();
 
 public:
+	//pHitPos는 레이가 충돌한 지점의 위치다. (out 인자)
+	virtual _bool		Picking(POINT _ViewPortPoint, _float3* pHitPos);
+	virtual	void		Interact();
+
+public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);
 
 private:
@@ -42,6 +47,8 @@ public:
 	static CMarine*	Create(PDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone_GameObject(void * pArg) override;
 	virtual void Free();
+
+
 
 };
 END

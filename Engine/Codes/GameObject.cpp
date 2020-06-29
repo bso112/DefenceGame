@@ -59,6 +59,7 @@ void CGameObject::Clear_DeadObject()
 	}
 }
 
+
 void CGameObject::OnCollisionEnter(CGameObject * _pOther)
 {
 }

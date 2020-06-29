@@ -23,7 +23,7 @@ CVIBuffer::CVIBuffer(const CVIBuffer & rhs)
 	, m_iNumVerticesZ(rhs.m_iNumVerticesZ)
 {
 	Safe_AddRef(m_pIBuffer);
-	Safe_AddRef(m_pVBuffer);	
+	Safe_AddRef(m_pVBuffer);
 }
 
 HRESULT CVIBuffer::Ready_Component_Prototype()
@@ -35,11 +35,11 @@ HRESULT CVIBuffer::Ready_Component_Prototype()
 
 	// 정점들을 보관하는 배열공간을 할당했다. 	
 	if (FAILED(m_pGraphic_Device->CreateVertexBuffer(m_iStride * m_iNumVertices, 0, m_dwFVF, D3DPOOL_MANAGED, &m_pVBuffer, nullptr)))
-		return E_FAIL;	
+		return E_FAIL;
 
 	if (FAILED(m_pGraphic_Device->CreateIndexBuffer(m_iIndexSize * m_iNumIndices, 0, m_eIndexFormat, D3DPOOL_MANAGED, &m_pIBuffer, nullptr)))
 		return E_FAIL;
-	
+
 	return S_OK;
 }
 
@@ -55,13 +55,30 @@ HRESULT CVIBuffer::Render_VIBuffer()
 		return E_FAIL;
 
 	// 1. 장치객체가 참조해야할 정점버퍼를 장치 소켓중 몇번째에 연결할까요? 
-	m_pGraphic_Device->SetStreamSource(0, m_pVBuffer, 0, m_iStride);	
+	m_pGraphic_Device->SetStreamSource(0, m_pVBuffer, 0, m_iStride);
 	m_pGraphic_Device->SetFVF(m_dwFVF);
 	m_pGraphic_Device->SetIndices(m_pIBuffer);
 	m_pGraphic_Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_iNumVertices, 0, m_iNumPrimitive);
 
 	return S_OK;
 }
+
+
+void CVIBuffer::SetAnchor(_float3 _vAnchor)
+{
+	VTXCUBETEX* pVertices = nullptr;
+
+	m_pVBuffer->Lock(0, 0, (void**)&pVertices, 0);
+
+	for (int i = 0; i < m_iNumVertices; ++i)
+	{
+		pVertices[i].vPosition = m_pVerticesPos[i] = m_pVerticesPos[i] - _vAnchor;
+		//pVertices[i].vTexUV = pVertices[i].vPosition;
+	}
+
+	m_pVBuffer->Unlock();
+}
+
 
 _bool CVIBuffer::Picking(POINT ptMouse, HWND hWnd, _matrix WorldMatrix, _float3 * pWorldOut)
 {
@@ -155,7 +172,7 @@ _bool CVIBuffer::Picking(POINT ptMouse, HWND hWnd, _matrix WorldMatrix, _float3 
 
 void CVIBuffer::Free()
 {
-	if(false == m_isClone)
+	if (false == m_isClone)
 		Safe_Delete_Array(m_pVerticesPos);
 
 	Safe_Release(m_pIBuffer);
