@@ -17,6 +17,7 @@ public:
 	virtual HRESULT Ready_Component_Prototype();
 	virtual HRESULT Ready_Component(void* pArg);
 	virtual HRESULT Render_VIBuffer();	
+	void SetAnchor(_float3 _vAnchor);
 public:
 	virtual _bool Picking(HWND hWnd, _matrix WorldMatrix, _float3* pOut);
 

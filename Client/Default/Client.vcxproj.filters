@@ -91,6 +91,15 @@
     <Filter Include="02.GameObject\Sky">
       <UniqueIdentifier>{c3bf244c-c92c-45e9-9388-67edb75e67b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\Building">
+      <UniqueIdentifier>{cf34c677-cf30-473b-822a-b6b691f0750f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Building\Barricade">
+      <UniqueIdentifier>{e8bcff0c-03f9-4081-99d9-7cca005b6ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Building\CommandCenter">
+      <UniqueIdentifier>{fe991a24-030b-4dde-bc30-7824f127599f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -177,6 +186,15 @@
     <ClInclude Include="..\Headers\Sky.h">
       <Filter>02.GameObject\Sky</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Building.h">
+      <Filter>02.GameObject\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Barricade.h">
+      <Filter>02.GameObject\Building\Barricade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\CommandCenter.h">
+      <Filter>02.GameObject\Building\CommandCenter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -248,6 +266,15 @@
     <ClCompile Include="..\Codes\Sky.cpp">
       <Filter>02.GameObject\Sky</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\Building.cpp">
+      <Filter>02.GameObject\Building</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Barricade.cpp">
+      <Filter>02.GameObject\Building\Barricade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\CommandCenter.cpp">
+      <Filter>02.GameObject\Building\CommandCenter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -273,6 +300,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Solid.fx">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

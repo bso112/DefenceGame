@@ -6,6 +6,7 @@
 #include "MyButton.h"
 #include "GameManager.h"
 #include "Cube.h"
+#include "CommandCenter.h"
 
 CScene_Stage::CScene_Stage(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
@@ -37,6 +38,12 @@ HRESULT CScene_Stage::Ready_Scene()
 	if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Camera_Free", SCENE_STAGE1, L"Layer_Camera", &StateDesc)))
 		return E_FAIL;
 	
+	//오브젝트 생성
+	CBuilding::BUILDING_DESC BuildingDesc;
+	BuildingDesc.vPos = _float3(0.f, 0.f, 0.f);
+	if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
+		return E_FAIL;
+
 #pragma endregion
 
 
