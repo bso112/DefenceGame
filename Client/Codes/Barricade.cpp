@@ -33,7 +33,10 @@ HRESULT CBarricade::Ready_GameObject(void * pArg)
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
-
+	m_tagStat.iMaxHP = CValue<int>(120);
+	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
+	m_tagStat.iLevel = 1;
+	m_tagStat.iPrice = 20;
 	//m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
 
 	m_fRealScaleMag = m_fScale * m_iTileSize;

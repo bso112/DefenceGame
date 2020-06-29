@@ -2,6 +2,7 @@
 #include "Client_Defines.h"
 #include "Interactable.h"
 #include "Management.h"
+#include "Value.h"
 
 
 BEGIN(Client)
@@ -21,6 +22,14 @@ public:
 		RENDER_END,
 	};
 
+	typedef struct tagBuildingStat
+	{
+		CValue<int> iMaxHP = CValue<int>(0);
+		_int iHp = 0;
+		_int iPrice = 0;
+		_int iLevel = 1;
+	}BUILDING_STAT;
+
 protected:
 	explicit CBuilding(PDIRECT3DDEVICE9 pGraphic_Device);
 	explicit CBuilding(const CBuilding& rhs);
@@ -34,6 +43,7 @@ public:
 
 public:
 	_int Get_TileSize() { return m_iTileSize; }
+	void Get_Damage(_int iDmg);
 
 public:
 	virtual void Upgrade();
@@ -44,11 +54,14 @@ protected:
 	CTransform*			m_pTransformCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CVIBuffer_Cube*		m_pVIBufferCom = nullptr;
+	BUILDING_STAT		m_tagStat;
 
 protected:
 	_int m_iTileSize;
 	_float m_fScale;
 	_float m_fRealScaleMag;
+
+
 
 private:
 	HRESULT Add_Component();

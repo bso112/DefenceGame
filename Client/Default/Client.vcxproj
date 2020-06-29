@@ -212,6 +212,7 @@
     <ClInclude Include="..\Headers\Scene_Stage4.h" />
     <ClInclude Include="..\Headers\Sky.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
+    <ClInclude Include="..\Headers\TileUI.h" />
     <ClInclude Include="..\Headers\Trigger.h" />
     <ClInclude Include="..\Headers\UI.h" />
     <ClInclude Include="..\Headers\Unit.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="..\Codes\Scene_Stage4.cpp" />
     <ClCompile Include="..\Codes\Sky.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />
+    <ClCompile Include="..\Codes\TileUI.cpp" />
     <ClCompile Include="..\Codes\Trigger.cpp" />
     <ClCompile Include="..\Codes\UI.cpp" />
     <ClCompile Include="..\Codes\Unit.cpp" />

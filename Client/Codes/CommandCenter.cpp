@@ -46,6 +46,11 @@ _int CCommandCenter::Update_GameObject(_double TimeDelta)
 	if (nullptr == pManagement)
 		return E_FAIL;
 
+	m_tagStat.iMaxHP = CValue<int>(300);
+	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
+	m_tagStat.iLevel = 1;
+	m_tagStat.iPrice = 0;
+
 	//m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
 	return _int();
 }

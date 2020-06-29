@@ -111,6 +111,21 @@ HRESULT CRenderer::Render_AlphaBlend()
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_3DUI()
+{
+	for (auto& pGameObject : m_RenderGroup[RENDER_3DUI])
+	{
+		if (FAILED(pGameObject->Render_GameObject()))
+			return E_FAIL;
+
+		Safe_Release(pGameObject);
+	}
+
+	m_RenderGroup[RENDER_3DUI].clear();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_UI()
 {
 	for (auto& pGameObject : m_RenderGroup[RENDER_UI])

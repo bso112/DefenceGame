@@ -70,6 +70,13 @@ HRESULT CBuilding::Render_GameObject()
 	return S_OK;
 }
 
+void CBuilding::Get_Damage(_int iDmg)
+{
+	m_tagStat.iHp -= iDmg;
+	if (m_tagStat.iHp <= 0)
+		m_bDead = 1;
+}
+
 void CBuilding::Upgrade()
 {
 }

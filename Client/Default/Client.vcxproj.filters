@@ -133,6 +133,9 @@
     <Filter Include="02.GameObject\UI\Mananger">
       <UniqueIdentifier>{9c21f4d5-71e2-4fc0-889e-6848467bcca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\UI\UI\TileUI">
+      <UniqueIdentifier>{bbfa546e-e48c-4bcb-9a58-9307fe01103d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -247,6 +250,9 @@
     <ClInclude Include="StageUIMgr.h">
       <Filter>02.GameObject\UI\Mananger</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\TileUI.h">
+      <Filter>02.GameObject\UI\UI\TileUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -342,6 +348,9 @@
     </ClCompile>
     <ClCompile Include="StageUIMgr.cpp">
       <Filter>02.GameObject\UI\Mananger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\TileUI.cpp">
+      <Filter>02.GameObject\UI\UI\TileUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
