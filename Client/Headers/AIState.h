@@ -1,9 +1,10 @@
 #pragma once
 #include "Base.h"
+#include "Unit.h"
 
 BEGIN(Client)
 class CUnit;
-class CAIState abstract : CBase
+class CAIState abstract : public CBase
 {
 public:
 	typedef struct tagStateDesc
@@ -26,7 +27,7 @@ public:
 protected:
 	CUnit*	m_pActor = nullptr;
 
-protected:
+public:
 	virtual	void Free();
 };
 
@@ -66,7 +67,7 @@ public:
 
 };
 
-class CAIWait: public CAIState
+class CAIWait : public CAIState
 {
 public:
 	explicit CAIWait(CUnit* _pActor) :CAIState(_pActor) {};
