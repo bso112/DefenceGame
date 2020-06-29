@@ -69,6 +69,25 @@ _bool CPickingMgr::Get_WorldMousePos(POINT _pt, _float3* _vWorldMouse)
 	return m_pTerrain->Picking(_pt, _vWorldMouse);
 }
 
+vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius)
+{
+	vector<CGameObject*> vecGameObject;
+	for (auto& obj : m_listObject)
+	{
+		CTransform* pObjTransform = (CTransform*)obj->Find_Component(L"Com_Transform");
+		if (nullptr == pObjTransform) return vector<CGameObject*>();
+		_float fDist = D3DXVec3Length(&(vPos - pObjTransform->Get_State(CTransform::STATE_POSITION)));
+		if (fDist < _fRadius)
+		{
+			vecGameObject.push_back(obj);
+		}
+	}
+	if(vecGameObject.empty())
+		return vector<CGameObject*>();
+
+	return vecGameObject;
+}
+
 HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 {
 	vector<CInteractable*> vecPicked;
