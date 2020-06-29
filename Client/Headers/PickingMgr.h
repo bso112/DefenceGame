@@ -16,9 +16,9 @@ private:
 
 public:
 	HRESULT	Ready_PickingMgr(CTerrain* pTerrain);
-	_int	Clear_PickingMgr();
 
-	HRESULT	Add_Interactable(CInteractable* pObj);
+	HRESULT	Register_Observer(CInteractable* pObj);
+	HRESULT	UnRegister_Observer(CInteractable* pObj);
 public:
 	HRESULT	Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out);
 	HRESULT Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out);

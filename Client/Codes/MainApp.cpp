@@ -18,7 +18,7 @@
 #include "Barricade.h"
 #include "PickingMgr.h"
 #include "Marine.h"
-
+#include "AIStateController.h"
 USING(Client)
 
 CMainApp::CMainApp()
@@ -215,6 +215,9 @@ HRESULT CMainApp::Ready_Default_Component()
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_Solid", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_Solid.fx"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_AIStateCon", CAIStateController::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 #pragma region TEXTURE

@@ -2,11 +2,13 @@
 #include "Interactable.h"
 #include "Value.h"
 #include "Management.h"
-
 BEGIN(Client)
 class CAIStateController;
 class CUnit abstract : public CInteractable
 {
+	friend class CAIState;
+	friend class CAIHunting;
+
 public:
 	typedef struct tagUnitStats
 	{
@@ -40,7 +42,7 @@ public:
 protected:
 	virtual	void OnTakeDamage(_int iDamage, _int iInfection);
 protected:
-	UNITSTATS				m_tStats = {};
+	UNITSTATS				m_tUnitStats;
 	_int					m_iRecogRange = 0;
 	_bool					m_bInBuilding = false;
 	_bool					m_bFriendly = false;

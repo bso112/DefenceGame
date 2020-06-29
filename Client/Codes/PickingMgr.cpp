@@ -19,25 +19,29 @@ HRESULT CPickingMgr::Ready_PickingMgr(CTerrain * pTerrain)
 	return S_OK;
 }
 
-_int CPickingMgr::Clear_PickingMgr()
-{
-	//쓴다음에는 비운다.
-	for (auto& obj : m_listObject)
-		Safe_Release(obj);
-
-	m_listObject.clear();
-
-	return 0;
-}
 
 
-HRESULT CPickingMgr::Add_Interactable(CInteractable * pObj)
+HRESULT CPickingMgr::Register_Observer(CInteractable * pObj)
 {
 	if (nullptr == pObj)
 		return E_FAIL;
 
-	Safe_AddRef(pObj);
 	m_listObject.push_back(pObj);
+	return S_OK;
+}
+
+HRESULT CPickingMgr::UnRegister_Observer(CInteractable * pObj)
+{
+	auto& iter = m_listObject.begin();
+	while (iter != m_listObject.end())
+	{
+		if (*iter == pObj)
+		{
+			iter = m_listObject.erase(iter);
+		}
+		else
+			++iter;
+	}
 	return S_OK;
 }
 
@@ -117,11 +121,6 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 
 	}
 
-	//쓴다음에는 비운다.
-	for (auto& obj : m_listObject)
-		Safe_Release(obj);
-
-	m_listObject.clear();
 	return S_OK;
 }
 
@@ -146,9 +145,6 @@ void CPickingMgr::Free()
 	CKeyMgr::Get_Instance()->UnRegisterObserver(SCENE_STATIC, this);
 
 	Safe_Release(m_pTerrain);
-
-	for (auto& obj : m_listObject)
-		Safe_Release(obj);
 
 	m_listObject.clear();
 

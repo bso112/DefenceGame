@@ -54,6 +54,13 @@ HRESULT CScene_Stage::Ready_Scene()
 _int CScene_Stage::Update_Scene(_double TimeDelta)
 {
 
+	
+	return _int();
+
+}
+
+HRESULT CScene_Stage::Render_Scene()
+{
 	CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON, SCENE_STAGE1);
 	CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON, SCENE_STAGE1);
 
@@ -63,15 +70,8 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 
 	CKeyMgr::Get_Instance()->Key_Update();
 
-	CPickingMgr::Get_Instance()->Clear_PickingMgr();
 
-	return _int();
 
-}
-
-HRESULT CScene_Stage::Render_Scene()
-{
-	
 	return S_OK;
 }
 

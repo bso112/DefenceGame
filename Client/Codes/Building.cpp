@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Headers\Building.h"
 #include "Management.h"
-
+#include "PickingMgr.h"
 CBuilding::CBuilding(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CInteractable(pGraphic_Device)
 {
@@ -21,6 +21,7 @@ HRESULT CBuilding::Ready_GameObject_Prototype()
 
 HRESULT CBuilding::Ready_GameObject(void * pArg)
 {
+
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
@@ -30,11 +31,7 @@ HRESULT CBuilding::Ready_GameObject(void * pArg)
 
 _int CBuilding::Update_GameObject(_double TimeDelta)
 {
-	CManagement*	pManagement = CManagement::Get_Instance();
-	if (nullptr == pManagement)
-		return E_FAIL;
-
-	m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
+	
 	return _int();
 }
 
@@ -42,7 +39,6 @@ _int CBuilding::Late_Update_GameObject(_double TimeDelta)
 {
 	if (nullptr == m_pRendererCom)
 		return -1;
-
 
 	if (FAILED(m_pRendererCom->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this)))
 		return -1;

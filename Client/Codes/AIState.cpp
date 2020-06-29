@@ -1,16 +1,8 @@
 #include "stdafx.h"
 #include "AIState.h"
 #include "Unit.h"
-
-CAIState::STATE CAIState::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
-{
-	return CAIState::STATE();
-}
-
-CAIState::STATE CAIState::Start(CAIState::STATEDESC _tDesc, _double _timeDelta)
-{
-	return CAIState::STATE();
-}
+#include "PickingMgr.h"
+#include "Building.h"
 
 void CAIState::Free()
 {
@@ -19,12 +11,31 @@ void CAIState::Free()
 
 CAIState::STATE CAIHunting::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
+	if (nullptr == pPickMgr) return STATE_END;
+	if (nullptr == m_pActor) return STATE_END;
+	if (nullptr == m_pActor->m_pTransform) return STATE_END;
+	vector<CGameObject*> vecGameObject = pPickMgr->OverlapSphere(m_pActor->m_pTransform->Get_State(CTransform::STATE_POSITION), m_pActor->m_iRecogRange);
+	if (vecGameObject.empty()) return STATE_END;
+	for (auto& go : vecGameObject)
+	{
+		if (go == m_pActor)
+			continue;
+
+		CBuilding* pBuilding = dynamic_cast<CBuilding*>(go);
+		if (pBuilding != nullptr)
+		{
+			pBuilding->Get_Damage(m_pActor->m_tUnitStats.iAtt.GetValue());
+		}
+	}
+
+
+	return STATE_END;
 }
 
 CAIState::STATE CAIHunting::Start(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 void CAIHunting::Free()
@@ -34,12 +45,12 @@ void CAIHunting::Free()
 
 CAIState::STATE CAIIdle::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 CAIState::STATE CAIIdle::Start(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 void CAIIdle::Free()
@@ -49,12 +60,12 @@ void CAIIdle::Free()
 
 CAIState::STATE CAIWait::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 CAIState::STATE CAIWait::Start(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 void CAIWait::Free()
@@ -64,12 +75,12 @@ void CAIWait::Free()
 
 CAIState::STATE CAIRetreat::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 CAIState::STATE CAIRetreat::Start(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
-	return CAIState::STATE();
+	return STATE_END;
 }
 
 void CAIRetreat::Free()
