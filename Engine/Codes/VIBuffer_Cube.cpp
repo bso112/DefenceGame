@@ -110,15 +110,10 @@ HRESULT CVIBuffer_Cube::Ready_Component(void * pArg)
 	return S_OK;
 }
 
-_bool CVIBuffer_Cube::Picking(HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
+_bool CVIBuffer_Cube::Picking(POINT ptMouse, HWND hWnd, _matrix WorldMatrix, _float3 * pOut)
 {
 	if (!(GetKeyState(VK_LBUTTON) & 0x8000))
 		return false;
-
-	POINT		ptMouse;
-
-	GetCursorPos(&ptMouse);
-	ScreenToClient(hWnd, &ptMouse);
 
 	D3DVIEWPORT9		ViewPort;
 	m_pGraphic_Device->GetViewport(&ViewPort);

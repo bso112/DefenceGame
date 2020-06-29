@@ -16,6 +16,9 @@
 #include "Sky.h"
 #include "CommandCenter.h"
 #include "Barricade.h"
+#include "PickingMgr.h"
+#include "Marine.h"
+
 USING(Client)
 
 CMainApp::CMainApp()
@@ -141,8 +144,6 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Trigger", CTrigger::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_GameEndPanel", CGameEndPanel::Create(m_pGraphic_Device))))
-		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Image3D", CImage3D::Create(m_pGraphic_Device))))
 		return E_FAIL;
@@ -155,7 +156,8 @@ HRESULT CMainApp::Ready_Default_GameObject()
 		return E_FAIL;
 	
 
-
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Marine", CMarine::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_CommandCenter", CCommandCenter::Create(m_pGraphic_Device))))
 		return E_FAIL;
@@ -189,7 +191,7 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_ViewPort", CVIBuffer_ViewPort::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Terrain", CVIBuffer_Terrain::Create(m_pGraphic_Device, 2,2))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Terrain", CVIBuffer_Terrain::Create(m_pGraphic_Device, TILEX,TILEZ,TILESIZE))))
 		return E_FAIL;
 
 
@@ -267,7 +269,8 @@ void CMainApp::Free()
 
 	Safe_Release(m_pManagement);
 
-	CGameManager::Get_Instance()->Destroy_Instance();
+	CPickingMgr::Get_Instance()->Destroy_Instance();
 
+	
 	CManagement::Release_Engine();
 }

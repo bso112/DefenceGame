@@ -43,37 +43,37 @@ HRESULT CManagement::Ready_Engine(_uint iNumScenes)
 	return S_OK;
 }
 
-	_int CManagement::Update_Engine(_double TimeDelta)
+_int CManagement::Update_Engine(_double TimeDelta)
+{
+	if (nullptr == m_pScene_Manager ||
+		nullptr == m_pObject_Manager ||
+		nullptr == m_pPipeLine)
+		return -1;
+
+	if (0x80000000 & m_pScene_Manager->Update_CurrentScene(TimeDelta))
+		return -1;
+
+
+	if (1 == m_pObject_Manager->Update_Object_Manager(TimeDelta))
+		return 1;
+
+	//Obj가 LateUpdate에서 콜리전매니저에 등록하기 때문에, 그 이후에 충돌체크해야한다.
+	//반대로 하면 오브젝트가 삭제될 경우 콜리전매니저에 dangling pointer가 생길것이다. 
+	if (FAILED(m_pCollisionMgr->CheckCollision()))
 	{
-		if (nullptr == m_pScene_Manager ||
-			nullptr == m_pObject_Manager ||
-			nullptr == m_pPipeLine)
-			return -1;
-
-		if (0x80000000 & m_pScene_Manager->Update_CurrentScene(TimeDelta))
-			return -1;
-
-
-		if (1 == m_pObject_Manager->Update_Object_Manager(TimeDelta))
-			return 1;
-
-		//Obj가 LateUpdate에서 콜리전매니저에 등록하기 때문에, 그 이후에 충돌체크해야한다.
-		//반대로 하면 오브젝트가 삭제될 경우 콜리전매니저에 dangling pointer가 생길것이다. 
-		if (FAILED(m_pCollisionMgr->CheckCollision()))
-		{
-			MSG_BOX("충돌처리 실패");
-			return -1;
-		}
-
-		if (FAILED(m_pPipeLine->Update_PipeLine()))
-			return -1;
-
-		if (FAILED(m_pInput_Device->Set_Input_Device_State()))
-			return -1;
-
-
-		return _int();
+		MSG_BOX("충돌처리 실패");
+		return -1;
 	}
+
+	if (FAILED(m_pPipeLine->Update_PipeLine()))
+		return -1;
+
+	if (FAILED(m_pInput_Device->Set_Input_Device_State()))
+		return -1;
+
+
+	return _int();
+}
 
 HRESULT CManagement::Render_Engine()
 {
@@ -307,6 +307,9 @@ void CManagement::Release_Engine()
 		MSG_BOX("Failed To Release CManagement");
 
 	if (0 != CKeyMgr::Get_Instance()->Destroy_Instance())
+		MSG_BOX("Failed To Release CKeyMgr");
+	
+	if (0 != CInput_Device::Get_Instance()->Destroy_Instance())
 		MSG_BOX("Failed To Release CKeyMgr");
 
 	if (0 != CCollisionMgr::Get_Instance()->Destroy_Instance())

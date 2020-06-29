@@ -124,6 +124,15 @@ HRESULT CTransform::Go_Left(_double TimeDelta)
 	return S_OK;
 }
 
+HRESULT CTransform::Go_Dst(_float3 _vDst, _double TimeDelta)
+{
+	_float3 vDir;
+	D3DXVec3Normalize(&vDir, &(_vDst - Get_State(STATE_POSITION)));
+	_float3 vNextPos = Get_State(STATE_POSITION) + vDir * _float(m_StateDesc.SpeedPerSec * TimeDelta);
+	SetUp_Position(vNextPos);
+	return S_OK;
+}
+
 HRESULT CTransform::SetUp_Position(_float3 _vPos)
 {
 

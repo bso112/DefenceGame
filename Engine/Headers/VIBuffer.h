@@ -19,7 +19,7 @@ public:
 	virtual HRESULT Render_VIBuffer();	
 	void SetAnchor(_float3 _vAnchor);
 public:
-	virtual _bool Picking(HWND hWnd, _matrix WorldMatrix, _float3* pOut);
+	virtual _bool Picking(POINT pt, HWND hWnd, _matrix WorldMatrix, _float3* pWorldOut);
 
 protected: // For.VertexBuffer
 	PDIRECT3DVERTEXBUFFER9		m_pVBuffer = nullptr;

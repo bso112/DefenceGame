@@ -41,7 +41,3 @@ HRESULT CBase::OnKeyUp(_int KeyCode)
 	return S_OK;
 }
 
-HRESULT CBase::OnMoveTurn()
-{
-	return S_OK;
-}

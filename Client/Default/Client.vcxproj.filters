@@ -25,9 +25,6 @@
     <Filter Include="97.ShaderFiles">
       <UniqueIdentifier>{e20ca914-db13-45ea-83ea-f867ccc2de26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.GameManager">
-      <UniqueIdentifier>{e2dfb2ff-b9f8-41a9-9442-5f12b4bd2762}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04.Level">
       <UniqueIdentifier>{75fe4f1c-49cf-4c18-a92a-822be355c388}</UniqueIdentifier>
     </Filter>
@@ -64,9 +61,6 @@
     <Filter Include="05.Utility\00.Clock">
       <UniqueIdentifier>{a7975227-3f0c-47bf-b2a8-490718d88fe8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\GameEndPanel">
-      <UniqueIdentifier>{ff035084-27e3-4744-a798-a46bd1fc7e35}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\UI">
       <UniqueIdentifier>{9d2e6977-59e0-481f-9c97-6aad1dc3dee8}</UniqueIdentifier>
     </Filter>
@@ -99,6 +93,36 @@
     </Filter>
     <Filter Include="02.GameObject\Building\CommandCenter">
       <UniqueIdentifier>{fe991a24-030b-4dde-bc30-7824f127599f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Utility\01.Value">
+      <UniqueIdentifier>{f68027a6-788d-46b8-8e02-eea200a0230f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit">
+      <UniqueIdentifier>{7ddb5c67-28ae-4f87-9c15-d324e6b67ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit\00.Marine">
+      <UniqueIdentifier>{69ead615-b411-4dc8-8c72-0c90f9af5b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit\01.Firebat">
+      <UniqueIdentifier>{d93b5f7b-4691-46d6-be18-0ce7ebf25cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Unit\02.Walker">
+      <UniqueIdentifier>{03f7e775-533f-45a7-afd7-bed4abdba7a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.PickingMgr">
+      <UniqueIdentifier>{8120b7bc-b324-48a7-9ac4-442a843f6fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component">
+      <UniqueIdentifier>{321c95a4-744e-49aa-bb8e-dcd714d5be9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component\AIState">
+      <UniqueIdentifier>{b5114dbf-4278-44d0-869c-abc52001059e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component\AIState\Controller">
+      <UniqueIdentifier>{370ffeab-42ca-40be-af1a-87f0046dd8fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component\AIState\AIState">
+      <UniqueIdentifier>{ad26e587-6807-44bd-94b3-3320f6373e92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +162,6 @@
     <ClInclude Include="..\Headers\Camera_Free.h">
       <Filter>02.GameObject\Camera\Camera_Free</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\GameManager.h">
-      <Filter>03.GameManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Headers\Level.h">
       <Filter>04.Level</Filter>
     </ClInclude>
@@ -168,9 +189,6 @@
     <ClInclude Include="..\Headers\Clock.h">
       <Filter>05.Utility\00.Clock</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\GameEndPanel.h">
-      <Filter>02.GameObject\GameEndPanel</Filter>
-    </ClInclude>
     <ClInclude Include="..\Headers\Image3D.h">
       <Filter>02.GameObject\UI\Image3D</Filter>
     </ClInclude>
@@ -194,6 +212,24 @@
     </ClInclude>
     <ClInclude Include="..\Headers\CommandCenter.h">
       <Filter>02.GameObject\Building\CommandCenter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Value.h">
+      <Filter>05.Utility\01.Value</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Unit.h">
+      <Filter>02.GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Marine.h">
+      <Filter>02.GameObject\Unit\00.Marine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\PickingMgr.h">
+      <Filter>06.PickingMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\AIStateController.h">
+      <Filter>06.Component\AIState\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\AIState.h">
+      <Filter>06.Component\AIState\AIState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +257,6 @@
     <ClCompile Include="..\Codes\Camera_Free.cpp">
       <Filter>02.GameObject\Camera\Camera_Free</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\GameManager.cpp">
-      <Filter>03.GameManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Codes\Level.cpp">
       <Filter>04.Level</Filter>
     </ClCompile>
@@ -248,9 +281,6 @@
     <ClCompile Include="..\Codes\Clock.cpp">
       <Filter>05.Utility\00.Clock</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\GameEndPanel.cpp">
-      <Filter>02.GameObject\GameEndPanel</Filter>
-    </ClCompile>
     <ClCompile Include="..\Codes\Image3D.cpp">
       <Filter>02.GameObject\UI\Image3D</Filter>
     </ClCompile>
@@ -274,6 +304,21 @@
     </ClCompile>
     <ClCompile Include="..\Codes\CommandCenter.cpp">
       <Filter>02.GameObject\Building\CommandCenter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Unit.cpp">
+      <Filter>02.GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Marine.cpp">
+      <Filter>02.GameObject\Unit\00.Marine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PickingMgr.cpp">
+      <Filter>06.PickingMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\AIStateController.cpp">
+      <Filter>06.Component\AIState\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\AIState.cpp">
+      <Filter>06.Component\AIState\AIState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
