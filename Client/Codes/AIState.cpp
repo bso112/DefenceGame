@@ -11,24 +11,48 @@ void CAIState::Free()
 
 CAIState::STATE CAIHunting::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
+
 	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
 	if (nullptr == pPickMgr) return STATE_END;
 	if (nullptr == m_pActor) return STATE_END;
 	if (nullptr == m_pActor->m_pTransform) return STATE_END;
-	vector<CGameObject*> vecGameObject = pPickMgr->OverlapSphere(m_pActor->m_pTransform->Get_State(CTransform::STATE_POSITION), m_pActor->m_iRecogRange);
-	if (vecGameObject.empty()) return STATE_END;
-	for (auto& go : vecGameObject)
-	{
-		if (go == m_pActor)
-			continue;
 
-		CBuilding* pBuilding = dynamic_cast<CBuilding*>(go);
-		if (pBuilding != nullptr)
-		{
+	//컨트롤 모드로
+	if (m_pActor->m_bControlMode)
+		return STATE_WAIT;
+
+	//커멘드센터로 간다.
+	CManagement* pManageemnt = CManagement::Get_Instance();
+	if (nullptr == pManageemnt)  return STATE_END;
+	CGameObject* pComandcenter = pManageemnt->Get_ObjectPointer(pManageemnt->Get_CurrScene(), L"Layer_CommandCenter", 0);
+	if (nullptr == pComandcenter) return STATE_END;
+	CTransform* pDstTransform = (CTransform*)pComandcenter->Find_Component(L"Com_Transform");
+	m_pActor->m_pTransform->Go_Dst(pDstTransform->Get_State(CTransform::STATE_POSITION), _timeDelta);
+
+
+
+	//주변을 조사해서 가장가까운 게임오브젝트를 받는다.
+	_float dist = 0.f;
+	CGameObject* pTarget = pPickMgr->OverlapSphere_Closest(m_pActor->m_pTransform->Get_State(CTransform::STATE_POSITION), m_pActor->m_iRecogRange, &dist,m_pActor);
+	if (nullptr == pTarget) return STATE_END;
+
+	//도착이면
+	if (dist < 2.f)
+	{
+		//공격
+		CBuilding* pBuilding = dynamic_cast<CBuilding*>(pTarget);
+		if (nullptr != pBuilding)
 			pBuilding->Get_Damage(m_pActor->m_tUnitStats.iAtt.GetValue());
-		}
+		CUnit*		pUnit = dynamic_cast<CUnit*>(pTarget);
+		if (nullptr != pUnit)
+			pUnit->TakeDamage(m_pActor->m_tUnitStats.iAtt.GetValue(), m_pActor->m_tUnitStats.iAtt.GetValue());
 	}
 
+	//가장 가까운 게임 오브젝트로 간다.
+	CTransform* pTargetTransform = (CTransform*)pTarget->Find_Component(L"Com_Transform");
+	if (nullptr == pTargetTransform) return STATE_END;
+	m_pActor->m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), _timeDelta);
+	
 
 	return STATE_END;
 }

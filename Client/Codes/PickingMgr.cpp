@@ -73,11 +73,14 @@ _bool CPickingMgr::Get_WorldMousePos(POINT _pt, _float3* _vWorldMouse)
 	return m_pTerrain->Picking(_pt, _vWorldMouse);
 }
 
-vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius)
+vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius, CGameObject* pSelf)
 {
 	vector<CGameObject*> vecGameObject;
 	for (auto& obj : m_listObject)
 	{
+		if (obj == pSelf)
+			continue;
+
 		CTransform* pObjTransform = (CTransform*)obj->Find_Component(L"Com_Transform");
 		if (nullptr == pObjTransform) return vector<CGameObject*>();
 		_float fDist = D3DXVec3Length(&(vPos - pObjTransform->Get_State(CTransform::STATE_POSITION)));
@@ -90,6 +93,30 @@ vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius)
 		return vector<CGameObject*>();
 
 	return vecGameObject;
+}
+
+CGameObject * CPickingMgr::OverlapSphere_Closest(_float3 vPos, _float _fRadius, _float* pDist, CGameObject* pSelf)
+{
+	_float minDist = FLT_MAX;
+	CGameObject* pClosest = nullptr;
+	for (auto& obj : m_listObject)
+	{
+		if (obj == pSelf)
+			continue;
+		CTransform* pObjTransform = (CTransform*)obj->Find_Component(L"Com_Transform");
+		if (nullptr == pObjTransform) return nullptr;
+		_float fDist = D3DXVec3Length(&(vPos - pObjTransform->Get_State(CTransform::STATE_POSITION)));
+		if (fDist > _fRadius)
+			continue;
+		if (minDist > fDist)
+		{
+			minDist = fDist;
+			pClosest = obj;
+		}
+	}
+
+	*pDist = minDist;
+	return pClosest;
 }
 
 HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
