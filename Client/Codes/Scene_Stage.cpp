@@ -7,6 +7,7 @@
 #include "GameManager.h"
 #include "Cube.h"
 #include "CommandCenter.h"
+#include "Barricade.h"
 #include "PickingMgr.h"
 #include "Terrain.h"
 #include "Object_Manager.h"
@@ -57,6 +58,7 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 	CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON, SCENE_STAGE1);
 
 	CKeyMgr::Get_Instance()->Key_Down('1', SCENE_STAGE1);
+	CKeyMgr::Get_Instance()->Key_Down('2', SCENE_STAGE1);
 
 
 	CKeyMgr::Get_Instance()->Key_Update();
@@ -103,6 +105,33 @@ HRESULT CScene_Stage::OnKeyDown(_int KeyCode)
 
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 	}
+
+	if (KeyCode == '2')
+	{
+		_float3 vDest;
+		POINT tTemp;
+		GetCursorPos(&tTemp);
+		ScreenToClient(g_hWnd, &tTemp);
+		pPickingMgr->Get_WorldMousePos(tTemp, &vDest);
+		vDest.y = 0;
+
+		CTerrain* pTerrain = pPickingMgr->Get_Terrain();
+		int iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+		//CObject_Manager* pObjMgr = CObject_Manager::Get_Instance();
+		//int iTileSize = ((CBuilding*)pObjMgr->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			return S_OK;//설치 실패
+
+		CBuilding::BUILDING_DESC BuildingDesc;
+		BuildingDesc.vPos = vDest;
+		//BuildingDesc.vPos = _float3(0.f,0.f,0.f);
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
+			return E_FAIL;
+
+		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+	}
+
 	return S_OK;
 }
 

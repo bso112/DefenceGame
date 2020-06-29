@@ -308,17 +308,17 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 {
 	NODE tTempNode;
 
+	if (vPoint->x >= TILEX ||
+		vPoint->z >= TILEZ ||
+		vPoint->x < 0 ||
+		vPoint->z < 0)
+		return false;
+
 	if (vPoint->x - ScaleInTiles + 1 < 0)
 		vPoint->x = ScaleInTiles - 1;
 
 	if (vPoint->z - ScaleInTiles + 1 < 0)
 		vPoint->z = ScaleInTiles - 1;
-
-	if (vPoint->x >= TILEX)
-		vPoint->x = TILEX;
-
-	if (vPoint->z >= TILEZ)
-		vPoint->z = TILEZ;
 
 	tTempNode.X = _uint(vPoint->x);
 	tTempNode.Z = _uint(vPoint->z);
@@ -352,9 +352,9 @@ void CTerrain::Set_Occupation(_float3 * vPoint, _int ScaleInTiles, _bool bOccupa
 	int iTempX = int(vPoint->x);
 	int iTempZ = int(vPoint->z);
 
-	for (int i = iTempX - int(ScaleInTiles*0.5f); iTempX <= iTempX + int(ScaleInTiles*0.5f) - ScaleInTiles % 2; i++)
+	for (int i = iTempX - int(ScaleInTiles*0.5f); i <= iTempX + int(ScaleInTiles*0.5f) - _int(!ScaleInTiles) % 2; i++)
 	{
-		for (int j = iTempZ - int(ScaleInTiles*0.5f); iTempZ <= iTempZ + int(ScaleInTiles*0.5f) - ScaleInTiles % 2; j++)
+		for (int j = iTempZ - int(ScaleInTiles*0.5f); j <= iTempZ + int(ScaleInTiles*0.5f) - _int(!ScaleInTiles) % 2; j++)
 		{
 			m_Nodes[j][i]->bOccupied = bOccupation;
 		}
