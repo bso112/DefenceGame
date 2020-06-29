@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObject.h"
+#include "UI.h"
 
 #include "Management.h"
 
 BEGIN(Client)
-class CMyButton : public CGameObject
+class CMyButton : public CUI
 {
 public:
 	typedef struct tagStateDesc
@@ -22,7 +22,7 @@ public:
 	}STATEDESC;
 
 protected:
-	explicit CMyButton(PDIRECT3DDEVICE9 _pGraphic_Device) :CGameObject(_pGraphic_Device) {};
+	explicit CMyButton(PDIRECT3DDEVICE9 _pGraphic_Device) :CUI(_pGraphic_Device) {};
 	explicit CMyButton(CMyButton& _rhs);
 	virtual ~CMyButton() = default;
 

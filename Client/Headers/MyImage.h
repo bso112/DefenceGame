@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObject.h"
+#include "UI.h"
 #include "Management.h"
 
 BEGIN(Client)
 class CClock_Single;
-class CMyImage : public CGameObject
+class CMyImage : public CUI
 {
 public:
 	typedef struct tagStateDesc
@@ -22,7 +22,7 @@ public:
 	}STATEDESC;
 
 protected:
-	explicit CMyImage(PDIRECT3DDEVICE9 _pGraphic_Device) :CGameObject(_pGraphic_Device) {};
+	explicit CMyImage(PDIRECT3DDEVICE9 _pGraphic_Device) :CUI(_pGraphic_Device) {};
 	explicit CMyImage(CMyImage& _rhs);
 	virtual ~CMyImage() = default;
 

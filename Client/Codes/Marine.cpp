@@ -53,6 +53,8 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 	CKeyMgr::Get_Instance()->RegisterObserver(m_tDesc.eSceneID, this);
 
+	m_bFriendly = true;
+
 	return S_OK;
 }
 
@@ -125,15 +127,14 @@ HRESULT CMarine::OnKeyDown(_int KeyCode)
 {
 	if (KeyCode == VK_LBUTTON)
 	{
-		POINT pt;
-		GetCursorPos(&pt);
-		ScreenToClient(g_hWnd, &pt);
+		if (IsControllable())
+		{
+			POINT pt;
+			GetCursorPos(&pt);
+			ScreenToClient(g_hWnd, &pt);
+			GoToDst(pt);
 
-	/*	_float3 vWorldMous;
-		if (CPickingMgr::Get_Instance()->Get_WorldMousePos(pt, &vWorldMous))
-			m_pTransform->SetUp_Position(vWorldMous);*/
-
-		GoToDst(pt);
+		}
 	}
 	return S_OK;
 }
@@ -182,5 +183,6 @@ _bool CMarine::Picking(POINT _ViewPortPoint, _float3 * pHitPos)
 
 void CMarine::Interact()
 {
+	m_bControlMode = true;
 	int a = 0;
 }

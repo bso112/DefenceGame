@@ -213,6 +213,7 @@
     <ClInclude Include="..\Headers\Sky.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
     <ClInclude Include="..\Headers\Trigger.h" />
+    <ClInclude Include="..\Headers\UI.h" />
     <ClInclude Include="..\Headers\Unit.h" />
     <ClInclude Include="..\Headers\Value.h" />
     <ClInclude Include="..\Headers\Wall.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Client_Struct.h" />
     <ClInclude Include="MyButton.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="StageUIMgr.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -249,10 +251,12 @@
     <ClCompile Include="..\Codes\Sky.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />
     <ClCompile Include="..\Codes\Trigger.cpp" />
+    <ClCompile Include="..\Codes\UI.cpp" />
     <ClCompile Include="..\Codes\Unit.cpp" />
     <ClCompile Include="..\Codes\Wall.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="MyButton.cpp" />
+    <ClCompile Include="StageUIMgr.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

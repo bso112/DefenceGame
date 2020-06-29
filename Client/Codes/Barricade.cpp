@@ -33,6 +33,7 @@ HRESULT CBarricade::Ready_GameObject(void * pArg)
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
+
 	//m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
 
 	m_fRealScaleMag = m_fScale * m_iTileSize;

@@ -24,6 +24,10 @@ public:
 	HRESULT Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out);
 	_bool	Get_WorldMousePos(POINT _pt, _float3* _vWorldMouse);
 
+public:
+	//vPos 를 기준으로 _fRadius 범위안에 있는 게임오브젝트들을 반환한다.
+	vector<CGameObject*> OverlapSphere(_float3 vPos, _float _fRadius);
+
 	CTerrain* Get_Terrain() { return m_pTerrain; }
 	HRESULT	Pick_Object(POINT _ViewPortPoint, _float3* pHitPos);
 

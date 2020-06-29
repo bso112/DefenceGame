@@ -64,21 +64,6 @@ HRESULT CVIBuffer::Render_VIBuffer()
 }
 
 
-void CVIBuffer::SetAnchor(_float3 _vAnchor)
-{
-	VTXCUBETEX* pVertices = nullptr;
-
-	m_pVBuffer->Lock(0, 0, (void**)&pVertices, 0);
-
-	for (int i = 0; i < m_iNumVertices; ++i)
-	{
-		pVertices[i].vPosition = m_pVerticesPos[i] = m_pVerticesPos[i] - _vAnchor;
-		//pVertices[i].vTexUV = pVertices[i].vPosition;
-	}
-
-	m_pVBuffer->Unlock();
-}
-
 
 _bool CVIBuffer::Picking(POINT ptMouse, HWND hWnd, _matrix WorldMatrix, _float3 * pWorldOut)
 {
