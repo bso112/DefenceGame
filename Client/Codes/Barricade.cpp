@@ -23,7 +23,7 @@ HRESULT CBarricade::Ready_GameObject_Prototype()
 	m_iTileSize = 1;
 
 	//건축물 자체 크기
-	m_fScale = 0.1f;
+	m_fScale = 1.f;
 
 	return S_OK;
 }
@@ -33,7 +33,7 @@ HRESULT CBarricade::Ready_GameObject(void * pArg)
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
-	m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
+	//m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
 
 	m_fRealScaleMag = m_fScale * m_iTileSize;
 	m_pTransformCom->SetUp_Scale(_float3(m_fRealScaleMag, m_fRealScaleMag, m_fRealScaleMag));
@@ -108,7 +108,7 @@ HRESULT CBarricade::Add_Component()
 	//	return E_FAIL;
 
 	// For.Com_VIBuffer
-	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_VIBuffer_Cube", L"Com_VIBuffer", (CComponent**)&m_pVIBufferCom)))
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_VIBuffer_Brick", L"Com_VIBuffer", (CComponent**)&m_pVIBufferCom)))
 		return E_FAIL;
 
 	// For.Com_Shader

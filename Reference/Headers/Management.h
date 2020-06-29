@@ -8,6 +8,7 @@
 #include "Component_Manager.h"
 #include "PipeLine.h"
 #include "VIBuffer_Cube.h"
+#include "VIBuffer_Brick.h"
 #include "VIBuffer_ViewPort.h"
 #include "VIBuffer_Terrain.h"
 #include "Collider.h"
@@ -16,6 +17,7 @@
 #include "KeyMgr.h"
 #include "CollisionMgr.h"
 #include "Input_Device.h"
+#include "GameObject.h"
 
 
 BEGIN(Engine)
@@ -63,6 +65,7 @@ public:
 	HRESULT Add_GameObject_Prototype(_uint iSceneID, const _tchar* pPrototypeTag, CGameObject* pPrototype);
 	CGameObject* Add_Object_ToLayer(_uint iPrototypeSceneID, const _tchar* pPrototypeTag, _uint iLayerSceneID, const _tchar* pLayerTag, void* pArg = nullptr);
 	HRESULT Clear_Object_Manager(_uint iSceneID);
+	CGameObject* Find_Prototype(_uint iPrototypeSceneID, const _tchar* pPrototypeTag);
 #pragma endregion
 
 

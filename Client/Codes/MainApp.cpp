@@ -56,7 +56,6 @@ _int CMainApp::Update_MainApp(_double TimeDelta)
 		return -1;
 
 
-
 	return m_pManagement->Update_Engine(TimeDelta);
 }
 
@@ -186,6 +185,9 @@ HRESULT CMainApp::Ready_Default_Component()
 
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Cube", CVIBuffer_Cube::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Brick", CVIBuffer_Brick::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_ViewPort", CVIBuffer_ViewPort::Create(m_pGraphic_Device))))

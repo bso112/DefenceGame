@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Transform.h"
 #include "VIBuffer_Rect.h"
+#include "VIBuffer_Brick.h"
 
 
 BEGIN(Engine)
