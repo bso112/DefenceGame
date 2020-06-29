@@ -19,6 +19,12 @@ bool CKeyMgr::Key_Pressing(int _Key, _uint _iSceneID)
 		if (_iSceneID >= m_iMaxScene)
 			MSG_BOX("유효하지 않은 씬입니다.");
 
+		//static Scene
+		for (auto& observer : m_listObservers[0])
+		{
+			observer->OnKeyPressing(_Key);
+		}
+
 		if (m_listObservers[_iSceneID].empty())
 			return false;
 
@@ -26,6 +32,7 @@ bool CKeyMgr::Key_Pressing(int _Key, _uint _iSceneID)
 		{
 			observer->OnKeyPressing(_Key);
 		}
+
 		return true;
 	}
 	return false;
@@ -41,6 +48,11 @@ bool CKeyMgr::Key_Down(int _Key, _uint _iSceneID)
 		if (_iSceneID >= m_iMaxScene)
 			MSG_BOX("유효하지 않은 씬입니다.");
 
+		//static Scene
+		for (auto& observer : m_listObservers[0])
+		{
+			observer->OnKeyDown(_Key);
+		}
 		if (m_listObservers[_iSceneID].empty())
 			return false;
 
@@ -61,6 +73,12 @@ bool CKeyMgr::Key_Up(int _Key, _uint _iSceneID)
 		
 		if (_iSceneID >= m_iMaxScene)
 			MSG_BOX("유효하지 않은 씬입니다.");
+
+			//static Scene
+		for (auto& observer : m_listObservers[0])
+		{
+			observer->OnKeyUp(_Key);
+		}
 
 		if (m_listObservers[_iSceneID].empty())
 			return false;

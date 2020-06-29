@@ -63,6 +63,8 @@ protected:
 public:
 	CComponent* Find_Component(const _tchar* pComponentTag);
 
+
+
 public:
 	virtual void OnCollisionEnter(CGameObject* _pOther);
 	virtual void OnCollisionStay(CGameObject* _pOther);

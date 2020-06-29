@@ -3,13 +3,13 @@
 #include "Management.h"
 
 CBuilding::CBuilding(PDIRECT3DDEVICE9 pGraphic_Device)
-	: CGameObject(pGraphic_Device)
+	: CInteractable(pGraphic_Device)
 {
 
 }
 
 CBuilding::CBuilding(const CBuilding & rhs)
-	: CGameObject(rhs)
+	: CInteractable(rhs)
 {
 
 }
@@ -74,9 +74,7 @@ void CBuilding::Upgrade()
 {
 }
 
-void CBuilding::Interact()
-{
-}
+
 
 HRESULT CBuilding::Add_Component()
 {
@@ -135,5 +133,6 @@ void CBuilding::Free()
 	Safe_Release(m_pRendererCom);
 	Safe_Release(m_pTransformCom);
 
-	CGameObject::Free();
+	CInteractable::Free();
 }
+

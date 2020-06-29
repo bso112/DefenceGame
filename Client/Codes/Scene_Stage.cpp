@@ -45,6 +45,7 @@ HRESULT CScene_Stage::Ready_Scene()
 
 #pragma endregion
 
+	CKeyMgr::Get_Instance()->RegisterObserver(SCENE_STAGE1, this);
 
 	return S_OK;
 }
@@ -54,9 +55,13 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 
 	CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON, SCENE_STAGE1);
 	CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON, SCENE_STAGE1);
+
 	CKeyMgr::Get_Instance()->Key_Down('1', SCENE_STAGE1);
 
+
 	CKeyMgr::Get_Instance()->Key_Update();
+
+	CPickingMgr::Get_Instance()->Clear_PickingMgr();
 
 	return _int();
 
@@ -64,6 +69,7 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 
 HRESULT CScene_Stage::Render_Scene()
 {
+	
 	return S_OK;
 }
 
@@ -117,5 +123,7 @@ void CScene_Stage::Free()
 	CKeyMgr* pKeyMgr = CKeyMgr::Get_Instance();
 	pKeyMgr->UnRegisterObserver(SCENE_STAGE1, this);
 
+	CKeyMgr::Get_Instance()->UnRegisterObserver(SCENE_STAGE1, this);
 	CScene::Free();
 }
+

@@ -1,10 +1,11 @@
 #pragma once
-#include "GameObject.h"
+#include "Interactable.h"
 #include "Value.h"
 #include "Management.h"
+
 BEGIN(Client)
 class CAIStateController;
-class CUnit abstract : public CGameObject
+class CUnit abstract : public CInteractable
 {
 public:
 	typedef struct tagUnitStats

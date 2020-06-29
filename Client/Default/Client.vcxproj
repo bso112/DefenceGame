@@ -198,6 +198,7 @@
     <ClInclude Include="..\Headers\Client_Defines.h" />
     <ClInclude Include="..\Headers\Clock.h" />
     <ClInclude Include="..\Headers\Image3D.h" />
+    <ClInclude Include="..\Headers\Interactable.h" />
     <ClInclude Include="..\Headers\Level.h" />
     <ClInclude Include="..\Headers\Loading.h" />
     <ClInclude Include="..\Headers\MainApp.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="..\Codes\Camera_Free.cpp" />
     <ClCompile Include="..\Codes\Clock.cpp" />
     <ClCompile Include="..\Codes\Image3D.cpp" />
+    <ClCompile Include="..\Codes\Interactable.cpp" />
     <ClCompile Include="..\Codes\Level.cpp" />
     <ClCompile Include="..\Codes\Loading.cpp" />
     <ClCompile Include="..\Codes\MainApp.cpp" />

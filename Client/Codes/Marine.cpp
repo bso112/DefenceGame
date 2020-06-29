@@ -2,7 +2,7 @@
 #include "..\Headers\Marine.h"
 #include "PickingMgr.h"
 #include "KeyMgr.h"
-
+#include "PickingMgr.h"
 
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
@@ -63,15 +63,20 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 		return E_FAIL;
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
+
+	//피킹매니저에 등록. Update에서 해야함.
+	CPickingMgr::Get_Instance()->Add_Interactable(this);
+
 	return CUnit::Update_GameObject(TimeDelta);
-	return _int();
 }
 
 _int CMarine::Late_Update_GameObject(_double TimeDelta)
 {
+	//렌더러에 등록
 	if (nullptr == m_pRenderer) return -1;
 	m_pRenderer->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this);
 
+	//콜리전 매니저에 등록
 	CManagement* pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement) return -1;
 	pManagement->Add_CollisionGroup(CCollisionMgr::COL_BOX, this);
@@ -168,4 +173,14 @@ void CMarine::Free()
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pBoxCollider);
 	CGameObject::Free();
+}
+
+_bool CMarine::Picking(POINT _ViewPortPoint, _float3 * pHitPos)
+{
+	return m_pVIBuffer->Picking(_ViewPortPoint, g_hWnd, m_pTransform->Get_WorldMatrix(), pHitPos);
+}
+
+void CMarine::Interact()
+{
+	int a = 0;
 }

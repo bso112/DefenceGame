@@ -87,8 +87,8 @@ HRESULT CLoading::Loading_ForStageOne()
 	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Background", SCENE_STAGE1, L"Layer_Background", &tBackgroundDesc)))
 		return E_FAIL;
 
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Sky", SCENE_STAGE1, L"Layer_GameObject")))
-	//	return E_FAIL;
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Sky", SCENE_STAGE1, L"Layer_GameObject")))
+		return E_FAIL;
 
 	CTerrain::STATEDESC tTerrainDesc;
 	tTerrainDesc._eSceneID = SCENE_STAGE1;

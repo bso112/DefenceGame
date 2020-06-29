@@ -30,11 +30,7 @@ HRESULT CSky::Ready_GameObject(void * pArg)
 
 _int CSky::Update_GameObject(_double TimeDelta)
 {
-	CManagement*	pManagement = CManagement::Get_Instance();
-	if (nullptr == pManagement)
-		return E_FAIL;
 
-	m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
 	return _int();
 }
 
@@ -46,6 +42,17 @@ _int CSky::Late_Update_GameObject(_double TimeDelta)
 
 	if (FAILED(m_pRendererCom->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this)))
 		return -1;
+	
+	CManagement*	pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement)
+		return E_FAIL;
+
+	_float3 vCamPos = pManagement->Get_CamPosition();
+	_matrix viewMat = pManagement->Get_Transform(D3DTS_VIEW);
+	D3DXMatrixInverse(&viewMat, nullptr, &viewMat);
+	
+	//카메라가 움직이고 나서 카메라 위치로 가야한다.
+	m_pTransformCom->SetUp_Position(_float3(viewMat.m[3][0], viewMat.m[3][1] - 0.5f, viewMat.m[3][2]));
 
 	return _int();
 }
@@ -93,6 +100,7 @@ HRESULT CSky::Add_Component()
 		return E_FAIL;
 
 	m_pTransformCom->SetUp_Scale(_float3(5.f, 5.f, 5.f));
+
 	return S_OK;
 }
 

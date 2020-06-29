@@ -1,12 +1,12 @@
 #pragma once
 #include "Client_Defines.h"
-#include "GameObject.h"
+#include "Interactable.h"
 #include "Management.h"
 
 
 BEGIN(Client)
 
-class CBuilding abstract : public CGameObject
+class CBuilding abstract : public CInteractable
 {
 public:
 	typedef struct tagBuildingDesc
@@ -37,7 +37,6 @@ public:
 
 public:
 	virtual void Upgrade();
-	virtual void Interact();
 
 protected:
 	CShader*			m_pShaderCom = nullptr;
@@ -57,6 +56,7 @@ private:
 public:
 	virtual CGameObject* Clone_GameObject(void* pArg) = 0;
 	virtual void Free();
+
 };
 
 END
