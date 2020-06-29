@@ -64,15 +64,6 @@
     <Filter Include="02.GameObject\UI">
       <UniqueIdentifier>{9d2e6977-59e0-481f-9c97-6aad1dc3dee8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\UI\Button">
-      <UniqueIdentifier>{d1571137-965b-4cea-864e-45c353c6554b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\UI\Image">
-      <UniqueIdentifier>{5d4bb0d1-1507-44fb-9ab8-d3aeeec8d854}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\UI\Image3D">
-      <UniqueIdentifier>{10d92846-3e88-4e7b-9ee7-f0b564f6f06a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\Trigger">
       <UniqueIdentifier>{e8c130c9-ba2f-4c37-b88f-e56ef110b4d5}</UniqueIdentifier>
     </Filter>
@@ -126,6 +117,21 @@
     </Filter>
     <Filter Include="02.GameObject\Interactable\Building\CommandCenter">
       <UniqueIdentifier>{fe991a24-030b-4dde-bc30-7824f127599f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Image3D">
+      <UniqueIdentifier>{10d92846-3e88-4e7b-9ee7-f0b564f6f06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\UI">
+      <UniqueIdentifier>{73064fef-ba46-4515-8428-c4229b8f928d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\UI\Button">
+      <UniqueIdentifier>{d1571137-965b-4cea-864e-45c353c6554b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\UI\Image">
+      <UniqueIdentifier>{5d4bb0d1-1507-44fb-9ab8-d3aeeec8d854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\UI\Mananger">
+      <UniqueIdentifier>{9c21f4d5-71e2-4fc0-889e-6848467bcca5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -184,16 +190,16 @@
       <Filter>01.Scene\04.Scene_Stage_4</Filter>
     </ClInclude>
     <ClInclude Include="MyButton.h">
-      <Filter>02.GameObject\UI\Button</Filter>
+      <Filter>02.GameObject\UI\UI\Button</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\MyImage.h">
-      <Filter>02.GameObject\UI\Image</Filter>
+      <Filter>02.GameObject\UI\UI\Image</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Clock.h">
       <Filter>05.Utility\00.Clock</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Image3D.h">
-      <Filter>02.GameObject\UI\Image3D</Filter>
+      <Filter>02.GameObject\Image3D</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Trigger.h">
       <Filter>02.GameObject\Trigger</Filter>
@@ -235,6 +241,12 @@
       <Filter>06.Component\AIState\AIState</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Interactable.h" />
+    <ClInclude Include="..\Headers\UI.h">
+      <Filter>02.GameObject\UI\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="StageUIMgr.h">
+      <Filter>02.GameObject\UI\Mananger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -277,16 +289,16 @@
       <Filter>01.Scene\04.Scene_Stage_4</Filter>
     </ClCompile>
     <ClCompile Include="MyButton.cpp">
-      <Filter>02.GameObject\UI\Button</Filter>
+      <Filter>02.GameObject\UI\UI\Button</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\MyImage.cpp">
-      <Filter>02.GameObject\UI\Image</Filter>
+      <Filter>02.GameObject\UI\UI\Image</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Clock.cpp">
       <Filter>05.Utility\00.Clock</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Image3D.cpp">
-      <Filter>02.GameObject\UI\Image3D</Filter>
+      <Filter>02.GameObject\Image3D</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Trigger.cpp">
       <Filter>02.GameObject\Trigger</Filter>
@@ -325,6 +337,12 @@
       <Filter>06.Component\AIState\AIState</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Interactable.cpp" />
+    <ClCompile Include="..\Codes\UI.cpp">
+      <Filter>02.GameObject\UI\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="StageUIMgr.cpp">
+      <Filter>02.GameObject\UI\Mananger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

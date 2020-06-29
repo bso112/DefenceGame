@@ -7,7 +7,7 @@
 USING(Client)
 
 CMyImage::CMyImage(CMyImage & _rhs)
-	: CGameObject(_rhs)
+	: CUI(_rhs)
 {
 
 }
@@ -171,7 +171,7 @@ void CMyImage::Free()
 	Safe_Release(m_pTexture);
 	Safe_Release(m_pRenderer);
 
-	CGameObject::Free();
+	CUI::Free();
 
 }
 

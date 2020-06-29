@@ -33,10 +33,12 @@ public:
 	void	GoToDst(_float3 _vDst);
 	void	GoToDst(POINT _pt);
 	void	TakeDamage(_int iDamage, _int iInfection);
+
+public:
+	_bool	IsControllable() { return m_bFriendly && m_bControlMode; }
 	
 protected:
 	virtual	void OnTakeDamage(_int iDamage, _int iInfection);
-
 protected:
 	UNITSTATS				m_tStats = {};
 	_int					m_iRecogRange = 0;
@@ -45,6 +47,7 @@ protected:
 	CAIStateController*		m_pAICon = nullptr;
 	CTransform*				m_pTransform = nullptr;
 	_bool					m_bMoving = false;
+	_bool					m_bControlMode = false;
 
 
 protected:

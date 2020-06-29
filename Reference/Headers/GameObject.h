@@ -57,6 +57,7 @@ public:
 	void Set_Dead() { m_bDead = true; }
 	const bool& Get_Dead() const { return m_bDead; }
 	void Set_Active(_bool bActive) { m_bActive = bActive; OnSetActive(bActive); }
+	_bool Get_Actice() { return m_bActive; }
 	virtual void OnSetActive(_bool bActive) {}
 protected:
 	HRESULT Add_Component(_uint iPrototypeSceneID, const _tchar* pPrototypeTag, const _tchar * pComponentTag, CComponent** ppOut, void* pArg = nullptr);
