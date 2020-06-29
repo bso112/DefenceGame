@@ -192,6 +192,7 @@
     <ClInclude Include="..\Headers\Timer_Manager.h" />
     <ClInclude Include="..\Headers\Transform.h" />
     <ClInclude Include="..\Headers\VIBuffer.h" />
+    <ClInclude Include="..\Headers\VIBuffer_Brick.h" />
     <ClInclude Include="..\Headers\VIBuffer_Cube.h" />
     <ClInclude Include="..\Headers\VIBuffer_Rect.h" />
     <ClInclude Include="..\Headers\VIBuffer_Terrain.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="..\Codes\Timer_Manager.cpp" />
     <ClCompile Include="..\Codes\Transform.cpp" />
     <ClCompile Include="..\Codes\VIBuffer.cpp" />
+    <ClCompile Include="..\Codes\VIBuffer_Brick.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Cube.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Rect.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp" />

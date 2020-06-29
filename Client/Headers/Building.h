@@ -33,6 +33,9 @@ public:
 	virtual HRESULT Render_GameObject();
 
 public:
+	_int Get_TileSize() { return m_iTileSize; }
+
+public:
 	virtual void Upgrade();
 
 protected:

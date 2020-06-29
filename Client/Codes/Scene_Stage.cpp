@@ -8,10 +8,12 @@
 #include "Cube.h"
 #include "CommandCenter.h"
 #include "PickingMgr.h"
+#include "Terrain.h"
+#include "Object_Manager.h"
+
 CScene_Stage::CScene_Stage(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
 {
-
 }
 
 HRESULT CScene_Stage::Ready_Scene()
@@ -19,6 +21,9 @@ HRESULT CScene_Stage::Ready_Scene()
 	CManagement*	pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement)
 		return E_FAIL;
+
+	CKeyMgr* pKeyMgr = CKeyMgr::Get_Instance();
+	pKeyMgr->RegisterObserver(SCENE_STAGE1, this);
 
 #pragma region 카메라생성
 
@@ -37,12 +42,6 @@ HRESULT CScene_Stage::Ready_Scene()
 
 	if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Camera_Free", SCENE_STAGE1, L"Layer_Camera", &StateDesc)))
 		return E_FAIL;
-	
-	//오브젝트 생성
-	CBuilding::BUILDING_DESC BuildingDesc;
-	BuildingDesc.vPos = _float3(0.f, 0.f, 0.f);
-	if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
-		return E_FAIL;
 
 #pragma endregion
 
@@ -56,6 +55,10 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 
 	CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON, SCENE_STAGE1);
 	CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON, SCENE_STAGE1);
+
+	CKeyMgr::Get_Instance()->Key_Down('1', SCENE_STAGE1);
+
+
 	CKeyMgr::Get_Instance()->Key_Update();
 
 	CPickingMgr::Get_Instance()->Clear_PickingMgr();
@@ -67,6 +70,39 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 HRESULT CScene_Stage::Render_Scene()
 {
 	
+	return S_OK;
+}
+
+HRESULT CScene_Stage::OnKeyDown(_int KeyCode)
+{
+	CManagement*	pManagement = CManagement::Get_Instance();
+	CPickingMgr* pPickingMgr = CPickingMgr::Get_Instance();
+
+	if (KeyCode == '1')
+	{
+		_float3 vDest;
+		POINT tTemp;
+		GetCursorPos(&tTemp);
+		ScreenToClient(g_hWnd, &tTemp);
+		pPickingMgr->Get_WorldMousePos(tTemp, &vDest);
+		vDest.y = 0;
+
+		CTerrain* pTerrain = pPickingMgr->Get_Terrain();
+		int iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
+		//CObject_Manager* pObjMgr = CObject_Manager::Get_Instance();
+		//int iTileSize = ((CBuilding*)pObjMgr->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			return S_OK;//설치 실패
+
+		CBuilding::BUILDING_DESC BuildingDesc;
+		BuildingDesc.vPos = vDest;
+		//BuildingDesc.vPos = _float3(0.f,0.f,0.f);
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
+			return E_FAIL;
+
+		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+	}
 	return S_OK;
 }
 
@@ -84,6 +120,8 @@ CScene_Stage * CScene_Stage::Create(PDIRECT3DDEVICE9 pGraphic_Device)
 
 void CScene_Stage::Free()
 {
+	CKeyMgr* pKeyMgr = CKeyMgr::Get_Instance();
+	pKeyMgr->UnRegisterObserver(SCENE_STAGE1, this);
 
 	CKeyMgr::Get_Instance()->UnRegisterObserver(SCENE_STAGE1, this);
 	CScene::Free();

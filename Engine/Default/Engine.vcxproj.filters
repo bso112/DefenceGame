@@ -112,6 +112,9 @@
     <Filter Include="00.System\02.Input">
       <UniqueIdentifier>{3ee3fab6-db39-4adc-a354-07a33044469f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\03.Component\Component\VIBuffer\Brick">
+      <UniqueIdentifier>{c65bfaeb-92ce-4d5a-b1bd-95bd0d55866a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Engine_Struct.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="..\..\Client\Headers\Input_Device.h">
       <Filter>00.System\02.Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_Brick.h">
+      <Filter>01.Utility\03.Component\Component\VIBuffer\Brick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Client\Codes\Input_Device.cpp">
       <Filter>00.System\02.Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_Brick.cpp">
+      <Filter>01.Utility\03.Component\Component\VIBuffer\Brick</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

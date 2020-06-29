@@ -23,7 +23,7 @@ HRESULT CCommandCenter::Ready_GameObject_Prototype()
 	m_iTileSize = 3;
 
 	//건축물 자체 크기
-	m_fScale = 0.1f;
+	m_fScale = 1.f;
 
 	return S_OK;
 }
@@ -74,7 +74,7 @@ HRESULT CCommandCenter::Render_GameObject()
 		return E_FAIL;
 
 	m_pShaderCom->Begin_Shader();
-	m_pShaderCom->Begin_Pass(RENDER_WARNING);
+	m_pShaderCom->Begin_Pass(RENDER_RED);
 
 	m_pVIBufferCom->Render_VIBuffer();
 

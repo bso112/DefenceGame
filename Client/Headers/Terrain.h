@@ -24,7 +24,8 @@ private:
 		//¿Œµ¶Ω∫
 		_uint		X;
 		_uint		Z;
-		_bool		bMovable = false;
+		_bool		bMovable = true;
+		_bool		bOccupied = false;
 		tagNode*	pParent = nullptr;
 
 		tagNode() {}
@@ -75,7 +76,9 @@ public:
 
 public:
 	HRESULT	Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out);
-	_bool	 Picking(POINT pt, _float3 * pOut);
+	_bool	Picking(POINT pt, _float3 * pOut);
+	_bool	BuildCheck(_float3* vPoint,_int ScaleInTiles);
+	void	Set_Occupation(_float3* vPoint, _int ScaleInTiles, _bool bOccupation);
 
 public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);

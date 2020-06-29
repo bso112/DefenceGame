@@ -299,9 +299,67 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 	return S_OK;
 }
 
-_bool CTerrain::Picking(POINT pt,_float3 * pOut)
+_bool CTerrain::Picking(POINT pt, _float3 * pOut)
 {
 	return m_pVIBufferCom->Picking(pt, g_hWnd, m_pTransformCom->Get_WorldMatrix(), pOut);
+}
+
+_bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
+{
+	NODE tTempNode;
+
+	if (vPoint->x - ScaleInTiles + 1 < 0)
+		vPoint->x = ScaleInTiles - 1;
+
+	if (vPoint->z - ScaleInTiles + 1 < 0)
+		vPoint->z = ScaleInTiles - 1;
+
+	if (vPoint->x >= TILEX)
+		vPoint->x = TILEX;
+
+	if (vPoint->z >= TILEZ)
+		vPoint->z = TILEZ;
+
+	tTempNode.X = _uint(vPoint->x);
+	tTempNode.Z = _uint(vPoint->z);
+
+	for (int i = tTempNode.Z - ScaleInTiles + 1; i <= tTempNode.Z; ++i)
+	{
+		for (int j = tTempNode.X - ScaleInTiles + 1; j <= tTempNode.X; ++j)
+		{
+			if (m_Nodes[i][j]->bOccupied == 1)
+				return false;
+		}
+	}
+
+	if (ScaleInTiles % 2 == 0)
+	{
+		vPoint->x = _float(tTempNode.X - _uint(ScaleInTiles*0.5f) + 1);
+		vPoint->z = _float(tTempNode.Z - _uint(ScaleInTiles*0.5f) + 1);
+	}
+
+	else
+	{
+		vPoint->x = _float(tTempNode.X - _uint(ScaleInTiles*0.5f)) + 0.5f;
+		vPoint->z = _float(tTempNode.Z - _uint(ScaleInTiles*0.5f)) + 0.5f;
+	}
+
+	return true;
+}
+
+void CTerrain::Set_Occupation(_float3 * vPoint, _int ScaleInTiles, _bool bOccupation)
+{
+	int iTempX = int(vPoint->x);
+	int iTempZ = int(vPoint->z);
+
+	for (int i = iTempX - int(ScaleInTiles*0.5f); iTempX <= iTempX + int(ScaleInTiles*0.5f) - ScaleInTiles % 2; i++)
+	{
+		for (int j = iTempZ - int(ScaleInTiles*0.5f); iTempZ <= iTempZ + int(ScaleInTiles*0.5f) - ScaleInTiles % 2; j++)
+		{
+			m_Nodes[j][i]->bOccupied = bOccupation;
+		}
+	}
+	return;
 }
 
 HRESULT CTerrain::OnKeyDown(_int KeyCode)
@@ -411,7 +469,7 @@ void CTerrain::Free()
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pRendererCom);
 	Safe_Release(m_pTransformCom);
-	
+
 	for (int i = 0; i < TILEZ; ++i)
 	{
 		for (int j = 0; j < TILEX; ++j)

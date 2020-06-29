@@ -239,6 +239,14 @@ HRESULT CManagement::Clear_Object_Manager(_uint iSceneID)
 	return m_pObject_Manager->Clear_Object_Manager(iSceneID);
 }
 
+CGameObject * CManagement::Find_Prototype(_uint iPrototypeSceneID, const _tchar * pPrototypeTag)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Find_Prototype(iPrototypeSceneID,pPrototypeTag);
+}
+
 #pragma endregion
 
 

@@ -75,14 +75,19 @@ PS_OUT PS_MAIN_WARNING(PS_IN In/*ÇÈ¼¿*/)
 	PS_OUT	Out = (PS_OUT)0;
 
 	//Out.vColor = tex2D(DiffuseSampler, In.vTexUV);
-	Out.vColor = vector(0.35f, 0.35f, 0.35f, 1.f);
+	Out.vColor = vector(0.35f, 0.35f, 0.35f, 1.f);	
 
-	if (((In.vTexUV.y + In.vTexUV.x) * 10 + 10) % 4 > 2)
+	if (((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) * 10 + 15) % 4 > 2)
 		Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
 
-	if (In.vTexUV.y < -0.4f || In.vTexUV.y > 0.4f ||
-		In.vTexUV.x < -0.4f || In.vTexUV.x > 0.4f/* ||
-		In.vTexUV.z < -0.4f || In.vTexUV.z > 0.4f*/)
+	bool xy = (In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f);
+	bool yz = (In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f);
+	bool zx = (In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f);
+
+	//if (!(In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f &&
+	//	In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f &&
+	//	In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f))
+	if (xy + yz + zx != 2)
 		Out.vColor = vector(0.35f, 0.35f, 0.35f, 1.f);
 
 	//pow(Out.vColor.rgb, 10.f);
