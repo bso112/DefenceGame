@@ -16,6 +16,9 @@ CUnit::CUnit(const CUnit & _rhs)
 
 _int CUnit::Update_GameObject(_double TimeDelta)
 {
+	if (m_bDead)
+		return -1;
+
 	if (nullptr == m_pTransform)
 		return -1;
 
@@ -62,7 +65,15 @@ void CUnit::GoToDst(POINT _pt)
 
 void CUnit::TakeDamage(_int iDamage, _int iInfection)
 {
+	CManagement* pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement) return;
+	m_tUnitStats.iCurrHp -= iDamage * pManagement->Get_TimeDelta(L"Timer_60");
+	if (m_tUnitStats.iCurrHp < 0)
+	{
+		m_bDead = true;
+		m_tUnitStats.iCurrHp = 0;
 
+	}
 }
 
 void CUnit::Interact()

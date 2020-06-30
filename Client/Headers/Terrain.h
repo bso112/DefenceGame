@@ -58,6 +58,7 @@ private:
 			X = 0;
 			Z = 0;
 			pParent = nullptr;
+			bMovable = true;
 
 		}
 

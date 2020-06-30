@@ -53,6 +53,8 @@ _int CCommandCenter::Update_GameObject(_double TimeDelta)
 	m_tagStat.iLevel = 1;
 	m_tagStat.iPrice = 0;
 
+	m_pBoxCollider->Update_Collider(m_pTransformCom->Get_WorldMatrix());
+
 	return CBuilding::Update_GameObject(TimeDelta);
 }
 
@@ -65,6 +67,7 @@ _int CCommandCenter::Late_Update_GameObject(_double TimeDelta)
 	if (FAILED(m_pRendererCom->Add_RenderGroup(CRenderer::RENDER_ALPHABLEND, this)))
 		return -1;
 
+	CCollisionMgr::Get_Instance()->Add_CollisionGroup(CCollisionMgr::COL_BOX, this);
 	CBuilding::Late_Update_GameObject(TimeDelta);
 
 	return _int();
@@ -121,6 +124,9 @@ HRESULT CCommandCenter::Add_Component()
 
 	// For.Com_Shader
 	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Shader_Solid", L"Com_Shader", (CComponent**)&m_pShaderCom)))
+		return E_FAIL;
+
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_BoxCollider", L"Com_Collider", (CComponent**)&m_pBoxCollider)))
 		return E_FAIL;
 
 	return S_OK;
@@ -181,6 +187,6 @@ void CCommandCenter::Free()
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pRendererCom);
 	Safe_Release(m_pTransformCom);
-
+	Safe_Release(m_pBoxCollider);
 	CGameObject::Free();
 }

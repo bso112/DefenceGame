@@ -169,6 +169,12 @@ HRESULT CTransform::GO_ZNegative(_double TimeDelta)
 	return S_OK;
 }
 
+HRESULT CTransform::AddForce(_float3 _vForce)
+{
+	Set_State(STATE_POSITION, Get_State(STATE_POSITION) + _vForce);
+	return S_OK;
+}
+
 HRESULT CTransform::SetUp_Position(_float3 _vPos)
 {
 

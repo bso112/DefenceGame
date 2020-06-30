@@ -44,6 +44,18 @@ HRESULT CCollider::Render_Collider()
 	return S_OK;
 }
 
+_float3 CCollider::Get_Size()
+{
+	return _float3(D3DXVec3Length(((_float3*)&m_StateMatrix.m[0][0])),
+		D3DXVec3Length(((_float3*)&m_StateMatrix.m[1][0])),
+		D3DXVec3Length(((_float3*)&m_StateMatrix.m[2][0])));
+}
+
+_float3 CCollider::Get_Pos()
+{
+	return _float3(m_StateMatrix.m[3][0], m_StateMatrix.m[3][1], m_StateMatrix.m[3][2]);
+}
+
 void CCollider::Free()
 {
 	Safe_Release(m_pPipeLine);
