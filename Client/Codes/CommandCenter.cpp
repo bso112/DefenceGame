@@ -115,7 +115,7 @@ void CCommandCenter::Interact()
 
 void CCommandCenter::OnDead()
 {
-	CStageUIMgr::Get_Instance()->Set_Active_GameOverPanel();
+	//CStageUIMgr::Get_Instance()->Set_Active_GameOverPanel();
 }
 
 HRESULT CCommandCenter::Add_Component()
