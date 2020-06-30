@@ -186,6 +186,9 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		case '3':
 			m_eMode = MODE_ATTACKTOWER;
 			break;
+		case '4':
+			m_eMode = MODE_BOMBTOWER;
+			break;
 
 		default:
 			break;
@@ -281,13 +284,26 @@ HRESULT CPickingMgr::InstallObject()
 		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
 	case MODE_ATTACKTOWER:
-		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_AttackTower"))->Get_TileSize();
 
 		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
 			break;//설치 실패
 
 		BuildingDesc.vPos = vDest;
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_AttackTower", SCENE_STAGE1, L"Layer_AttackTower", &BuildingDesc)))
+			return E_FAIL;
+
+		//m_eMode = MODE_NORMAL;
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
+		break;
+	case MODE_BOMBTOWER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_BombTower"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			break;//설치 실패
+
+		BuildingDesc.vPos = vDest;
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_BombTower", SCENE_STAGE1, L"Layer_BombTower", &BuildingDesc)))
 			return E_FAIL;
 
 		//m_eMode = MODE_NORMAL;
@@ -309,6 +325,7 @@ HRESULT CPickingMgr::InstallObject()
 		pMarine->Set_Friendly(true);
 		break;
 	}
+
 	default:
 		break;
 	}

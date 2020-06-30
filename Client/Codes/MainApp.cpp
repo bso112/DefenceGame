@@ -25,6 +25,7 @@
 #include "Walker.h"
 #include "Runner.h"
 #include "AttackTower.h"
+#include "BombTower.h"
 
 USING(Client)
 
@@ -174,6 +175,10 @@ HRESULT CMainApp::Ready_Default_GameObject()
 		return E_FAIL;
 
 
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_BombTower", CBombTower::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Barricade", CBarricade::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
@@ -303,6 +308,9 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Marine", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Unit/marine%d.png", 1))))
 		return E_FAIL;
 	
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Explosion", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Effect/explosion%d.png", 1))))
+		return E_FAIL;
+
 #pragma endregion
 
 

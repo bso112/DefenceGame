@@ -22,7 +22,12 @@ public:
 
 	HRESULT OnGameStart();
 	HRESULT OnGameEnd();
+
+	_int	Get_Gold() { return m_iGold; }
+	void	Add_Gold(_int amount) { m_iGold += amount; }
+	void	Sub_Gold(_int amount) { m_iGold -= amount; }
 private:
+	_int		m_iGold = 0;
 	_bool		m_bGameStart = false;
 public:
 	virtual void Free() override;

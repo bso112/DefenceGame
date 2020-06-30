@@ -145,6 +145,9 @@
     <Filter Include="02.GameObject\Interactable\Building\AttackTower">
       <UniqueIdentifier>{9c716df1-9851-4ab5-833c-a4df708393a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\Interactable\Building\BombTower">
+      <UniqueIdentifier>{8b5d4a9d-8745-4cf1-82f9-614702824610}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -282,6 +285,9 @@
     <ClInclude Include="..\Headers\FontManager.h">
       <Filter>98.Default</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\BombTower.h">
+      <Filter>02.GameObject\Interactable\Building\BombTower</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -400,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\FontManager.cpp">
       <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\BombTower.cpp">
+      <Filter>02.GameObject\Interactable\Building\BombTower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,23 +1,24 @@
 #include "stdafx.h"
-#include "AttackTower.h"
+#include "BombTower.h"
 #include "Management.h"
 #include "PickingMgr.h"
 #include "CollisionMgr.h"
 #include "Unit.h"
-CAttackTower::CAttackTower(PDIRECT3DDEVICE9 pGraphic_Device)
+#include "Image3D.h"
+CBombTower::CBombTower(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
 {
 
 }
 
-CAttackTower::CAttackTower(const CAttackTower & rhs)
+CBombTower::CBombTower(const CBombTower & rhs)
 	: CBuilding(rhs)
 {
 	m_iTileSize = rhs.m_iTileSize;
 	m_fScale = rhs.m_fScale;
 }
 
-HRESULT CAttackTower::Ready_GameObject_Prototype()
+HRESULT CBombTower::Ready_GameObject_Prototype()
 {
 	//건축물별 기본 필요정보 수정
 
@@ -30,7 +31,7 @@ HRESULT CAttackTower::Ready_GameObject_Prototype()
 	return S_OK;
 }
 
-HRESULT CAttackTower::Ready_GameObject(void * pArg)
+HRESULT CBombTower::Ready_GameObject(void * pArg)
 {
 	if (FAILED(Add_Component()))
 		return E_FAIL;
@@ -52,13 +53,44 @@ HRESULT CAttackTower::Ready_GameObject(void * pArg)
 	return S_OK;
 }
 
-_int CAttackTower::Update_GameObject(_double TimeDelta)
+_int CBombTower::Update_GameObject(_double TimeDelta)
 {
+	if (m_bDead)
+	{
+		//폭발
+		CPickingMgr* pickingMgr = CPickingMgr::Get_Instance();
+		if (nullptr == pickingMgr)
+			return -1;
+		if (nullptr == m_pTransformCom)
+			return -1;
+
+		vector<CGameObject*> pObList = pickingMgr->OverlapSphere(m_pTransformCom->Get_State(CTransform::STATE_POSITION), 5.f);
+		for (auto& obj : pObList)
+		{
+			CUnit* pUnit = dynamic_cast<CUnit*>(obj);
+			if (nullptr != pUnit)
+			{
+				pUnit->TakeDamage(100000, 1000);
+			}
+		}
+
+		CImage3D* pEffect = nullptr;
+		
+		CManagement* pManagement = CManagement::Get_Instance();
+		if (nullptr == pManagement) return -1;
+		CImage3D::STATEDESC desc;
+		desc.eTextureSceneID = SCENE_STATIC;
+		desc.pTextureTag = L"Component_Texture_Explosion";
+		desc.tBaseDesc = BASEDESC(m_pTransformCom->Get_State(CTransform::STATE_POSITION), _float3(100.f,100.f,1.f));
+		CGameObject* pImage = pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Image3D",SCENE_STAGE1, L"Layer_Effect", &desc);
+		return -1;
+	}
+
 	m_pBoxCollider->Update_Collider(m_pTransformCom->Get_WorldMatrix());
 	return 0;
 }
 
-_int CAttackTower::Late_Update_GameObject(_double TimeDelta)
+_int CBombTower::Late_Update_GameObject(_double TimeDelta)
 {
 	if (nullptr == m_pRendererCom)
 		return -1;
@@ -72,7 +104,7 @@ _int CAttackTower::Late_Update_GameObject(_double TimeDelta)
 	return _int();
 }
 
-HRESULT CAttackTower::Render_GameObject()
+HRESULT CBombTower::Render_GameObject()
 {
 	//m_pGraphic_Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	if (nullptr == m_pVIBufferCom ||
@@ -93,30 +125,26 @@ HRESULT CAttackTower::Render_GameObject()
 	return S_OK;
 }
 
-void CAttackTower::Upgrade()
+void CBombTower::Upgrade()
 {
 }
 
-void CAttackTower::Interact()
+void CBombTower::Interact()
 {
 	CBuilding::Interact();
 }
 
-void CAttackTower::OnCollisionEnter(CGameObject * _pOther)
+void CBombTower::OnCollisionEnter(CGameObject * _pOther)
 {
 
 }
 
-void CAttackTower::OnCollisionStay(CGameObject * _pOther)
+void CBombTower::OnCollisionStay(CGameObject * _pOther)
 {
-	CUnit* pUnit = dynamic_cast<CUnit*>(_pOther);
-	if (nullptr != pUnit)
-	{
-		pUnit->TakeDamage(1000.f, 1000.f);
-	}
+
 }
 
-HRESULT CAttackTower::Add_Component()
+HRESULT CBombTower::Add_Component()
 {
 	// For.Com_Renderer
 	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRendererCom)))
@@ -145,7 +173,7 @@ HRESULT CAttackTower::Add_Component()
 	return S_OK;
 }
 
-HRESULT CAttackTower::SetUp_ConstantTable()
+HRESULT CBombTower::SetUp_ConstantTable()
 {
 	CManagement*	pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement)
@@ -168,31 +196,31 @@ HRESULT CAttackTower::SetUp_ConstantTable()
 	return S_OK;
 }
 
-CAttackTower * CAttackTower::Create(PDIRECT3DDEVICE9 pGraphic_Device)
+CBombTower * CBombTower::Create(PDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CAttackTower*	pInstance = new CAttackTower(pGraphic_Device);
+	CBombTower*	pInstance = new CBombTower(pGraphic_Device);
 
 	if (FAILED(pInstance->Ready_GameObject_Prototype()))
 	{
-		MSG_BOX("Failed To Create CAttackTower");
+		MSG_BOX("Failed To Create CBombTower");
 		Safe_Release(pInstance);
 	}
 	return pInstance;
 }
 
-CGameObject * CAttackTower::Clone_GameObject(void * pArg)
+CGameObject * CBombTower::Clone_GameObject(void * pArg)
 {
-	CAttackTower*	pInstance = new CAttackTower(*this);
+	CBombTower*	pInstance = new CBombTower(*this);
 
 	if (FAILED(pInstance->Ready_GameObject(pArg)))
 	{
-		MSG_BOX("Failed To Create CAttackTower");
+		MSG_BOX("Failed To Create CBombTower");
 		Safe_Release(pInstance);
 	}
 	return pInstance;
 }
 
-void CAttackTower::Free()
+void CBombTower::Free()
 {
 	CPickingMgr::Get_Instance()->UnRegister_Observer(this);
 	Safe_Release(m_pTextureCom);

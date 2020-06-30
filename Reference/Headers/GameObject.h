@@ -79,6 +79,7 @@ protected:
 public:
 	const _tchar*				Get_Name() { return m_pName; }
 
+
 protected:
 	map<const _tchar*, CComponent*>			m_Components;
 	typedef map<const _tchar*, CComponent*>	COMPONENTS;
