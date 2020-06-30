@@ -24,6 +24,8 @@ public:
 
 	_float3 Get_CollDistance() { return m_vCollDistance; }
 
+
+
 private:
 	STATEDESC_DERIVED	m_tDesc;
 	_float3				m_vOriginalPoint[8];

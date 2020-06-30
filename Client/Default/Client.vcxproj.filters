@@ -139,6 +139,12 @@
     <Filter Include="08.StageUIMananger">
       <UniqueIdentifier>{9c21f4d5-71e2-4fc0-889e-6848467bcca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\Interactable\Unit\03.Runner">
+      <UniqueIdentifier>{f59e8c60-8d8b-42f9-95a4-7c5c628ba1d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\Interactable\Building\AttackTower">
+      <UniqueIdentifier>{9c716df1-9851-4ab5-833c-a4df708393a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -246,7 +252,6 @@
     <ClInclude Include="..\Headers\AIState.h">
       <Filter>06.Component\AIState\AIState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\Interactable.h" />
     <ClInclude Include="..\Headers\UI.h">
       <Filter>02.GameObject\UI\UI</Filter>
     </ClInclude>
@@ -258,6 +263,21 @@
     </ClInclude>
     <ClInclude Include="..\Headers\GameManager.h">
       <Filter>07.GameMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Walker.h">
+      <Filter>02.GameObject\Interactable\Unit\02.Walker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Interactable.h">
+      <Filter>02.GameObject\Interactable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Firebat.h">
+      <Filter>02.GameObject\Interactable\Unit\01.Firebat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Runner.h">
+      <Filter>02.GameObject\Interactable\Unit\03.Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\AttackTower.h">
+      <Filter>02.GameObject\Interactable\Building\AttackTower</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\FontManager.h">
       <Filter>98.Default</Filter>
@@ -351,7 +371,6 @@
     <ClCompile Include="..\Codes\AIState.cpp">
       <Filter>06.Component\AIState\AIState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\Interactable.cpp" />
     <ClCompile Include="..\Codes\UI.cpp">
       <Filter>02.GameObject\UI\UI</Filter>
     </ClCompile>
@@ -363,6 +382,21 @@
     </ClCompile>
     <ClCompile Include="..\Codes\GameManager.cpp">
       <Filter>07.GameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Walker.cpp">
+      <Filter>02.GameObject\Interactable\Unit\02.Walker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Interactable.cpp">
+      <Filter>02.GameObject\Interactable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Firebat.cpp">
+      <Filter>02.GameObject\Interactable\Unit\01.Firebat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Runner.cpp">
+      <Filter>02.GameObject\Interactable\Unit\03.Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\AttackTower.cpp">
+      <Filter>02.GameObject\Interactable\Building\AttackTower</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\FontManager.cpp">
       <Filter>98.Default</Filter>

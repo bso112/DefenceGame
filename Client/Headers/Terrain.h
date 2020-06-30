@@ -58,6 +58,7 @@ private:
 			X = 0;
 			Z = 0;
 			pParent = nullptr;
+			bMovable = true;
 
 		}
 
@@ -74,7 +75,7 @@ public:
 	virtual HRESULT Render_GameObject();
 
 public:
-	HRESULT	Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out);
+	HRESULT	Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out, CGameObject* pSelf);
 	_bool	Picking(POINT pt, _float3 * pOut);
 	_bool	BuildCheck(_float3* vPoint,_int ScaleInTiles);
 	void	Set_Movable(_float3* vPoint, _int ScaleInTiles, _bool _bIsMovable);

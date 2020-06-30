@@ -59,6 +59,7 @@ protected:
 	CTransform*			m_pTransformCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CVIBuffer_Cube*		m_pVIBufferCom = nullptr;
+	CCollider_Box*		m_pBoxCollider = nullptr;
 	BUILDING_STAT		m_tagStat;
 
 protected:

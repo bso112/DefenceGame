@@ -46,6 +46,7 @@ public: // For.Movement
 	HRESULT Go_Dst(_float3 _vDst, _double TimeDelta);
 	HRESULT GO_ZPositive(_double TimeDelta);
 	HRESULT GO_ZNegative(_double TimeDelta);
+	HRESULT	AddForce(_float3 _vForce);
 
 
 public:

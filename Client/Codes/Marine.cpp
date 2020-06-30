@@ -8,6 +8,7 @@
 #include "Building.h"
 #include "GameManager.h"
 #include "StageUIMgr.h"
+#include "CollisionMgr.h"
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
@@ -50,6 +51,9 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_VIBuffer_Cube", L"Com_VIBuffer_Cube", (CComponent**)&m_pVIBuffer)))
 		return E_FAIL;
 
+	//if (FAILED(Add_Component(SCENE_STATIC, L"Component_VIBuffer_Rect", L"Com_VIBuffer_Rect", (CComponent**)&m_pVIBuffer)))
+	//	return E_FAIL;
+
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRenderer)))
 		return E_FAIL;
 
@@ -74,6 +78,9 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 	m_iRecogRange = 10;
 	m_tUnitStats.iAtt = CValue<int>(20);
+	m_tUnitStats.iMaxHp = CValue<int>(30.f);
+	m_tUnitStats.iCurrHp = m_tUnitStats.iMaxHp.GetValue();
+	m_tUnitStats.bFriendly = false;
 
 	return S_OK;
 }
@@ -86,6 +93,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
+	
 
 	//컨트롤 모드
 	if (m_bControlMode)
@@ -99,8 +107,6 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 		//타깃으로 간다.
 		m_bMoving = true;
-
-
 
 		CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
 		if (nullptr == pTargetTransform) return -1;
@@ -191,13 +197,12 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 			//다가간다.
 			CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
 			if (nullptr == pTargetTransform) return -1;
-			//A*
-			GoToDst(pTargetTransform->Get_State(CTransform::STATE_POSITION));
 
-			if (m_Route.empty())
-			{
-				int a = 10;
-			}
+			m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), TimeDelta);
+			//A*
+			//GoToDst(pTargetTransform->Get_State(CTransform::STATE_POSITION));
+
+	
 		}
 
 
@@ -208,8 +213,8 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 	{
 		CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
 		if (nullptr == pTargetTransform) return -1;
-		//다시 A*
-		GoToDst(pTargetTransform->Get_State(CTransform::STATE_POSITION));
+		m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), TimeDelta);
+		//GoToDst(pTargetTransform->Get_State(CTransform::STATE_POSITION));
 	}
 
 
@@ -243,6 +248,8 @@ _int CMarine::Late_Update_GameObject(_double TimeDelta)
 			m_pTarget = nullptr;
 
 	}
+
+
 
 	return _int();
 }
@@ -285,8 +292,46 @@ HRESULT CMarine::Render_GameObject()
 
 HRESULT CMarine::OnKeyDown(_int KeyCode)
 {
-
+	
 	return S_OK;
+}
+
+void CMarine::OnCollisionEnter(CGameObject * _pOther)
+{
+	//CTransform* pTargetTransform = (CTransform*)_pOther->Find_Component(L"Com_Transform");
+	//if (nullptr == pTargetTransform) return;
+
+	//_float3 dir = pTargetTransform->Get_State(CTransform::STATE_POSITION) - m_pTransform->Get_State(CTransform::STATE_POSITION);
+	//D3DXVec3Normalize(&dir, &dir);
+	//pTargetTransform->AddForce(dir * 10.f);
+}
+
+void CMarine::OnCollisionStay(CGameObject * _pOther)
+{
+	/*if (nullptr == m_pBoxCollider)
+		return;
+	CBuilding* pBuilding = dynamic_cast<CBuilding*>(_pOther);
+	if (pBuilding != nullptr)
+	{
+		m_bMoving = false;
+		return;
+	}
+
+	CTransform* pOtherTransform = (CTransform*)_pOther->Find_Component(L"Com_Transform");
+	
+	_float3 vPos = m_pTransform->Get_State(CTransform::STATE_POSITION);
+	_float3	vOtherPos = pOtherTransform->Get_State(CTransform::STATE_POSITION);
+
+	if (vOtherPos.x < vPos.x)
+		pOtherTransform->AddForce(_float3(-m_pBoxCollider->Get_CollDistance().x, 0.f,0.f));
+	else if(vOtherPos.x > vPos.x)
+		pOtherTransform->AddForce(_float3(m_pBoxCollider->Get_CollDistance().x, 0.f, 0.f));
+
+	if (vOtherPos.z < vPos.z)
+		pOtherTransform->AddForce(_float3(0.f, 0.f, -m_pBoxCollider->Get_CollDistance().z));
+	else if (vOtherPos.z > vPos.z)
+		pOtherTransform->AddForce(_float3(0.f, 0.f, m_pBoxCollider->Get_CollDistance().z));*/
+
 }
 
 CMarine * CMarine::Create(PDIRECT3DDEVICE9 pGraphic_Device)

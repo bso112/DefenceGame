@@ -51,15 +51,15 @@ HRESULT CPickingMgr::UnRegister_Observer(CInteractable * pObj)
 	return S_OK;
 }
 
-HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out)
+HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out, CGameObject* pSelf)
 {
 	if (nullptr == m_pTerrain)
 		return E_FAIL;
 
-	return m_pTerrain->Get_Route(_WorldSrc, _WorldDst, _out);
+	return m_pTerrain->Get_Route(_WorldSrc, _WorldDst, _out, pSelf);
 }
 
-HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out)
+HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out, CGameObject* pSelf)
 {
 	if (nullptr == m_pTerrain)
 		return E_FAIL;
@@ -68,7 +68,7 @@ HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_fl
 
 	if (m_pTerrain->Picking(_ViewPortDst, &vWorldPt))
 	{
-		m_pTerrain->Get_Route(_WorldSrc, vWorldPt, _out);
+		m_pTerrain->Get_Route(_WorldSrc, vWorldPt, _out, pSelf);
 		return S_OK;
 	}
 	return E_FAIL;
@@ -184,7 +184,7 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 			m_eMode = MONE_COMMANDCENTER;
 			break;
 		case '3':
-			m_eMode = MODE_UNIT;
+			m_eMode = MODE_ATTACKTOWER;
 			break;
 
 		default:
@@ -280,20 +280,34 @@ HRESULT CPickingMgr::InstallObject()
 		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
+	case MODE_ATTACKTOWER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			break;//설치 실패
+
+		BuildingDesc.vPos = vDest;
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_AttackTower", SCENE_STAGE1, L"Layer_AttackTower", &BuildingDesc)))
+			return E_FAIL;
+
+		//m_eMode = MODE_NORMAL;
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
+		break;
 	case MODE_UNIT:
 	{
 		CMarine::STATEDESC tMarineDesc;
-		tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+		tMarineDesc.pTextureTag = L"Component_Texture_Marine";
 		tMarineDesc.iTextureID = 0;
 		tMarineDesc.eTextureSceneID = SCENE_STATIC;
 		tMarineDesc.eSceneID = SCENE_STAGE1;
-		tMarineDesc.tBaseDesc = BASEDESC(vDest, _float3(1.f, 1.f, 1.f));
+		tMarineDesc.tBaseDesc = BASEDESC(_float3(vDest.x, vDest.y + 0.5f, vDest.z), _float3(1.f, 1.f, 1.f));
 
 		CMarine* pMarine = nullptr;
 		if (nullptr == (pMarine = (CMarine*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
 			return E_FAIL;
 
 		pMarine->Set_Friendly(true);
+		break;
 	}
 	default:
 		break;

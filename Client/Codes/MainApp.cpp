@@ -22,7 +22,9 @@
 #include "AIStateController.h"
 #include <time.h>
 #include "StageUIMgr.h"
-
+#include "Walker.h"
+#include "Runner.h"
+#include "AttackTower.h"
 
 USING(Client)
 
@@ -168,10 +170,20 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_CommandCenter", CCommandCenter::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_AttackTower", CAttackTower::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Barricade", CBarricade::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_TileUI", CTileUI::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Walker", CWalker::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Runner", CRunner::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -287,6 +299,10 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Resell", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/Resell.png"))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Marine", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Unit/marine%d.png", 1))))
+		return E_FAIL;
+	
 #pragma endregion
 
 
@@ -313,6 +329,8 @@ void CMainApp::Free()
 
 	CPickingMgr::Get_Instance()->Destroy_Instance();
 	CStageUIMgr::Get_Instance()->Destroy_Instance();
+	CGameManager::Get_Instance()->Destroy_Instance();
+	CFontManager::Get_Instance()->Destroy_Instance();
 
 	CManagement::Release_Engine();
 }

@@ -114,63 +114,135 @@ HRESULT CLoading::Loading_ForStageOne()
 	//	}
 	//}
 
-	//CMarine::STATEDESC tMarineDesc;
-	//tMarineDesc.pTextureTag = L"Component_Texture_Cube";
-	//tMarineDesc.iTextureID = 0;
-	//tMarineDesc.eTextureSceneID = SCENE_STATIC;
-	//tMarineDesc.eSceneID = SCENE_STAGE1;
-	//tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.f, 0.f), _float3(1.f, 1.f, 1.f));
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
-	//	return E_FAIL;
+	CMarine::STATEDESC tMarineDesc;
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
 
-	//tMarineDesc.pTextureTag = L"Component_Texture_Cube";
-	//tMarineDesc.iTextureID = 0;
-	//tMarineDesc.eTextureSceneID = SCENE_STATIC;
-	//tMarineDesc.eSceneID = SCENE_STAGE1;
-	//tMarineDesc.tBaseDesc = BASEDESC(_float3(10.f, 0.f, 0.f), _float3(1.f, 1.f, 1.f));
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
-	//	return E_FAIL;
-
-
-
-	//tMarineDesc.pTextureTag = L"Component_Texture_Cube";
-	//tMarineDesc.iTextureID = 0;
-	//tMarineDesc.eTextureSceneID = SCENE_STATIC;
-	//tMarineDesc.eSceneID = SCENE_STAGE1;
-	//tMarineDesc.tBaseDesc = BASEDESC(_float3(20.f, 0.f, 0.f), _float3(1.f, 1.f, 1.f));
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
-	//	return E_FAIL;
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(10.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
 
 
 
-	//tMarineDesc.pTextureTag = L"Component_Texture_Cube";
-	//tMarineDesc.iTextureID = 0;
-	//tMarineDesc.eTextureSceneID = SCENE_STATIC;
-	//tMarineDesc.eSceneID = SCENE_STAGE1;
-	//tMarineDesc.tBaseDesc = BASEDESC(_float3(30.f, 0.f, 0.f), _float3(1.f, 1.f, 1.f));
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
-	//	return E_FAIL;
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(20.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
 
 
 
-	//tMarineDesc.pTextureTag = L"Component_Texture_Cube";
-	//tMarineDesc.iTextureID = 0;
-	//tMarineDesc.eTextureSceneID = SCENE_STATIC;
-	//tMarineDesc.eSceneID = SCENE_STAGE1;
-	//tMarineDesc.tBaseDesc = BASEDESC(_float3(40.f, 0.f, 0.f), _float3(1.f, 1.f, 1.f));
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
-	//	return E_FAIL;
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(30.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
 
 
 
-	//CMarine::STATEDESC tMarineDesc;
-	//tMarineDesc.pTextureTag = L"Component_Texture_Cube";
-	//tMarineDesc.iTextureID = 0;
-	//tMarineDesc.eTextureSceneID = SCENE_STATIC;
-	//tMarineDesc.eSceneID = SCENE_STAGE1;
-	//tMarineDesc.tBaseDesc = BASEDESC(_float3(TILEX * 0.5f, 0.f, TILEZ * 0.5f), _float3(1.f, 1.f, 1.f));
-	//if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
-	//	return E_FAIL;
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(40.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(10.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(20.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(30.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(50.f, 0.5f, 0.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.5f, 10.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.5f, 20.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(0.f, 0.5f, 30.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Walker", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
+	tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+	tMarineDesc.iTextureID = 0;
+	tMarineDesc.eTextureSceneID = SCENE_STATIC;
+	tMarineDesc.eSceneID = SCENE_STAGE1;
+	tMarineDesc.tBaseDesc = BASEDESC(_float3(60.f, 0.5f, 30.f), _float3(1.f, 1.f, 1.f));
+	if (FAILED(pEngineMgr->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Runner", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+		return E_FAIL;
+
+
 
 
 #pragma endregion

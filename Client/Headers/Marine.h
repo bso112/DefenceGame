@@ -46,7 +46,9 @@ private:
 	CGameObject*	m_pTarget = nullptr;
 
 
-	
+public:
+	virtual void OnCollisionEnter(CGameObject* _pOther) override;
+	virtual void OnCollisionStay(CGameObject* _pOther);
 public:
 	static CMarine*	Create(PDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone_GameObject(void * pArg) override;

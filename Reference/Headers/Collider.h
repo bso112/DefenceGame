@@ -23,7 +23,13 @@ public:
 
 public:
 	virtual	_bool	Check_Collision(CCollider* pTarget) = 0;
+
+public:
+	_float3	Get_Size();
+	_float3	Get_Pos();
+
 protected:
+	_matrix				m_StateMatrix;
 	CPipeLine*			m_pPipeLine = nullptr;
 	_bool				m_isColl = false;
 public:

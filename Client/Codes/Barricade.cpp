@@ -2,7 +2,7 @@
 #include "..\Headers\Barricade.h"
 #include "Management.h"
 #include "PickingMgr.h"
-
+#include "CollisionMgr.h"
 CBarricade::CBarricade(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
 {
@@ -53,7 +53,7 @@ HRESULT CBarricade::Ready_GameObject(void * pArg)
 
 _int CBarricade::Update_GameObject(_double TimeDelta)
 {
-
+	m_pBoxCollider->Update_Collider(m_pTransformCom->Get_WorldMatrix());
 	return 0;
 }
 
@@ -65,6 +65,8 @@ _int CBarricade::Late_Update_GameObject(_double TimeDelta)
 
 	if (FAILED(m_pRendererCom->Add_RenderGroup(CRenderer::RENDER_ALPHABLEND, this)))
 		return -1;
+
+	CCollisionMgr::Get_Instance()->Add_CollisionGroup(CCollisionMgr::COL_BOX, this);
 
 	return _int();
 }
@@ -120,6 +122,10 @@ HRESULT CBarricade::Add_Component()
 	// For.Com_Shader
 	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_Shader_Solid", L"Com_Shader", (CComponent**)&m_pShaderCom)))
 		return E_FAIL;
+
+	if (FAILED(CGameObject::Add_Component(SCENE_STATIC, L"Component_BoxCollider", L"Com_Collider", (CComponent**)&m_pBoxCollider)))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -179,6 +185,7 @@ void CBarricade::Free()
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pRendererCom);
 	Safe_Release(m_pTransformCom);
+	Safe_Release(m_pBoxCollider);
 
 	CGameObject::Free();
 }

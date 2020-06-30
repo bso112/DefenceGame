@@ -43,6 +43,15 @@ _int CTerrain::Update_GameObject(_double TimeDelta)
 {
 
 
+	CManagement* pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement)
+		return E_FAIL;
+
+	CLayer* pUnitLayer = pManagement->Find_Layer(CManagement::Get_Instance()->Get_CurrScene(), L"Layer_Unit");
+	if (nullptr == pUnitLayer)
+		return E_FAIL;
+
+
 	return _int();
 }
 
@@ -71,10 +80,11 @@ HRESULT CTerrain::Render_GameObject()
 	m_pShaderCom->End_Pass();
 	m_pShaderCom->End_Shader();
 
+
 	return S_OK;
 }
 
-HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
+HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out, CGameObject* pSelf)
 {
 	_out.clear();
 
@@ -98,30 +108,7 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 	Fcost // Gcost + Hcost
 	*/
 
-#pragma region 제외할 타일들
-	
-	CManagement* pManagement = CManagement::Get_Instance();
-	if (nullptr == pManagement)
-		return E_FAIL;
 
-	CLayer* pUnitLayer = pManagement->Find_Layer(CManagement::Get_Instance()->Get_CurrScene(), L"Layer_Unit");
-	if (nullptr == pUnitLayer)
-		return E_FAIL;
-	for (auto& go : *pUnitLayer->Get_ObjectList())
-	{
-		CTransform* pTransform= (CTransform*)go->Find_Component(L"Com_Transform");
-		if (nullptr == pTransform)
-			return E_FAIL;
-
-		_float3 vPos= pTransform->Get_State(CTransform::STATE_POSITION);
-
-		_int tileX = vPos.x / (_int)TILESIZE;
-		_int tileZ = vPos.z / (_int)TILESIZE;
-
-		m_Nodes[tileZ][tileX]->Set_Movable(false);
-
-	}
-#pragma endregion
 
 
 #pragma region 초기화
@@ -134,6 +121,39 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 				m_Nodes[i][j]->Clear();
 		}
 	}
+
+
+#pragma region 제외할 타일들
+
+	if (nullptr == pSelf)
+		return E_FAIL;
+
+	CManagement* pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement)
+		return E_FAIL;
+
+	CLayer* pUnitLayer = pManagement->Find_Layer(CManagement::Get_Instance()->Get_CurrScene(), L"Layer_Unit");
+	if (nullptr == pUnitLayer)
+		return E_FAIL;
+	for (auto& go : *pUnitLayer->Get_ObjectList())
+	{
+		if (go == pSelf)
+			continue;
+		CTransform* pTransform = (CTransform*)go->Find_Component(L"Com_Transform");
+		if (nullptr == pTransform)
+			return E_FAIL;
+
+		_float3 vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+
+		_int tileX = vPos.x / (_int)TILESIZE;
+		_int tileZ = vPos.z / (_int)TILESIZE;
+		
+		m_Nodes[tileZ][tileX]->Set_Movable(false);
+
+	}
+
+#pragma endregion
+
 
 	//지나온 노드(최종경로가 아니다)
 	vector<NODE*> closed;
