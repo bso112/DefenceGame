@@ -256,7 +256,7 @@ HRESULT CPickingMgr::InstallObject()
 			return E_FAIL;
 
 		//m_eMode = MODE_NORMAL;
-		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
 	case MONE_COMMANDCENTER:
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
@@ -269,7 +269,7 @@ HRESULT CPickingMgr::InstallObject()
 			return E_FAIL;
 
 		//m_eMode = MODE_NORMAL;
-		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
 	case MODE_UNIT:
 	{

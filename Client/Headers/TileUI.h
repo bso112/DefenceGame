@@ -10,7 +10,7 @@ public:
 	typedef struct tagStateDesc
 	{
 		_float3					m_vPos;
-		_bool					m_bIsOccupied;
+		_bool					m_bMovable;
 
 
 	}STATEDESC;
