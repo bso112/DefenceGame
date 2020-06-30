@@ -26,6 +26,8 @@ HRESULT CAIStateController::Ready_Component(void * _pArg)
 
 _int CAIStateController::Update(CAIState::STATEDESC _tDesc, _double _timeDelta)
 {
+	if (nullptr == m_pCurrState)
+		return -1;
 	CAIState::STATE eState = m_pCurrState->Update(_tDesc, _timeDelta);
 	if (eState < CAIState::STATE_END)
 	{

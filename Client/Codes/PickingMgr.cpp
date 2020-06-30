@@ -89,7 +89,7 @@ vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius, C
 			vecGameObject.push_back(obj);
 		}
 	}
-	if(vecGameObject.empty())
+	if (vecGameObject.empty())
 		return vector<CGameObject*>();
 
 	return vecGameObject;
@@ -157,12 +157,21 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 	//피킹
 	if (KeyCode == VK_LBUTTON)
 	{
-		POINT pt;
-		GetCursorPos(&pt);
-		ScreenToClient(g_hWnd, &pt);
-		_float3 vHitPos;
-		Pick_Object(pt, &vHitPos);
+		PickObject();
 	}
+	return S_OK;
+}
+
+void CPickingMgr::PickObject()
+{
+
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hWnd, &pt);
+
+	_float3 vHitPos;
+	//오브젝트 피킹 후 인터렉트
+	Pick_Object(pt, &vHitPos);
 
 	return S_OK;
 }

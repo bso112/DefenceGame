@@ -29,14 +29,15 @@ public:
 	vector<CGameObject*> OverlapSphere(_float3 vPos, _float _fRadius, CGameObject* pSelf = nullptr);
 	//범위안에 가장 가까운 게임오브젝트를 반환한다. 자기자신(pSelf)은 포함하지 않는다.
 	CGameObject* OverlapSphere_Closest(_float3 vPos, _float _fRadius, _float* pDist, CGameObject* pSelf = nullptr);
-
-
 	CTerrain* Get_Terrain() { return m_pTerrain; }
 	HRESULT	Pick_Object(POINT _ViewPortPoint, _float3* pHitPos);
 
 public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);
 
+private:
+	void	PickObject();
+	
 private:
 	CTerrain*					m_pTerrain = nullptr;
 	list<CInteractable*>		m_listObject;

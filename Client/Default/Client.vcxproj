@@ -197,6 +197,7 @@
     <ClInclude Include="..\Headers\Camera_Free.h" />
     <ClInclude Include="..\Headers\Client_Defines.h" />
     <ClInclude Include="..\Headers\Clock.h" />
+    <ClInclude Include="..\Headers\GameManager.h" />
     <ClInclude Include="..\Headers\Image3D.h" />
     <ClInclude Include="..\Headers\Interactable.h" />
     <ClInclude Include="..\Headers\Level.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="..\Codes\Cube.cpp" />
     <ClCompile Include="..\Codes\Camera_Free.cpp" />
     <ClCompile Include="..\Codes\Clock.cpp" />
+    <ClCompile Include="..\Codes\GameManager.cpp" />
     <ClCompile Include="..\Codes\Image3D.cpp" />
     <ClCompile Include="..\Codes\Interactable.cpp" />
     <ClCompile Include="..\Codes\Level.cpp" />

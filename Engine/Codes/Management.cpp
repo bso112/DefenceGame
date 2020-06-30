@@ -247,6 +247,11 @@ CGameObject * CManagement::Find_Prototype(_uint iPrototypeSceneID, const _tchar 
 	return m_pObject_Manager->Find_Prototype(iPrototypeSceneID,pPrototypeTag);
 }
 
+CLayer * CManagement::Find_Layer(_uint iSceneID, const _tchar * pLayerTag)
+{
+	return m_pObject_Manager->Find_Layer(iSceneID, pLayerTag);
+}
+
 #pragma endregion
 
 

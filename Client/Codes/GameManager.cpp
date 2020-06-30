@@ -10,19 +10,6 @@ CGameManager::CGameManager()
 {
 }
 
-HRESULT CGameManager::Set_CurrentLevel(_uint _iLevel)
-{
-	Safe_Release(m_pCurrentLevel);
-
-	m_pCurrentLevel = CLevel::Create(_iLevel);
-
-	return S_OK;
-}
-
-CCube * CGameManager::PickBrick(POINT pt)
-{
-	return m_pCurrentLevel->PickBrick(pt);
-}
 
 HRESULT CGameManager::OnGameStart()
 {
@@ -37,6 +24,5 @@ HRESULT CGameManager::OnGameEnd()
 
 void CGameManager::Free()
 {
-	Safe_Release(m_pCurrentLevel);
 
 }

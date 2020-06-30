@@ -18,6 +18,7 @@ public:
 		_int				iAttRange = 0;
 		_int				iMaxInfection = 0;
 		_int				iCurrInfection = 0;
+		_bool				bFriendly = false;
 	}UNITSTATS;
 
 protected:
@@ -37,7 +38,8 @@ public:
 	void	TakeDamage(_int iDamage, _int iInfection);
 
 public:
-	_bool	IsControllable() { return m_bFriendly && m_bControlMode; }
+	_bool	IsControllable() { return m_tUnitStats.bFriendly && m_bControlMode; }
+	_bool	Get_Friendly() { return m_tUnitStats.bFriendly; }
 	
 protected:
 	virtual	void OnTakeDamage(_int iDamage, _int iInfection);
@@ -45,7 +47,6 @@ protected:
 	UNITSTATS				m_tUnitStats;
 	_int					m_iRecogRange = 0;
 	_bool					m_bInBuilding = false;
-	_bool					m_bFriendly = false;
 	CAIStateController*		m_pAICon = nullptr;
 	CTransform*				m_pTransform = nullptr;
 	_bool					m_bMoving = false;

@@ -136,6 +136,9 @@
     <Filter Include="02.GameObject\UI\UI\TileUI">
       <UniqueIdentifier>{bbfa546e-e48c-4bcb-9a58-9307fe01103d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07.GameMgr">
+      <UniqueIdentifier>{d4f18578-af93-4e0c-8bbc-cd0ce1e4fb5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -253,6 +256,9 @@
     <ClInclude Include="..\Headers\TileUI.h">
       <Filter>02.GameObject\UI\UI\TileUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\GameManager.h">
+      <Filter>07.GameMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -351,6 +357,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\TileUI.cpp">
       <Filter>02.GameObject\UI\UI\TileUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\GameManager.cpp">
+      <Filter>07.GameMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

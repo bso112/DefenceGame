@@ -5,6 +5,7 @@
 #include "PickingMgr.h"
 #include "AIStateController.h"
 #include "AIState.h"
+#include "Building.h"
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
@@ -28,7 +29,7 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 	CTransform::STATEDESC tTransformDesc;
 	tTransformDesc.RotatePerSec = D3DXToRadian(90.f);
-	tTransformDesc.SpeedPerSec = 5.0;
+	tTransformDesc.SpeedPerSec = 10.0;
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &tTransformDesc)))
 		return E_FAIL;
 
@@ -55,23 +56,24 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 	m_pTransform->SetUp_Scale(m_tDesc.tBaseDesc.vSize);
 
 	CKeyMgr::Get_Instance()->RegisterObserver(m_tDesc.eSceneID, this);
-
-	m_pAICon->Set_State(CAIState::STATE_IDLE, new CAIIdle(this));
-	m_pAICon->Set_State(CAIState::STATE_HUNTING, new CAIHunting(this));
-	m_pAICon->Set_State(CAIState::STATE_RETREAT, new CAIRetreat(this));
-	m_pAICon->Set_State(CAIState::STATE_WAIT, new CAIWait(this));
-
-	m_pAICon->Set_Default_State(CAIState::STATE_HUNTING, CAIState::STATEDESC(), CManagement::Get_Instance()->Get_TimeDelta(L"Timer_60"));
-
-
-
-	m_bFriendly = true;
-	m_iRecogRange = 10;
-	
-	m_tUnitStats.iAtt = CValue<int>(20);
-
 	//피킹매니저에 등록. 
 	CPickingMgr::Get_Instance()->Register_Observer(this);
+
+	//왜 릭이 나는지 모르겠음.
+	//m_pAICon->Set_State(CAIState::STATE_IDLE, new CAIIdle(this));
+	//m_pAICon->Set_State(CAIState::STATE_HUNTING, new CAIHunting(this));
+	//m_pAICon->Set_State(CAIState::STATE_RETREAT, new CAIRetreat(this));
+	//m_pAICon->Set_State(CAIState::STATE_WAIT, new CAIWait(this));
+
+	//m_pAICon->Set_Default_State(CAIState::STATE_HUNTING, CAIState::STATEDESC(), CManagement::Get_Instance()->Get_TimeDelta(L"Timer_60"));
+
+
+
+	m_tUnitStats.bFriendly = true;
+	m_iRecogRange = 10;
+
+	m_tUnitStats.iAtt = CValue<int>(20);
+
 
 	return S_OK;
 }
@@ -80,9 +82,82 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 {
 	if (nullptr == m_pBoxCollider ||
 		nullptr == m_pTransform)
-		return E_FAIL;
+		return -1;
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
+
+
+#pragma region AIHunting
+
+	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
+	if (nullptr == pPickMgr) return-1;
+	if (nullptr == m_pTransform) return -1;
+
+	if (m_bControlMode)
+		return 0;
+
+	//주변을 조사해서 게임오브젝트를 얻는다.
+	vector<CGameObject*> pTargetVector = pPickMgr->OverlapSphere(m_pTransform->Get_State(CTransform::STATE_POSITION), FLT_MAX, this);
+	if (pTargetVector.empty()) return 0;
+
+	for (auto& go : pTargetVector)
+	{
+		_float dist = 0.f;
+		CTransform* pTargetTransform = (CTransform*)go->Find_Component(L"Com_Transform");
+		if (nullptr == pTargetTransform) return -1;
+		dist = D3DXVec3Length(&(pTargetTransform->Get_State(CTransform::STATE_POSITION) - m_pTransform->Get_State(CTransform::STATE_POSITION)));
+
+		//유닛일 경우
+		CUnit*		pUnit = dynamic_cast<CUnit*>(go);
+		if (nullptr != pUnit)
+		{
+			//아군일 경우 무시
+			if (pUnit->Get_Friendly() == Get_Friendly())
+				continue;
+			//적군일 경우
+			else
+			{
+				//다가간다.
+				CTransform* pTargetTransform = (CTransform*)pUnit->Find_Component(L"Com_Transform");
+				if (nullptr == pTargetTransform) return -1;
+				m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), TimeDelta);
+
+
+				//도착이면 공격
+				if (dist < 2.f)
+					pUnit->TakeDamage(m_tUnitStats.iAtt.GetValue(), m_tUnitStats.iAtt.GetValue());
+			}
+		}
+		else
+		{
+			//아군은 빌딩을 공격하지 않는다
+			if (m_tUnitStats.bFriendly)
+				continue;
+
+			//빌딩일 경우
+			CBuilding* pBuilding = dynamic_cast<CBuilding*>(go);
+			if (nullptr != pBuilding)
+			{
+				//다가간다.
+				CTransform* pTargetTransform = (CTransform*)pBuilding->Find_Component(L"Com_Transform");
+				if (nullptr == pTargetTransform) return -1;
+				m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), TimeDelta);
+
+				//도착이면 공격
+				if (dist < 2.f)
+					pBuilding->Get_Damage(m_tUnitStats.iAtt.GetValue());
+
+			}
+		}
+
+
+
+
+	}
+
+
+#pragma endregion
+
 
 	return CUnit::Update_GameObject(TimeDelta);
 }
@@ -91,8 +166,8 @@ _int CMarine::Late_Update_GameObject(_double TimeDelta)
 {
 
 
-	if (nullptr == m_pAICon) return -1;
-	m_pAICon->Update(CAIState::STATEDESC(), TimeDelta);
+	//if (nullptr == m_pAICon) return -1;
+	//m_pAICon->Update(CAIState::STATEDESC(), TimeDelta);
 
 
 	//렌더러에 등록

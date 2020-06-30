@@ -66,6 +66,7 @@ public:
 	CGameObject* Add_Object_ToLayer(_uint iPrototypeSceneID, const _tchar* pPrototypeTag, _uint iLayerSceneID, const _tchar* pLayerTag, void* pArg = nullptr);
 	HRESULT Clear_Object_Manager(_uint iSceneID);
 	CGameObject* Find_Prototype(_uint iPrototypeSceneID, const _tchar* pPrototypeTag);
+	CLayer*		Find_Layer(_uint iSceneID, const _tchar* pLayerTag);
 #pragma endregion
 
 

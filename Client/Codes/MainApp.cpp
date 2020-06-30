@@ -19,6 +19,8 @@
 #include "PickingMgr.h"
 #include "Marine.h"
 #include "AIStateController.h"
+#include <time.h>
+
 USING(Client)
 
 CMainApp::CMainApp()
@@ -41,6 +43,8 @@ HRESULT CMainApp::Ready_MainApp()
 
 	if (FAILED(Ready_Start_Scene(SCENE_STAGE1)))
 		return E_FAIL;
+
+	srand(unsigned int(time(NULL)));
 
 	return S_OK;
 }
@@ -269,13 +273,10 @@ CMainApp * CMainApp::Create()
 void CMainApp::Free()
 {
 	Safe_Release(m_pRenderer);
-
 	Safe_Release(m_pGraphic_Device);
-
 	Safe_Release(m_pManagement);
 
 	CPickingMgr::Get_Instance()->Destroy_Instance();
-
 	
 	CManagement::Release_Engine();
 }
