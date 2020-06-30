@@ -432,9 +432,9 @@ void CTerrain::Set_Movable(_float3 * vPoint, _int ScaleInTiles, _bool bIsMovable
 	int iTempX = int(vPoint->x);
 	int iTempZ = int(vPoint->z);
 
-	for (int i = iTempX - int(ScaleInTiles*0.5f); i <= iTempX + int(ScaleInTiles*0.5f) - _int(!ScaleInTiles) % 2; i++)
+	for (int i = iTempX - int(ScaleInTiles*0.5f) /*+ !_int(ScaleInTiles % 2)*/; i <= iTempX + int(ScaleInTiles*0.5f) - !_int(ScaleInTiles % 2); i++)
 	{
-		for (int j = iTempZ - int(ScaleInTiles*0.5f); j <= iTempZ + int(ScaleInTiles*0.5f) - _int(!ScaleInTiles) % 2; j++)
+		for (int j = iTempZ - int(ScaleInTiles*0.5f) /*+ !_int(ScaleInTiles % 2)*/; j <= iTempZ + int(ScaleInTiles*0.5f) - !_int(ScaleInTiles % 2); j++)
 		{
 			m_Nodes[j][i]->bMovable = bIsMovable;
 		}

@@ -151,6 +151,32 @@ PS_OUT PS_MAIN_TOWER(PS_IN In/*ÇÈ¼¿*/)
 	return Out;
 }
 
+PS_OUT PS_MAIN_BOMBTOWER(PS_IN In/*ÇÈ¼¿*/)
+{
+	PS_OUT	Out = (PS_OUT)0;
+
+	//Out.vColor = tex2D(DiffuseSampler, In.vTexUV);
+	Out.vColor = vector(0.20f, 0.15f, 0.15f, 1.f);
+
+	if (((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) * 10 + 15) % 4 > 2)
+		Out.vColor = vector(0.85f, 0.45f, 0.35f, 1.f);
+
+	bool xy = (In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f);
+	bool yz = (In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f);
+	bool zx = (In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f);
+
+	//if (!(In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f &&
+	//	In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f &&
+	//	In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f))
+	if (xy + yz + zx != 2)
+		Out.vColor = vector(0.20f, 0.15f, 0.15f, 1.f);
+
+	//pow(Out.vColor.rgb, 10.f);
+
+	return Out;
+}
+
+
 PS_OUT PS_MAIN3(PS_IN In/*ÇÈ¼¿*/)
 {
 	PS_OUT	Out = (PS_OUT)0;
@@ -196,6 +222,16 @@ technique Default_Technique
 		DestBlend = InvSrcAlpha;
 		VertexShader = compile vs_3_0 VS_MAIN();
 		PixelShader = compile ps_3_0 PS_MAIN_TOWER();
+	}
+
+	pass BombTower
+	{
+		cullmode = ccw;
+		aLPHAbLENDeNABLE = true;
+		SrcBlend = SrcAlpha;
+		DestBlend = InvSrcAlpha;
+		VertexShader = compile vs_3_0 VS_MAIN();
+		PixelShader = compile ps_3_0 PS_MAIN_BOMBTOWER();
 	}
 
 	//pass Frendly_ShipInFog

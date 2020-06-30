@@ -204,6 +204,7 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		if (m_eMode != MODE_BARRICADE &&
 			m_eMode != MONE_COMMANDCENTER &&
 			m_eMode != MODE_ATTACKTOWER&&
+			m_eMode != MODE_BOMBTOWER&&
 			m_eMode != MODE_UNIT)
 			PickObject();
 		//¼³Ä¡
@@ -404,6 +405,11 @@ void CPickingMgr::Check_Mouse()
 		pTerrain->BuildCheck(&vDest, iTileSize);
 		break;
 
+	case MODE_BOMBTOWER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_BombTower"))->Get_TileSize();
+		pTerrain->BuildCheck(&vDest, iTileSize);
+		break;
+
 	default:
 		break;
 	}
@@ -415,6 +421,9 @@ void CPickingMgr::Update_UI()
 
 	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)
 		m_eMode = MODE_IN_WAVE;
+
+	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_IN_WAVE)
+		m_eMode = MODE_NORMAL;
 
 	InActiveAllUI();
 	ActiveUI(UI_ALWAYS);
@@ -432,6 +441,7 @@ void CPickingMgr::Update_UI()
 	if (m_eMode == MODE_BARRICADE ||
 		m_eMode == MONE_COMMANDCENTER ||
 		m_eMode == MODE_ATTACKTOWER ||
+		m_eMode == MODE_BOMBTOWER ||
 		m_eMode == MODE_UNIT)
 		ActiveUI(UI_PURCHASE_ONLY);
 }
