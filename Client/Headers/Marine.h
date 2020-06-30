@@ -12,7 +12,7 @@ public:
 		const _tchar*		pTextureTag = nullptr;
 		_uint				iShaderPass = 0;
 		_uint				iTextureID = 0;
-
+		
 	}STATEDESC;
 private:
 	explicit CMarine(PDIRECT3DDEVICE9 pGraphic_Device);

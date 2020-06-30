@@ -6,7 +6,8 @@
 #include "CommandCenter.h"
 #include "Barricade.h"
 #include "KeyMgr.h"
-
+#include "Marine.h"
+#include "StageUIMgr.h"
 IMPLEMENT_SINGLETON(CPickingMgr)
 CPickingMgr::CPickingMgr()
 {
@@ -171,6 +172,10 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		case '2':
 			m_eMode = MONE_COMMANDCENTER;
 			break;
+		case '3':
+			m_eMode = MODE_UNIT;
+			break;
+
 		default:
 			break;
 		}
@@ -181,8 +186,7 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 	{
 		//피킹
 		PickObject();
-
-
+		//설치
 		InstallObject();
 
 		return S_OK;
@@ -206,13 +210,24 @@ HRESULT CPickingMgr::PickObject()
 
 HRESULT CPickingMgr::InstallObject()
 {
-	//타일생성
+
+
 	_float3 vDest;
 	POINT tTemp;
 	GetCursorPos(&tTemp);
 	ScreenToClient(g_hWnd, &tTemp);
+	
+	CStageUIMgr* pStageUIMgr = CStageUIMgr::Get_Instance();
+	vector<RECT> vecRc = pStageUIMgr->Get_UIRect();
+	for (auto& rc : vecRc)
+	{
+		if (PtInRect(&rc,tTemp))
+			return NO_ERROR;
+	}
+
 	Get_WorldMousePos(tTemp, &vDest);
 	vDest.y = 0;
+	
 
 	CManagement* pManagement = CManagement::Get_Instance();
 	//_float3 vDest = vHitPos;
@@ -235,7 +250,6 @@ HRESULT CPickingMgr::InstallObject()
 		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 		break;
-
 	case MONE_COMMANDCENTER:
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
 
@@ -249,7 +263,21 @@ HRESULT CPickingMgr::InstallObject()
 		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 		break;
+	case MODE_UNIT:
+	{
+		CMarine::STATEDESC tMarineDesc;
+		tMarineDesc.pTextureTag = L"Component_Texture_Cube";
+		tMarineDesc.iTextureID = 0;
+		tMarineDesc.eTextureSceneID = SCENE_STATIC;
+		tMarineDesc.eSceneID = SCENE_STAGE1;
+		tMarineDesc.tBaseDesc = BASEDESC(vDest, _float3(2.f, 2.f, 2.f));
+		
+		CMarine* pMarine = nullptr;
+		if (nullptr == (pMarine = (CMarine*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
+			return E_FAIL;
 
+		pMarine->Set_Friendly(true);
+	}
 	default:
 		break;
 	}

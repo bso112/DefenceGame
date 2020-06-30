@@ -2,14 +2,28 @@
 #include "Base.h"
 
 BEGIN(Client)
+class CMyImage;
+class CMyButton;
 class CStageUIMgr : public CBase
 {
 	DECLARE_SINGLETON(CStageUIMgr)
 public:
-	explicit CStageUIMgr();
+	explicit CStageUIMgr() {};
 	virtual ~CStageUIMgr() = default;
 
+
+public:
+	virtual HRESULT Ready_StageUIMgr();
+
+public:
+	vector<RECT>	Get_UIRect();
 private:
+	CMyButton*	m_pGameStartBtn = nullptr;
+
+
+
+	// CBase을(를) 통해 상속됨
+	virtual void Free() override;
 
 };
 END

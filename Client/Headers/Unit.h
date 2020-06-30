@@ -36,6 +36,9 @@ public:
 	void	GoToDst(_float3 _vDst);
 	void	GoToDst(POINT _pt);
 	void	TakeDamage(_int iDamage, _int iInfection);
+	void	Set_Friendly(_bool _bFriendly) {
+		m_tUnitStats.bFriendly = _bFriendly;
+	}
 
 public:
 	_bool	IsControllable() { return m_tUnitStats.bFriendly && m_bControlMode; }

@@ -14,10 +14,10 @@ private:
 	virtual ~CGameManager() = default;
 
 public:
-	void	Set_IsGameStart(_bool IsStart) { m_bGameStart = IsStart; }
+	void	SetGameStart(_bool IsStart) { m_bGameStart = IsStart; }
 
 public:
-	_bool	Get_IsGameStart() { return m_bGameStart; }
+	_bool	IsGameStart() { return m_bGameStart; }
 	
 
 	HRESULT OnGameStart();
