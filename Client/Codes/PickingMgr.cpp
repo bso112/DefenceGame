@@ -241,7 +241,7 @@ HRESULT CPickingMgr::InstallObject()
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
 
 		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
-			return S_OK;//설치 실패
+			break; //설치 실패
 
 		BuildingDesc.vPos = vDest;
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
@@ -254,7 +254,7 @@ HRESULT CPickingMgr::InstallObject()
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
 
 		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
-			return S_OK;//설치 실패
+			break;//설치 실패
 
 		BuildingDesc.vPos = vDest;
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
@@ -270,7 +270,7 @@ HRESULT CPickingMgr::InstallObject()
 		tMarineDesc.iTextureID = 0;
 		tMarineDesc.eTextureSceneID = SCENE_STATIC;
 		tMarineDesc.eSceneID = SCENE_STAGE1;
-		tMarineDesc.tBaseDesc = BASEDESC(vDest, _float3(2.f, 2.f, 2.f));
+		tMarineDesc.tBaseDesc = BASEDESC(vDest, _float3(1.f, 1.f, 1.f));
 		
 		CMarine* pMarine = nullptr;
 		if (nullptr == (pMarine = (CMarine*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
@@ -281,9 +281,7 @@ HRESULT CPickingMgr::InstallObject()
 	default:
 		break;
 	}
-
-
-	
+	return S_OK;
 }
 
 void CPickingMgr::Check_Mouse()

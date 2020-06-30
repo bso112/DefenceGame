@@ -309,8 +309,8 @@ _bool CTerrain::Picking(POINT pt, _float3 * pOut)
 _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 {
 	NODE tTempNode;
-
 	CManagement* pManagement = CManagement::Get_Instance();
+	SCENEID eCurScene = SCENEID(pManagement->Get_CurrScene());
 
 	_bool bIsFalse = 0;
 
@@ -330,7 +330,7 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 	tTempNode.Z = _uint(vPoint->z);
 
 	CTileUI::STATEDESC tStateDesc;
-	CLayer* tempLayer = pManagement->Find_Layer(SCENE_STATIC, L"Layer_TileUI");
+	CLayer* tempLayer = pManagement->Find_Layer(eCurScene, L"Layer_TileUI");
 
 	for (int i = tTempNode.Z - ScaleInTiles + 1; i <= tTempNode.Z; ++i)
 	{
@@ -346,18 +346,21 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 			if (m_Nodes[i][j]->bOccupied == 1)
 			{
 				tStateDesc.m_bIsOccupied = 1;
-				if (iTileUICnt < ScaleInTiles*ScaleInTiles)
+				if (/*iTileUICnt < ScaleInTiles*ScaleInTiles*/1)
 				{
-					if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", SCENE_STATIC, L"Layer_TileUI", &tStateDesc)))
+					if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", eCurScene, L"Layer_TileUI", &tStateDesc)))
 						return E_FAIL;
 
-					bIsFalse = 1;
 				}
+				bIsFalse = 1;
 			}
-			if (iTileUICnt < ScaleInTiles*ScaleInTiles)
+			else
 			{
-				if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", SCENE_STATIC, L"Layer_TileUI", &tStateDesc)))
-					return E_FAIL;
+				if (/*iTileUICnt < ScaleInTiles*ScaleInTiles*/1)
+				{
+					if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", eCurScene, L"Layer_TileUI", &tStateDesc)))
+						return E_FAIL;
+				}
 			}
 		}
 	}
