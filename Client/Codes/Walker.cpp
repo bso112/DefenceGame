@@ -31,7 +31,7 @@ HRESULT CWalker::Ready_GameObject(void * pArg)
 
 	CTransform::STATEDESC tTransformDesc;
 	tTransformDesc.RotatePerSec = D3DXToRadian(90.f);
-	tTransformDesc.SpeedPerSec = 3.0;
+	tTransformDesc.SpeedPerSec = 8.0;
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &tTransformDesc)))
 		return E_FAIL;
 
