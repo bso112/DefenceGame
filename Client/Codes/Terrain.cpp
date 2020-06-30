@@ -3,6 +3,7 @@
 #include "TileUI.h"
 #include "Layer.h"
 
+
 CTerrain::CTerrain(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject(pGraphic_Device)
 {
@@ -96,6 +97,32 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 	Hcost // distance from end node
 	Fcost // Gcost + Hcost
 	*/
+
+#pragma region 제외할 타일들
+	
+	CManagement* pManagement = CManagement::Get_Instance();
+	if (nullptr == pManagement)
+		return E_FAIL;
+
+	CLayer* pUnitLayer = pManagement->Find_Layer(CManagement::Get_Instance()->Get_CurrScene(), L"Layer_Unit");
+	if (nullptr == pUnitLayer)
+		return E_FAIL;
+	for (auto& go : *pUnitLayer->Get_ObjectList())
+	{
+		CTransform* pTransform= (CTransform*)go->Find_Component(L"Com_Transform");
+		if (nullptr == pTransform)
+			return E_FAIL;
+
+		_float3 vPos= pTransform->Get_State(CTransform::STATE_POSITION);
+
+		_int tileX = vPos.x / (_int)TILESIZE;
+		_int tileZ = vPos.z / (_int)TILESIZE;
+
+		m_Nodes[tileZ][tileX]->Set_Movable(false);
+
+	}
+#pragma endregion
+
 
 #pragma region 초기화
 

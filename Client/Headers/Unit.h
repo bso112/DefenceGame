@@ -44,6 +44,7 @@ public:
 public:
 	_bool	IsControllable() { return m_tUnitStats.bFriendly && m_bControlMode; }
 	_bool	Get_Friendly() { return m_tUnitStats.bFriendly; }
+	_bool	IsMoving() { return  m_bMoving; }
 	virtual	void		Interact();
 	
 protected:

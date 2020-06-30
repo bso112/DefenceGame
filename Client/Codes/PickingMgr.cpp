@@ -295,7 +295,7 @@ HRESULT CPickingMgr::InteractObject()
 	CUnit* pUnit = dynamic_cast<CUnit*>(m_pFocus);
 	if (nullptr != pUnit)
 	{
-		if (pUnit->IsControllable())
+		if (pUnit->IsControllable() && !pUnit->IsMoving())
 		{
 			POINT pt;
 			GetCursorPos(&pt);
