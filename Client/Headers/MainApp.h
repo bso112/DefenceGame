@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "Management.h"
+#include "FontManager.h"
 #include "GameManager.h"
 
 BEGIN(Client)

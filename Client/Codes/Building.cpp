@@ -3,6 +3,7 @@
 #include "Management.h"
 #include "PickingMgr.h"
 #include "StageUIMgr.h"
+#include "FontManager.h"
 
 CBuilding::CBuilding(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CInteractable(pGraphic_Device)
@@ -78,6 +79,19 @@ void CBuilding::Get_Damage(_int iDmg)
 void CBuilding::Interact()
 {
 	CStageUIMgr::Get_Instance()->Set_StateToPanel_Building(m_tagStat);
+}
+
+void CBuilding::Display_Stats()
+{
+	_float fOffX = 0.f;
+	_float fOffY = 0.f;
+	_tchar szChar[128];
+
+	wsprintf(szChar, L"HP \t :%d / %d", m_tagStat.iHp,_int(m_tagStat.iMaxHP.GetValue()));
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+	wsprintf(szChar, L"Resell \t :%d", _int(m_tagStat.iPrice * 0.5f));
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY + 25.f, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
 }
 
 void CBuilding::Upgrade()

@@ -259,6 +259,9 @@
     <ClInclude Include="..\Headers\GameManager.h">
       <Filter>07.GameMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\FontManager.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -360,6 +363,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\GameManager.cpp">
       <Filter>07.GameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\FontManager.cpp">
+      <Filter>98.Default</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,11 +12,13 @@
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
 {
+	m_tUnitStats.iCost = 100;
 }
 
 CMarine::CMarine(const CMarine & _rhs)
 	: CUnit(_rhs)
 {
+	m_tUnitStats.iCost = _rhs.m_tUnitStats.iCost;
 }
 
 HRESULT CMarine::Ready_GameObject_Prototype()
@@ -72,7 +74,6 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 	m_iRecogRange = 10;
 	m_tUnitStats.iAtt = CValue<int>(20);
-
 
 	return S_OK;
 }

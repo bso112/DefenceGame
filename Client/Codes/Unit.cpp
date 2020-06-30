@@ -3,6 +3,7 @@
 #include "PickingMgr.h"
 #include "AIStateController.h"
 #include "StageUIMgr.h"
+#include "FontManager.h"
 
 CUnit::CUnit(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CInteractable(pGraphic_Device)
@@ -18,7 +19,6 @@ _int CUnit::Update_GameObject(_double TimeDelta)
 {
 	if (nullptr == m_pTransform)
 		return -1;
-
 	//루트따라 이동
 	if (m_bMoving)
 	{
@@ -63,6 +63,26 @@ void CUnit::GoToDst(POINT _pt)
 void CUnit::TakeDamage(_int iDamage, _int iInfection)
 {
 
+}
+
+void CUnit::Display_Stats()
+{
+	_float fOffX = 0.f;
+	_float fOffY = 0.f;
+	_tchar szChar[128];
+
+	wsprintf(szChar, L"Attack \t :%d",_int(m_tUnitStats.iAtt.GetValue()));
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f),700);
+
+	wsprintf(szChar, L"HP\t\t\t :%d / %d", _int(m_tUnitStats.iCurrHp), _int(m_tUnitStats.iMaxHp.GetValue()));
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY + 25.f, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+	wsprintf(szChar, L"Resell \t :%d", _int(m_tUnitStats.iCost * 0.5f));
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY + 50.f, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+
+	//CFontManager::Get_Instance()->Draw_Gold(_float3(g_iWinSizeX*0.5f, g_iWinSizeY*0.5f, 0.f),100, _float3(10.f, 10.f, 10.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f),700);
+		//m_tUnitStats.iAtt;
 }
 
 void CUnit::Interact()

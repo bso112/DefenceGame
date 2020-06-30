@@ -157,6 +157,15 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 	return S_OK;
 }
 
+void CPickingMgr::Display_Stats()
+{
+	if (m_pFocus == nullptr ||
+		m_bStatWinOpen == false)
+		return;
+
+	m_pFocus->Display_Stats();
+}
+
 
 HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 {
@@ -365,6 +374,8 @@ void CPickingMgr::Check_Mouse()
 
 void CPickingMgr::Update_UI()
 {
+	m_bStatWinOpen = false;
+
 	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)
 		m_eMode = MODE_IN_WAVE;
 
@@ -376,7 +387,10 @@ void CPickingMgr::Update_UI()
 
 	if (m_eMode == MODE_BUILDING_INTERACT ||
 		m_eMode == MODE_UNIT_INTERACT)
+	{
+		m_bStatWinOpen = true;
 		ActiveUI(UI_INTERACT_ONLY);
+	}
 
 	if (m_eMode == MODE_BARRICADE ||
 		m_eMode == MONE_COMMANDCENTER ||

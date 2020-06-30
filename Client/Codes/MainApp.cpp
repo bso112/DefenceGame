@@ -48,7 +48,7 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 
 	srand(unsigned int(time(NULL)));
-
+	CFontManager::Get_Instance()->Ready_FontManager(m_pGraphic_Device);
 	return S_OK;
 }
 
@@ -160,7 +160,7 @@ HRESULT CMainApp::Ready_Default_GameObject()
 
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Sky", CSky::Create(m_pGraphic_Device))))
 		return E_FAIL;
-	
+
 
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Marine", CMarine::Create(m_pGraphic_Device))))
 		return E_FAIL;
@@ -203,7 +203,7 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_ViewPort", CVIBuffer_ViewPort::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Terrain", CVIBuffer_Terrain::Create(m_pGraphic_Device, TILEX,TILEZ,TILESIZE))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_VIBuffer_Terrain", CVIBuffer_Terrain::Create(m_pGraphic_Device, TILEX, TILEZ, TILESIZE))))
 		return E_FAIL;
 
 
@@ -235,7 +235,7 @@ HRESULT CMainApp::Ready_Default_Component()
 
 #pragma region TEXTURE
 
-	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Wall", CTexture::Create(m_pGraphic_Device ,L"../Bin/Resources/Textures/Wall/Wall%d.png", 1))))
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Wall", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Wall/Wall%d.png", 1))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Background", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Background/background%d.jpg", 3))))
@@ -286,7 +286,7 @@ HRESULT CMainApp::Ready_Default_Component()
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Resell", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/Resell.png"))))
 		return E_FAIL;
-	
+
 #pragma endregion
 
 
@@ -313,6 +313,6 @@ void CMainApp::Free()
 
 	CPickingMgr::Get_Instance()->Destroy_Instance();
 	CStageUIMgr::Get_Instance()->Destroy_Instance();
-	
+
 	CManagement::Release_Engine();
 }

@@ -126,7 +126,7 @@ HRESULT CStageUIMgr::Ready_StageUIMgr()
 	gameImgDesc.m_eSceneID = SCENE_STAGE1;
 	gameImgDesc.m_iTextureSceneID = SCENE_STATIC;
 	gameImgDesc.m_pTextureTag = L"Component_Texture_Gold";
-	gameImgDesc.m_tBaseDesc = BASEDESC(_float3(50, g_iWinSizeY - 200.f, 0.f), _float3(100.f, 100.f, 1.f));
+	gameImgDesc.m_tBaseDesc = BASEDESC(_float3(45, g_iWinSizeY - 160.f, 0.f), _float3(50.f, 50.f, 1.f));
 	if (nullptr == (m_pGoldIndicator = (CMyImage*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_MyImage", SCENE_STAGE1, L"Layer_UI", &gameImgDesc)))
 		return E_FAIL;
 	CPickingMgr::Get_Instance()->Add_UI(m_pGoldIndicator, CPickingMgr::UI_ALWAYS);

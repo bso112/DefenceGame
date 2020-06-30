@@ -54,8 +54,10 @@ public:
 	//범위안에 가장 가까운 게임오브젝트를 반환한다. 자기자신(pSelf)은 포함하지 않는다.
 	CGameObject* OverlapSphere_Closest(_float3 vPos, _float _fRadius, _float* pDist, CGameObject* pSelf = nullptr);
 	CTerrain* Get_Terrain() { return m_pTerrain; }
+	CONTROL_MODE Get_Mode() { return m_eMode; }
 	HRESULT	Pick_Object(POINT _ViewPortPoint, _float3* pHitPos);
 	void Set_Mode(CONTROL_MODE _eMode) { m_eMode = _eMode; }
+	void Display_Stats();
 
 public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);
@@ -86,5 +88,6 @@ public:
 private:
 	CONTROL_MODE m_eMode = MODE_NORMAL;
 	list<CUI*> m_listUI[UI_END];
+	_bool m_bStatWinOpen = false;
 };
 END

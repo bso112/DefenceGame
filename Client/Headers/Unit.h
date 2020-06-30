@@ -16,6 +16,7 @@ public:
 	{
 		CValue<int>			iMaxHp = CValue<int>(0);
 		_int				iCurrHp = 0;
+		_int				iCost = 0;
 		CValue<int>			iAtt = CValue<int>(0);
 		_int				iAttRange = 0;
 		_int				iMaxInfection = 0;
@@ -33,7 +34,7 @@ public:
 
 public:
 	virtual	void Attack();
-	
+
 public:
 	void	GoToDst(_float3 _vDst);
 	void	GoToDst(POINT _pt);
@@ -41,13 +42,15 @@ public:
 	void	Set_Friendly(_bool _bFriendly) {
 		m_tUnitStats.bFriendly = _bFriendly;
 	}
+	virtual void Display_Stats();
 
 public:
 	_bool	IsControllable() { return m_tUnitStats.bFriendly && m_bControlMode; }
 	_bool	Get_Friendly() { return m_tUnitStats.bFriendly; }
 	_bool	IsMoving() { return  m_bMoving; }
+	virtual _int Get_Cost() { return m_tUnitStats.iCost; }
 	virtual	void		Interact();
-	
+
 protected:
 	virtual	void OnTakeDamage(_int iDamage, _int iInfection);
 protected:
