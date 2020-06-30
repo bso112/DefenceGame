@@ -422,7 +422,7 @@ void CPickingMgr::Update_UI()
 	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)
 		m_eMode = MODE_IN_WAVE;
 
-	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_IN_WAVE)
+	if (CGameManager::Get_Instance()->IsGameStart() == false && m_eMode == MODE_IN_WAVE)
 		m_eMode = MODE_NORMAL;
 
 	InActiveAllUI();

@@ -26,6 +26,7 @@ public:
 	HRESULT OnGameEnd();
 
 	_int	Get_Gold() { return m_iGold; }
+	_int	Get_Wave() { return m_iWave; }
 	void	Add_Gold(_int amount) { m_iGold += amount; }
 	void	Sub_Gold(_int amount) { m_iGold -= amount; }
 private:

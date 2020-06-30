@@ -91,7 +91,8 @@ HRESULT CScene_Stage::Render_Scene()
 
 	CKeyMgr::Get_Instance()->Key_Update();
 
-	CFontManager::Get_Instance()->Draw_Gold(_float3(g_iWinSizeX*0.5f - 20.f, 50.f, 0.f), 1, _float3(5.f, 5., 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+	_int iWave_No = CGameManager::Get_Instance()->Get_Wave();
+	CFontManager::Get_Instance()->Draw_Gold(_float3(g_iWinSizeX*0.5f - 20.f, 50.f, 0.f), iWave_No, _float3(5.f, 5., 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
 
 
 	return S_OK;
