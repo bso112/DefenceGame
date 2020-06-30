@@ -14,6 +14,7 @@ private:
 public:
 	CGameObject* Get_ObjectPointer(_uint iIndex);
 	CComponent* Get_ComponentPointer(const _tchar* pComponentTag, _uint iIndex);
+	list<CGameObject*>*	Get_ObjectList() { return &m_ObjectList; }
 public:
 	HRESULT Ready_Layer();
 	HRESULT Add_Object(CGameObject* pGameObject);
