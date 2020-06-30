@@ -86,14 +86,14 @@ void CBuilding::Interact()
 void CBuilding::Display_Stats()
 {
 	_float fOffX = 0.f;
-	_float fOffY = 0.f;
+	_float fOffY = 10.f;
 	_tchar szChar[128];
 
 	wsprintf(szChar, L"HP \t :%d / %d", m_tagStat.iHp,_int(m_tagStat.iMaxHP.GetValue()));
-	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.25f, 0.f, 0.f, 1.f), 700);
 
 	wsprintf(szChar, L"Resell \t :%d", _int(m_tagStat.iPrice * 0.5f));
-	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY + 25.f, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+	CFontManager::Get_Instance()->Draw_Font(_float3(g_iWinSizeX - 200.f + fOffX, 100.f + fOffY + 25.f, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.25f, 0.f, 0.f, 1.f), 700);
 }
 
 void CBuilding::Upgrade()
