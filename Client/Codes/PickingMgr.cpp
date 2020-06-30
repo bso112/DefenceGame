@@ -157,6 +157,15 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 	return S_OK;
 }
 
+void CPickingMgr::Display_Stats()
+{
+	if (m_pFocus == nullptr ||
+		m_bStatWinOpen == false)
+		return;
+
+	m_pFocus->Display_Stats();
+}
+
 
 HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 {
@@ -175,7 +184,7 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 			m_eMode = MONE_COMMANDCENTER;
 			break;
 		case '3':
-			m_eMode = MODE_UNIT;
+			m_eMode = MODE_ATTACKTOWER;
 			break;
 
 		default:
@@ -271,6 +280,19 @@ HRESULT CPickingMgr::InstallObject()
 		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
+	case MODE_ATTACKTOWER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			break;//설치 실패
+
+		BuildingDesc.vPos = vDest;
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_AttackTower", SCENE_STAGE1, L"Layer_AttackTower", &BuildingDesc)))
+			return E_FAIL;
+
+		//m_eMode = MODE_NORMAL;
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
+		break;
 	case MODE_UNIT:
 	{
 		CMarine::STATEDESC tMarineDesc;
@@ -285,6 +307,7 @@ HRESULT CPickingMgr::InstallObject()
 			return E_FAIL;
 
 		pMarine->Set_Friendly(true);
+		break;
 	}
 	default:
 		break;
@@ -365,6 +388,8 @@ void CPickingMgr::Check_Mouse()
 
 void CPickingMgr::Update_UI()
 {
+	m_bStatWinOpen = false;
+
 	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)
 		m_eMode = MODE_IN_WAVE;
 
@@ -376,7 +401,10 @@ void CPickingMgr::Update_UI()
 
 	if (m_eMode == MODE_BUILDING_INTERACT ||
 		m_eMode == MODE_UNIT_INTERACT)
+	{
+		m_bStatWinOpen = true;
 		ActiveUI(UI_INTERACT_ONLY);
+	}
 
 	if (m_eMode == MODE_BARRICADE ||
 		m_eMode == MONE_COMMANDCENTER ||

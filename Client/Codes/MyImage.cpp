@@ -4,6 +4,9 @@
 #include "VIBuffer_ViewPort.h"
 #include "KeyMgr.h"
 #include "Clock.h"
+#include "PickingMgr.h"
+#include "Unit.h"
+#include "FontManager.h"
 USING(Client)
 
 CMyImage::CMyImage(CMyImage & _rhs)
@@ -121,6 +124,14 @@ HRESULT CMyImage::Render_GameObject()
 
 	ALPHABLEND_END;
 
+	CPickingMgr::Get_Instance()->Display_Stats();
+	Display_Cost();
+	
+	//GOLD!
+	_tchar szChar[128];
+	wsprintf(szChar, L":%d", _int(0));
+	CFontManager::Get_Instance()->Draw_Font(_float3(75.f, 550.f, 0.f), _float3(1.2f, 1.2f, 1.2f), szChar, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
 	return S_OK;
 }
 
@@ -179,6 +190,32 @@ void CMyImage::Free()
 _uint CMyImage::Get_Depth()
 {
 	return m_tDesc.m_iDepth;
+}
+
+void CMyImage::Display_Cost()
+{
+	if (CPickingMgr::Get_Instance()->Get_Mode() != CPickingMgr::MODE_NORMAL)
+		return;
+
+	_int iCost = 0;
+	_float fOffX = 0;
+	_float fOffY = 0;
+
+	iCost = ((CUnit*)(CManagement::Get_Instance()->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade")))->Get_Cost();
+	CFontManager::Get_Instance()->Draw_Gold(_float3(000.f + fOffX, g_iWinSizeY - 100.f + fOffY, 0.f), iCost, _float3(1.2f, 1.2f, 1.2f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+	iCost = ((CUnit*)(CManagement::Get_Instance()->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter")))->Get_Cost();
+	CFontManager::Get_Instance()->Draw_Gold(_float3(100.f + fOffX, g_iWinSizeY - 100.f + fOffY, 0.f), iCost, _float3(1.2f, 1.2f, 1.2f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+	iCost = ((CUnit*)(CManagement::Get_Instance()->Find_Prototype(SCENE_STATIC, L"GameObject_Marine")))->Get_Cost();
+	CFontManager::Get_Instance()->Draw_Gold(_float3(200.f + fOffX, g_iWinSizeY - 100.f + fOffY, 0.f), iCost, _float3(1.2f, 1.2f, 1.2f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+	iCost = ((CUnit*)(CManagement::Get_Instance()->Find_Prototype(SCENE_STATIC, L"GameObject_Marine")))->Get_Cost();
+	CFontManager::Get_Instance()->Draw_Gold(_float3(300.f + fOffX, g_iWinSizeY - 100.f + fOffY, 0.f), iCost, _float3(1.2f, 1.2f, 1.2f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
+	iCost = ((CUnit*)(CManagement::Get_Instance()->Find_Prototype(SCENE_STATIC, L"GameObject_Marine")))->Get_Cost();
+	CFontManager::Get_Instance()->Draw_Gold(_float3(400.f + fOffX, g_iWinSizeY - 100.f + fOffY, 0.f), iCost, _float3(1.2f, 1.2f, 1.2f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
 }
 
 

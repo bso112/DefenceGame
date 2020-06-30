@@ -56,6 +56,8 @@ public:
 	void	Expand(_float3 _vMaxSize, _float3 _fExpandSpeed);
 	virtual _uint Get_Depth();
 
+private:
+	void Display_Cost();
 
 public:
 	static CMyImage*	Create(PDIRECT3DDEVICE9 _pGraphic_Device);

@@ -12,6 +12,7 @@
 #include "Terrain.h"
 #include "Object_Manager.h"
 #include "StageUIMgr.h"
+#include "FontManager.h"
 
 CScene_Stage::CScene_Stage(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
@@ -61,6 +62,8 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 	pPickMgr->Update_UI();
 	pPickMgr->Check_Mouse();
 	pPickMgr->Clear_DeadFocus();
+
+
 	return _int();
 
 }
@@ -83,6 +86,9 @@ HRESULT CScene_Stage::Render_Scene()
 
 
 	CKeyMgr::Get_Instance()->Key_Update();
+
+	CFontManager::Get_Instance()->Draw_Gold(_float3(g_iWinSizeX*0.5f - 20.f, 50.f, 0.f), 1, _float3(5.f, 5., 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f), 700);
+
 
 	return S_OK;
 }

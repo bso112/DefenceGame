@@ -13,11 +13,13 @@
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
 {
+	m_tUnitStats.iCost = 100;
 }
 
 CMarine::CMarine(const CMarine & _rhs)
 	: CUnit(_rhs)
 {
+	m_tUnitStats.iCost = _rhs.m_tUnitStats.iCost;
 }
 
 HRESULT CMarine::Ready_GameObject_Prototype()
@@ -79,7 +81,6 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 	m_tUnitStats.iMaxHp = CValue<int>(30.f);
 	m_tUnitStats.iCurrHp = m_tUnitStats.iMaxHp.GetValue();
 	m_tUnitStats.bFriendly = false;
-
 
 	return S_OK;
 }

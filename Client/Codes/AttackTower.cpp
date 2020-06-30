@@ -153,8 +153,8 @@ HRESULT CAttackTower::SetUp_ConstantTable()
 	m_pShaderCom->Set_Value("g_matProj", &pManagement->Get_Transform(D3DTS_PROJECTION), sizeof(_matrix));
 
 
-	//if (FAILED(m_pTextureCom->Set_TextureOnShader(m_pShaderCom, "g_DiffuseTexture", 0)))
-	//	return E_FAIL;
+	if (FAILED(m_pTextureCom->Set_TextureOnShader(m_pShaderCom, "g_DiffuseTexture", 0)))
+		return E_FAIL;
 
 
 

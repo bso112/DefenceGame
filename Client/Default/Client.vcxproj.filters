@@ -279,6 +279,9 @@
     <ClInclude Include="..\Headers\AttackTower.h">
       <Filter>02.GameObject\Interactable\Building\AttackTower</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\FontManager.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -394,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\AttackTower.cpp">
       <Filter>02.GameObject\Interactable\Building\AttackTower</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\FontManager.cpp">
+      <Filter>98.Default</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

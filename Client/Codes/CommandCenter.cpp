@@ -6,7 +6,7 @@
 CCommandCenter::CCommandCenter(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
 {
-
+	m_tagStat.iPrice = 250;
 }
 
 CCommandCenter::CCommandCenter(const CCommandCenter & rhs)
@@ -14,6 +14,7 @@ CCommandCenter::CCommandCenter(const CCommandCenter & rhs)
 {
 	m_iTileSize = rhs.m_iTileSize;
 	m_fScale = rhs.m_fScale;
+	m_tagStat.iPrice = rhs.m_tagStat.iPrice;
 }
 
 HRESULT CCommandCenter::Ready_GameObject_Prototype()
@@ -51,7 +52,6 @@ _int CCommandCenter::Update_GameObject(_double TimeDelta)
 	m_tagStat.iMaxHP = CValue<int>(300);
 	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
 	m_tagStat.iLevel = 1;
-	m_tagStat.iPrice = 0;
 
 	m_pBoxCollider->Update_Collider(m_pTransformCom->Get_WorldMatrix());
 

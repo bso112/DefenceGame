@@ -6,7 +6,7 @@
 CBarricade::CBarricade(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
 {
-
+	m_tagStat.iPrice = 20;
 }
 
 CBarricade::CBarricade(const CBarricade & rhs)
@@ -14,6 +14,7 @@ CBarricade::CBarricade(const CBarricade & rhs)
 {
 	m_iTileSize = rhs.m_iTileSize;
 	m_fScale = rhs.m_fScale;
+	m_tagStat.iPrice = rhs.m_tagStat.iPrice;
 }
 
 HRESULT CBarricade::Ready_GameObject_Prototype()
@@ -37,7 +38,6 @@ HRESULT CBarricade::Ready_GameObject(void * pArg)
 	m_tagStat.iMaxHP = CValue<int>(120);
 	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
 	m_tagStat.iLevel = 1;
-	m_tagStat.iPrice = 20;
 	//m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
 
 	m_fRealScaleMag = m_fScale * m_iTileSize;
