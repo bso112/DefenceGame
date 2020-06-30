@@ -7,6 +7,7 @@
 CAttackTower::CAttackTower(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
 {
+	m_tagStat.iPrice = 30;
 
 }
 
@@ -15,6 +16,7 @@ CAttackTower::CAttackTower(const CAttackTower & rhs)
 {
 	m_iTileSize = rhs.m_iTileSize;
 	m_fScale = rhs.m_fScale;
+	m_tagStat.iPrice = rhs.m_tagStat.iPrice;
 }
 
 HRESULT CAttackTower::Ready_GameObject_Prototype()
@@ -22,7 +24,7 @@ HRESULT CAttackTower::Ready_GameObject_Prototype()
 	//건축물별 기본 필요정보 수정
 
 	//필요 타일 크기
-	m_iTileSize = 1;
+	m_iTileSize = 2;
 
 	//건축물 자체 크기
 	m_fScale = 1.f;
@@ -38,7 +40,6 @@ HRESULT CAttackTower::Ready_GameObject(void * pArg)
 	m_tagStat.iMaxHP = CValue<int>(60);
 	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
 	m_tagStat.iLevel = 1;
-	m_tagStat.iPrice = 20;
 	//m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
 
 	m_fRealScaleMag = m_fScale * m_iTileSize;
@@ -83,7 +84,7 @@ HRESULT CAttackTower::Render_GameObject()
 		return E_FAIL;
 
 	m_pShaderCom->Begin_Shader();
-	m_pShaderCom->Begin_Pass(RENDER_WARNING);
+	m_pShaderCom->Begin_Pass(RENDER_TOWER);
 
 	m_pVIBufferCom->Render_VIBuffer();
 
@@ -112,7 +113,7 @@ void CAttackTower::OnCollisionStay(CGameObject * _pOther)
 	CUnit* pUnit = dynamic_cast<CUnit*>(_pOther);
 	if (nullptr != pUnit)
 	{
-		pUnit->TakeDamage(100.f, 100.f);
+		pUnit->TakeDamage(1000.f, 1000.f);
 	}
 }
 

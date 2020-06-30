@@ -20,6 +20,7 @@ public:
 	{
 		RENDER_RED,
 		RENDER_WARNING,
+		RENDER_TOWER,
 		RENDER_END,
 	};
 

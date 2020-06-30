@@ -203,6 +203,7 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		//피킹
 		if (m_eMode != MODE_BARRICADE &&
 			m_eMode != MONE_COMMANDCENTER &&
+			m_eMode != MODE_ATTACKTOWER&&
 			m_eMode != MODE_UNIT)
 			PickObject();
 		//설치
@@ -398,6 +399,11 @@ void CPickingMgr::Check_Mouse()
 		pTerrain->BuildCheck(&vDest, iTileSize);
 		break;
 
+	case MODE_ATTACKTOWER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_AttackTower"))->Get_TileSize();
+		pTerrain->BuildCheck(&vDest, iTileSize);
+		break;
+
 	default:
 		break;
 	}
@@ -425,6 +431,7 @@ void CPickingMgr::Update_UI()
 
 	if (m_eMode == MODE_BARRICADE ||
 		m_eMode == MONE_COMMANDCENTER ||
+		m_eMode == MODE_ATTACKTOWER ||
 		m_eMode == MODE_UNIT)
 		ActiveUI(UI_PURCHASE_ONLY);
 }
