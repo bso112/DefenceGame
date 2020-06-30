@@ -8,6 +8,8 @@
 #include "KeyMgr.h"
 #include "Marine.h"
 #include "StageUIMgr.h"
+#include "GameManager.h"
+
 IMPLEMENT_SINGLETON(CPickingMgr)
 CPickingMgr::CPickingMgr()
 {
@@ -187,7 +189,10 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		//인터렉트
 		InteractObject();
 		//피킹
-		PickObject();
+		if (m_eMode != MODE_BARRICADE &&
+			m_eMode != MONE_COMMANDCENTER &&
+			m_eMode != MODE_UNIT)
+			PickObject();
 		//설치
 		InstallObject();
 
@@ -251,7 +256,7 @@ HRESULT CPickingMgr::InstallObject()
 			return E_FAIL;
 
 		//m_eMode = MODE_NORMAL;
-		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
 	case MONE_COMMANDCENTER:
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
@@ -264,7 +269,7 @@ HRESULT CPickingMgr::InstallObject()
 			return E_FAIL;
 
 		//m_eMode = MODE_NORMAL;
-		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+		pTerrain->Set_Movable(&vDest, iTileSize, 0);
 		break;
 	case MODE_UNIT:
 	{
@@ -287,6 +292,24 @@ HRESULT CPickingMgr::InstallObject()
 	return S_OK;
 }
 
+void CPickingMgr::InActiveAllUI()
+{
+	for (auto& UIList : m_listUI)
+	{
+		for (auto& UI : UIList)
+		{
+			UI->Set_Active(false);
+		}
+	}
+}
+
+void CPickingMgr::ActiveUI(UI_TYPE _eType)
+{
+	for (auto& UI : m_listUI[_eType])
+	{
+		UI->Set_Active(true);
+	}
+}
 HRESULT CPickingMgr::InteractObject()
 {
 	if (nullptr == m_pFocus)
@@ -340,6 +363,26 @@ void CPickingMgr::Check_Mouse()
 	}
 }
 
+void CPickingMgr::Update_UI()
+{
+	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)
+		m_eMode = MODE_IN_WAVE;
+
+	InActiveAllUI();
+	ActiveUI(UI_ALWAYS);
+
+	if (m_eMode == MODE_NORMAL)
+		ActiveUI(UI_NORMAL_ONLY);
+
+	if (m_eMode == MODE_BUILDING_INTERACT ||
+		m_eMode == MODE_UNIT_INTERACT)
+		ActiveUI(UI_INTERACT_ONLY);
+
+	if (m_eMode == MODE_BARRICADE ||
+		m_eMode == MONE_COMMANDCENTER ||
+		m_eMode == MODE_UNIT)
+		ActiveUI(UI_PURCHASE_ONLY);
+}
 void CPickingMgr::Clear_DeadFocus()
 {
 	if (nullptr == m_pFocus)

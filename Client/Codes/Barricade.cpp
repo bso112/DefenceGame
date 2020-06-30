@@ -96,6 +96,7 @@ void CBarricade::Upgrade()
 
 void CBarricade::Interact()
 {
+	CBuilding::Interact();
 }
 
 HRESULT CBarricade::Add_Component()

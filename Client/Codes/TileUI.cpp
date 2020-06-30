@@ -118,7 +118,7 @@ HRESULT CTileUI::Render_GameObject()
 
 	if (FAILED(m_pShader->Begin_Shader()))
 		return E_FAIL;
-	if (FAILED(m_pShader->Begin_Pass(int(!m_tDesc.m_bIsOccupied))))
+	if (FAILED(m_pShader->Begin_Pass(int(m_tDesc.m_bMovable))))
 		return E_FAIL;
 
 

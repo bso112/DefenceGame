@@ -97,6 +97,8 @@ void CCommandCenter::Upgrade()
 
 void CCommandCenter::Interact()
 {
+	CBuilding::Interact();
+
 }
 
 HRESULT CCommandCenter::Add_Component()

@@ -7,6 +7,7 @@
 #include "AIState.h"
 #include "Building.h"
 #include "GameManager.h"
+#include "StageUIMgr.h"
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
@@ -98,7 +99,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 		//타깃으로 간다.
 		m_bMoving = true;
 
-		
+
 
 		CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
 		if (nullptr == pTargetTransform) return -1;
@@ -121,7 +122,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 		}
 	}
-	
+
 	//게임이 시작되었고, 타깃이 없을때만
 	if (CGameManager::Get_Instance()->IsGameStart() && nullptr == m_pTarget)
 	{
@@ -332,5 +333,6 @@ _bool CMarine::Picking(POINT _ViewPortPoint, _float3 * pHitPos)
 void CMarine::Interact()
 {
 	m_bControlMode = true;
+	int a = 0;
 	CUnit::Interact();
 }

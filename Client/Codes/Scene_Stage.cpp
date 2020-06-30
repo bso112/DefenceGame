@@ -57,6 +57,7 @@ HRESULT CScene_Stage::Ready_Scene()
 _int CScene_Stage::Update_Scene(_double TimeDelta)
 {
 	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
+	pPickMgr->Update_UI();
 	pPickMgr->Check_Mouse();
 	pPickMgr->Clear_DeadFocus();
 	return _int();

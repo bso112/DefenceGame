@@ -363,16 +363,16 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 	{
 		for (int j = tTempNode.X - ScaleInTiles + 1; j <= tTempNode.X; ++j)
 		{
-			tStateDesc.m_bIsOccupied = 0;
+			tStateDesc.m_bMovable = 1;
 			tStateDesc.m_vPos = _float3((_float)j + 0.5f, 0.f, (_float)i + 0.5f);
 
 			_int iTileUICnt = 0;
 			if (tempLayer != nullptr)
 				iTileUICnt = tempLayer->Get_Size();
 
-			if (m_Nodes[i][j]->bOccupied == 1)
+			if (m_Nodes[i][j]->bMovable == 0)
 			{
-				tStateDesc.m_bIsOccupied = 1;
+				tStateDesc.m_bMovable = 0;
 				if (/*iTileUICnt < ScaleInTiles*ScaleInTiles*/1)
 				{
 					if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", eCurScene, L"Layer_TileUI", &tStateDesc)))
@@ -407,7 +407,7 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 	return !bIsFalse;
 }
 
-void CTerrain::Set_Occupation(_float3 * vPoint, _int ScaleInTiles, _bool bOccupation)
+void CTerrain::Set_Movable(_float3 * vPoint, _int ScaleInTiles, _bool bIsMovable)
 {
 	int iTempX = int(vPoint->x);
 	int iTempZ = int(vPoint->z);
@@ -416,7 +416,7 @@ void CTerrain::Set_Occupation(_float3 * vPoint, _int ScaleInTiles, _bool bOccupa
 	{
 		for (int j = iTempZ - int(ScaleInTiles*0.5f); j <= iTempZ + int(ScaleInTiles*0.5f) - _int(!ScaleInTiles) % 2; j++)
 		{
-			m_Nodes[j][i]->bOccupied = bOccupation;
+			m_Nodes[j][i]->bMovable = bIsMovable;
 		}
 	}
 	return;
