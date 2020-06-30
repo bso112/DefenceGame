@@ -85,7 +85,9 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
 
-
+	//컨트롤 모드
+	if (m_bControlMode)
+		return CUnit::Update_GameObject(TimeDelta);
 
 #pragma region AIHunting
 
@@ -128,8 +130,6 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 		if (nullptr == pPickMgr) return-1;
 		if (nullptr == m_pTransform) return -1;
 
-		if (m_bControlMode)
-			return 0;
 
 		//주변을 조사해서 게임오브젝트를 얻는다.
 		vector<CGameObject*> pTargetVector = pPickMgr->OverlapSphere(m_pTransform->Get_State(CTransform::STATE_POSITION), FLT_MAX, this);
@@ -283,17 +283,7 @@ HRESULT CMarine::Render_GameObject()
 
 HRESULT CMarine::OnKeyDown(_int KeyCode)
 {
-	if (KeyCode == VK_LBUTTON)
-	{
-		if (IsControllable())
-		{
-			POINT pt;
-			GetCursorPos(&pt);
-			ScreenToClient(g_hWnd, &pt);
-			GoToDst(pt);
 
-		}
-	}
 	return S_OK;
 }
 
@@ -342,5 +332,5 @@ _bool CMarine::Picking(POINT _ViewPortPoint, _float3 * pHitPos)
 void CMarine::Interact()
 {
 	m_bControlMode = true;
-	int a = 0;
+	CUnit::Interact();
 }

@@ -148,8 +148,8 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 		});
 
 
-		vecPicked.front()->Interact();
-
+		m_pFocus = vecPicked.front();
+		m_pFocus->Interact();
 	}
 
 	return S_OK;
@@ -184,13 +184,16 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 
 	if (KeyCode == VK_LBUTTON)
 	{
+		//인터렉트
+		InteractObject();
 		//피킹
 		PickObject();
 		//설치
 		InstallObject();
 
-		return S_OK;
 	}
+
+	return S_OK;
 }
 
 HRESULT CPickingMgr::PickObject()
@@ -216,18 +219,18 @@ HRESULT CPickingMgr::InstallObject()
 	POINT tTemp;
 	GetCursorPos(&tTemp);
 	ScreenToClient(g_hWnd, &tTemp);
-	
+
 	CStageUIMgr* pStageUIMgr = CStageUIMgr::Get_Instance();
 	vector<RECT> vecRc = pStageUIMgr->Get_UIRect();
 	for (auto& rc : vecRc)
 	{
-		if (PtInRect(&rc,tTemp))
+		if (PtInRect(&rc, tTemp))
 			return NO_ERROR;
 	}
 
 	Get_WorldMousePos(tTemp, &vDest);
 	vDest.y = 0;
-	
+
 
 	CManagement* pManagement = CManagement::Get_Instance();
 	//_float3 vDest = vHitPos;
@@ -271,7 +274,7 @@ HRESULT CPickingMgr::InstallObject()
 		tMarineDesc.eTextureSceneID = SCENE_STATIC;
 		tMarineDesc.eSceneID = SCENE_STAGE1;
 		tMarineDesc.tBaseDesc = BASEDESC(vDest, _float3(1.f, 1.f, 1.f));
-		
+
 		CMarine* pMarine = nullptr;
 		if (nullptr == (pMarine = (CMarine*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
 			return E_FAIL;
@@ -281,6 +284,26 @@ HRESULT CPickingMgr::InstallObject()
 	default:
 		break;
 	}
+	return S_OK;
+}
+
+HRESULT CPickingMgr::InteractObject()
+{
+	if (nullptr == m_pFocus)
+		return S_OK;
+
+	CUnit* pUnit = dynamic_cast<CUnit*>(m_pFocus);
+	if (nullptr != pUnit)
+	{
+		if (pUnit->IsControllable())
+		{
+			POINT pt;
+			GetCursorPos(&pt);
+			ScreenToClient(g_hWnd, &pt);
+			pUnit->GoToDst(pt);
+		}
+	}
+
 	return S_OK;
 }
 
@@ -315,6 +338,14 @@ void CPickingMgr::Check_Mouse()
 	default:
 		break;
 	}
+}
+
+void CPickingMgr::Clear_DeadFocus()
+{
+	if (nullptr == m_pFocus)
+		return;
+	if (m_pFocus->Get_Dead())
+		m_pFocus = nullptr;
 }
 
 void CPickingMgr::Free()

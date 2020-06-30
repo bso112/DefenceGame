@@ -47,14 +47,17 @@ public:
 public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);
 	virtual void Check_Mouse();
+	void	Clear_DeadFocus();
 
 private:
 	HRESULT	PickObject();
 	HRESULT	InstallObject();
+	HRESULT	InteractObject();
 private:
 	CTerrain*					m_pTerrain = nullptr;
 	list<CInteractable*>		m_listObject;
 	CInteractable*				m_pFocus = nullptr;
+
 public:
 	virtual void Free() override;
 

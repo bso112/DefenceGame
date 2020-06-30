@@ -26,6 +26,7 @@ _int CUnit::Update_GameObject(_double TimeDelta)
 			m_bMoving = false;
 			m_iCurrDst = 0;
 			m_Route.clear();
+			m_bControlMode = false;
 			return 0;
 		}
 
@@ -61,6 +62,10 @@ void CUnit::GoToDst(POINT _pt)
 void CUnit::TakeDamage(_int iDamage, _int iInfection)
 {
 
+}
+
+void CUnit::Interact()
+{
 }
 
 void CUnit::OnTakeDamage(_int iDamage, _int iInfection)

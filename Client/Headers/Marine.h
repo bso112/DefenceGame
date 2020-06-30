@@ -45,6 +45,8 @@ private:
 	//A*¸¦ À§ÇÑ Å¸±ê
 	CGameObject*	m_pTarget = nullptr;
 
+
+	
 public:
 	static CMarine*	Create(PDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone_GameObject(void * pArg) override;
