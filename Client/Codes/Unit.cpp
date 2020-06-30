@@ -47,7 +47,7 @@ void CUnit::Attack()
 
 void CUnit::GoToDst(_float3 _vDst)
 {
-	CPickingMgr::Get_Instance()->Get_Route(m_pTransform->Get_State(CTransform::STATE_POSITION), _vDst, m_Route);
+	CPickingMgr::Get_Instance()->Get_Route(m_pTransform->Get_State(CTransform::STATE_POSITION), _vDst, m_Route, this);
 	if (m_Route.size() > 0)
 		m_bMoving = true;
 
@@ -55,7 +55,7 @@ void CUnit::GoToDst(_float3 _vDst)
 
 void CUnit::GoToDst(POINT _pt)
 {
-	CPickingMgr::Get_Instance()->Get_Route(m_pTransform->Get_State(CTransform::STATE_POSITION), _pt, m_Route);
+	CPickingMgr::Get_Instance()->Get_Route(m_pTransform->Get_State(CTransform::STATE_POSITION), _pt, m_Route, this);
 	if (m_Route.size() > 0)
 		m_bMoving = true;
 }

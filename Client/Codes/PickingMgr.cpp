@@ -51,15 +51,15 @@ HRESULT CPickingMgr::UnRegister_Observer(CInteractable * pObj)
 	return S_OK;
 }
 
-HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out)
+HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out, CGameObject* pSelf)
 {
 	if (nullptr == m_pTerrain)
 		return E_FAIL;
 
-	return m_pTerrain->Get_Route(_WorldSrc, _WorldDst, _out);
+	return m_pTerrain->Get_Route(_WorldSrc, _WorldDst, _out, pSelf);
 }
 
-HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out)
+HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out, CGameObject* pSelf)
 {
 	if (nullptr == m_pTerrain)
 		return E_FAIL;
@@ -68,7 +68,7 @@ HRESULT CPickingMgr::Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_fl
 
 	if (m_pTerrain->Picking(_ViewPortDst, &vWorldPt))
 	{
-		m_pTerrain->Get_Route(_WorldSrc, vWorldPt, _out);
+		m_pTerrain->Get_Route(_WorldSrc, vWorldPt, _out, pSelf);
 		return S_OK;
 	}
 	return E_FAIL;

@@ -44,8 +44,8 @@ public:
 	HRESULT	Register_Observer(CInteractable* pObj);
 	HRESULT	UnRegister_Observer(CInteractable* pObj);
 public:
-	HRESULT	Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out);
-	HRESULT Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out);
+	HRESULT	Get_Route(_float3 _WorldSrc, _float3 _WorldDst, vector<_float3>& _out, CGameObject* pSelf);
+	HRESULT Get_Route(_float3 _WorldSrc, POINT _ViewPortDst, vector<_float3>& _out, CGameObject* pSelf);
 	_bool	Get_WorldMousePos(POINT _pt, _float3* _vWorldMouse);
 
 public:

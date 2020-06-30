@@ -74,7 +74,7 @@ HRESULT CTerrain::Render_GameObject()
 	return S_OK;
 }
 
-HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
+HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out, CGameObject* pSelf)
 {
 	_out.clear();
 
@@ -99,6 +99,9 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 	*/
 
 #pragma region 제외할 타일들
+
+	if(nullptr == pSelf)
+		return E_FAIL;
 	
 	CManagement* pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement)
@@ -109,6 +112,8 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 		return E_FAIL;
 	for (auto& go : *pUnitLayer->Get_ObjectList())
 	{
+		if (go == pSelf)
+			continue;
 		CTransform* pTransform= (CTransform*)go->Find_Component(L"Com_Transform");
 		if (nullptr == pTransform)
 			return E_FAIL;
