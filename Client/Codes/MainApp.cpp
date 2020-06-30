@@ -18,8 +18,10 @@
 #include "Barricade.h"
 #include "PickingMgr.h"
 #include "Marine.h"
+#include "TileUI.h"
 #include "AIStateController.h"
 #include <time.h>
+
 
 USING(Client)
 
@@ -168,6 +170,9 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Barricade", CBarricade::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_TileUI", CTileUI::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -219,6 +224,9 @@ HRESULT CMainApp::Ready_Default_Component()
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_Solid", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_Solid.fx"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Shader_Rect_NoImg", CShader::Create(m_pGraphic_Device, L"../Bin/ShaderFiles/Shader_Rect_NoImg.fx"))))
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_AIStateCon", CAIStateController::Create(m_pGraphic_Device))))

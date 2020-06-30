@@ -18,6 +18,7 @@
 #include "CollisionMgr.h"
 #include "Input_Device.h"
 #include "GameObject.h"
+#include "Layer.h"
 
 
 BEGIN(Engine)
@@ -67,6 +68,7 @@ public:
 	HRESULT Clear_Object_Manager(_uint iSceneID);
 	CGameObject* Find_Prototype(_uint iPrototypeSceneID, const _tchar* pPrototypeTag);
 	CLayer*		Find_Layer(_uint iSceneID, const _tchar* pLayerTag);
+
 #pragma endregion
 
 

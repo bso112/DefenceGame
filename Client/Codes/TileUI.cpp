@@ -36,8 +36,12 @@ HRESULT CTileUI::Ready_GameObject(void* pArg)
 		return E_FAIL;
 
 
-	m_pTransform->SetUp_Position(m_tDesc.m_tBaseDesc.vPos);
-	m_pTransform->SetUp_Scale(m_tDesc.m_tBaseDesc.vSize);
+	m_pTransform->SetUp_Position(m_tDesc.m_vPos);
+	m_pTransform->Set_State(Engine::CTransform::STATE_LOOK, _float3(0.f, -1.f, 0.f));
+	m_pTransform->Set_State(Engine::CTransform::STATE_UP, _float3(0.f, 0.f, 1.f));
+	m_pTransform->Set_State(Engine::CTransform::STATE_RIGHT, _float3(1.f, 0.f, 0.f));
+	m_bDead = 0;
+	//m_pTransform->SetUp_Scale(m_tDesc.m_tBaseDesc.vSize);
 	return S_OK;
 }
 
@@ -50,17 +54,17 @@ _int CTileUI::Update_GameObject(_double _timeDelta)
 	if (m_bDead)
 		return -1;
 
-	if (m_bExpand)
-	{
-		if ( nullptr == m_pTransform)
-			return -1;
+	//if (m_bExpand)
+	//{
+	//	if (nullptr == m_pTransform)
+	//		return -1;
 
-		_float3 vOldSize = m_pTransform->Get_Scaled();
-		_float3 vSize =  _float3(vOldSize.x + _float(m_vExpandSpeed.x * _timeDelta), vOldSize.y + _float(m_vExpandSpeed.y * _timeDelta), vOldSize.z + _float(m_vExpandSpeed.z * _timeDelta));
-		m_pTransform->SetUp_Scale(vSize);
-		if (vSize.x >= m_vMaxExpandSize.x || vSize.y >= m_vMaxExpandSize.y || vSize.z >= m_vMaxExpandSize.z)
-			m_bExpand = false;
-	}
+	//	_float3 vOldSize = m_pTransform->Get_Scaled();
+	//	_float3 vSize = _float3(vOldSize.x + _float(m_vExpandSpeed.x * _timeDelta), vOldSize.y + _float(m_vExpandSpeed.y * _timeDelta), vOldSize.z + _float(m_vExpandSpeed.z * _timeDelta));
+	//	m_pTransform->SetUp_Scale(vSize);
+	//	if (vSize.x >= m_vMaxExpandSize.x || vSize.y >= m_vMaxExpandSize.y || vSize.z >= m_vMaxExpandSize.z)
+	//		m_bExpand = false;
+	//}
 
 
 	return 0;
@@ -75,7 +79,7 @@ _int CTileUI::Late_Update_GameObject(_double _timeDelta)
 	if (nullptr == m_pRenderer)
 		return -1;
 
-	if (FAILED(m_pRenderer->Add_RenderGroup(CRenderer::RENDER_UI, this)))
+	if (FAILED(m_pRenderer->Add_RenderGroup(CRenderer::RENDER_3DUI, this)))
 		return -1;
 
 	return 0;
@@ -83,32 +87,42 @@ _int CTileUI::Late_Update_GameObject(_double _timeDelta)
 
 HRESULT CTileUI::Render_GameObject()
 {
-	if (!m_bActive)
-		return 0;
+	//if (!m_bActive)
+	//	return 0;
 
 	if (nullptr == m_pVIBuffer ||
-		nullptr == m_pTransform ||
-		nullptr == m_pTexture)
+		nullptr == m_pTransform/* ||
+		nullptr == m_pTexture*/)
 		return E_FAIL;
 
 	CManagement* pEngineMgr = CManagement::Get_Instance();
 
+	m_pGraphic_Device->SetRenderState(D3DRS_ZENABLE, false);
 
-	if (FAILED(m_pVIBuffer->Set_Transform(m_pTransform->Get_WorldMatrix())))
-		return E_FAIL;
+	_matrix matView = pEngineMgr->Get_Transform(D3DTS_VIEW);
+	_matrix matProj = pEngineMgr->Get_Transform(D3DTS_PROJECTION);
+	//if (FAILED(m_pVIBuffer->Set_Transform(m_pTransform->Get_WorldMatrix())))
+	//	return E_FAIL;
 
 	ALPHABLEND;
 
-	if (FAILED(m_pTexture->Set_TextureOnShader(m_pShader, "g_BaseTexture", 0)))
+	//if (FAILED(m_pTexture->Set_TextureOnShader(m_pShader, "g_BaseTexture", 0)))
+	//	return E_FAIL;
+
+	if (FAILED(m_pShader->Set_Value("g_matWorld", &m_pTransform->Get_WorldMatrix(), sizeof(_matrix))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Set_Value("g_matView", &matView, sizeof(_matrix))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Set_Value("g_matProj", &matProj, sizeof(_matrix))))
 		return E_FAIL;
 
 	if (FAILED(m_pShader->Begin_Shader()))
 		return E_FAIL;
-	if (FAILED(m_pShader->Begin_Pass(0)))
+	if (FAILED(m_pShader->Begin_Pass(int(!m_tDesc.m_bIsOccupied))))
 		return E_FAIL;
 
 
-	if (FAILED(m_pVIBuffer->Render()))
+	if (FAILED(m_pVIBuffer->Render_VIBuffer()))
 		return E_FAIL;
 
 
@@ -120,6 +134,11 @@ HRESULT CTileUI::Render_GameObject()
 
 
 	ALPHABLEND_END;
+
+	m_pGraphic_Device->SetRenderState(D3DRS_ZENABLE, true);
+
+
+	m_bDead = 1;
 
 	return S_OK;
 }
@@ -178,7 +197,8 @@ void CTileUI::Free()
 
 _uint CTileUI::Get_Depth()
 {
-	return m_tDesc.m_iDepth;
+	//return m_tDesc.m_iDepth;
+	return 0;
 }
 
 

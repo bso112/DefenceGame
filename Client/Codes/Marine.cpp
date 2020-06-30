@@ -69,7 +69,7 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 
 
-	m_tUnitStats.bFriendly = true;
+	//m_tUnitStats.bFriendly = true;
 	m_iRecogRange = 10;
 
 	m_tUnitStats.iAtt = CValue<int>(20);

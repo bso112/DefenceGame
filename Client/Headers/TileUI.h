@@ -9,14 +9,8 @@ class CTileUI : public CUI
 public:
 	typedef struct tagStateDesc
 	{
-		BASEDESC				m_tBaseDesc;
-		//키매니저에 등록해야하는데 버튼은 어느씬에든 있을 수 있으니까 인자로 받아야함.
-		SCENEID					m_eSceneID;
-		const _tchar*			m_pTextureTag = L"";
-		_uint					m_iTextureSceneID = SCENE_END;
-		_uint					m_iTextureID = 0;
-		_uint					m_iShaderPass = 0;
-		_uint					m_iDepth = 0;
+		_float3					m_vPos;
+		_bool					m_bIsOccupied;
 
 
 	}STATEDESC;
@@ -28,7 +22,7 @@ protected:
 
 
 protected:
-	CVIBuffer_ViewPort*			m_pVIBuffer = nullptr;
+	CVIBuffer*			m_pVIBuffer = nullptr;
 	CTransform*			m_pTransform = nullptr;
 	CTexture*			m_pTexture = nullptr;
 	CShader*			m_pShader = nullptr;
@@ -41,9 +35,6 @@ public:
 	_bool			m_bExpand = false;
 	_float3			m_vMaxExpandSize;
 	_float3			m_vExpandSpeed;
-	
-
-
 
 public:
 	virtual HRESULT Ready_GameObject_Prototype();

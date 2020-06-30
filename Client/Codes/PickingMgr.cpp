@@ -3,6 +3,8 @@
 #include "Terrain.h"
 #include "Management.h"
 #include "Interactable.h"
+#include "CommandCenter.h"
+#include "Barricade.h"
 #include "KeyMgr.h"
 
 IMPLEMENT_SINGLETON(CPickingMgr)
@@ -16,6 +18,7 @@ HRESULT CPickingMgr::Ready_PickingMgr(CTerrain * pTerrain)
 	Safe_AddRef(m_pTerrain);
 
 	CKeyMgr::Get_Instance()->RegisterObserver(SCENE_STATIC, this);
+	m_eMode = MODE_NORMAL;
 	return S_OK;
 }
 
@@ -154,15 +157,37 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 
 HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 {
-	//피킹
+	//설치
+	if (m_eMode == MODE_NORMAL)
+	{
+		switch (KeyCode)
+		{
+		case '1':
+			m_eMode = MODE_BARRICADE;
+			break;
+		case '2':
+			m_eMode = MONE_COMMANDCENTER;
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
 	if (KeyCode == VK_LBUTTON)
 	{
+		//피킹
 		PickObject();
+
+
+		InstallObject();
+
+		return S_OK;
 	}
-	return S_OK;
 }
 
-void CPickingMgr::PickObject()
+HRESULT CPickingMgr::PickObject()
 {
 
 	POINT pt;
@@ -173,7 +198,92 @@ void CPickingMgr::PickObject()
 	//오브젝트 피킹 후 인터렉트
 	Pick_Object(pt, &vHitPos);
 
+
 	return S_OK;
+}
+
+HRESULT CPickingMgr::InstallObject()
+{
+	//타일생성
+	_float3 vDest;
+	POINT tTemp;
+	GetCursorPos(&tTemp);
+	ScreenToClient(g_hWnd, &tTemp);
+	Get_WorldMousePos(tTemp, &vDest);
+	vDest.y = 0;
+
+	CManagement* pManagement = CManagement::Get_Instance();
+	//_float3 vDest = vHitPos;
+	CTerrain* pTerrain = Get_Terrain();
+	int iTileSize = 0;
+	CBuilding::BUILDING_DESC BuildingDesc;
+
+	switch (m_eMode)
+	{
+	case MODE_BARRICADE:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			return S_OK;//설치 실패
+
+		BuildingDesc.vPos = vDest;
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
+			return E_FAIL;
+
+		m_eMode = MODE_NORMAL;
+		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+		break;
+
+	case MONE_COMMANDCENTER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+
+		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
+			return S_OK;//설치 실패
+
+		BuildingDesc.vPos = vDest;
+		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
+			return E_FAIL;
+
+		m_eMode = MODE_NORMAL;
+		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
+		break;
+
+	default:
+		break;
+	}
+}
+
+void CPickingMgr::Check_Mouse()
+{
+	if (m_eMode == MODE_NORMAL)
+		return;
+
+	_float3 vDest;
+	POINT tTemp;
+	GetCursorPos(&tTemp);
+	ScreenToClient(g_hWnd, &tTemp);
+	Get_WorldMousePos(tTemp, &vDest);
+	vDest.y = 0;
+
+	CManagement* pManagement = CManagement::Get_Instance();
+	CTerrain* pTerrain = Get_Terrain();
+	int iTileSize = 0;
+
+	switch (m_eMode)
+	{
+	case MODE_BARRICADE:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
+		pTerrain->BuildCheck(&vDest, iTileSize);
+		break;
+
+	case MONE_COMMANDCENTER:
+		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
+		pTerrain->BuildCheck(&vDest, iTileSize);
+		break;
+
+	default:
+		break;
+	}
 }
 
 void CPickingMgr::Free()

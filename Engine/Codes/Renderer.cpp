@@ -40,6 +40,8 @@ HRESULT CRenderer::Draw_RenderGroup()
 		return E_FAIL;
 	if (FAILED(Render_AlphaBlend()))
 		return E_FAIL;
+	if (FAILED(Render_3DUI()))
+		return E_FAIL;
 	if (FAILED(Render_UI()))
 		return E_FAIL;
 
@@ -79,7 +81,7 @@ HRESULT CRenderer::Render_NonAlpha()
 HRESULT CRenderer::Render_AlphaBlend()
 {
 	//깊이를 내림차순으로 정렬
-	m_RenderGroup[RENDER_ALPHABLEND].sort([](CGameObject* pA, CGameObject* pB) 
+	m_RenderGroup[RENDER_ALPHABLEND].sort([](CGameObject* pA, CGameObject* pB)
 	{
 		CTransform* pTransformA = (CTransform*)pA->Find_Component(L"Com_Transform");
 		CTransform* pTransformB = (CTransform*)pB->Find_Component(L"Com_Transform");
@@ -97,7 +99,7 @@ HRESULT CRenderer::Render_AlphaBlend()
 	});
 
 
-	
+
 	for (auto& pGameObject : m_RenderGroup[RENDER_ALPHABLEND])
 	{
 		if (FAILED(pGameObject->Render_GameObject()))
@@ -158,7 +160,7 @@ CComponent * CRenderer::Clone_Component(void * pArg)
 {
 	AddRef();
 
-	return this;	
+	return this;
 }
 
 void CRenderer::Free()
