@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Headers\CommandCenter.h"
 #include "Management.h"
+#include "PickingMgr.h"
 
 CCommandCenter::CCommandCenter(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
@@ -37,6 +38,7 @@ HRESULT CCommandCenter::Ready_GameObject(void * pArg)
 	m_pTransformCom->SetUp_Scale(_float3(m_fRealScaleMag, m_fRealScaleMag, m_fRealScaleMag));
 	m_pTransformCom->SetUp_Position(((CBuilding::BUILDING_DESC*)pArg)->vPos);
 
+	CPickingMgr::Get_Instance()->Register_Observer(this);
 	return S_OK;
 }
 
@@ -51,8 +53,7 @@ _int CCommandCenter::Update_GameObject(_double TimeDelta)
 	m_tagStat.iLevel = 1;
 	m_tagStat.iPrice = 0;
 
-	//m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
-	return _int();
+	return CBuilding::Update_GameObject(TimeDelta);
 }
 
 _int CCommandCenter::Late_Update_GameObject(_double TimeDelta)
@@ -63,6 +64,8 @@ _int CCommandCenter::Late_Update_GameObject(_double TimeDelta)
 
 	if (FAILED(m_pRendererCom->Add_RenderGroup(CRenderer::RENDER_ALPHABLEND, this)))
 		return -1;
+
+	CBuilding::Late_Update_GameObject(TimeDelta);
 
 	return _int();
 }
@@ -170,6 +173,7 @@ CGameObject * CCommandCenter::Clone_GameObject(void * pArg)
 
 void CCommandCenter::Free()
 {
+	CPickingMgr::Get_Instance()->UnRegister_Observer(this);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);

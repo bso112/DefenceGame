@@ -3,7 +3,8 @@
 #include "PickingMgr.h"
 #include "KeyMgr.h"
 #include "PickingMgr.h"
-
+#include "AIStateController.h"
+#include "AIState.h"
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
@@ -37,6 +38,9 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Shader_Cube", L"Com_Shader_Cube", (CComponent**)&m_pShader)))
 		return E_FAIL;
+	if (FAILED(Add_Component(SCENE_STATIC, L"Component_AIStateCon", L"Com_AIStateCon", (CComponent**)&m_pAICon)))
+		return E_FAIL;
+
 
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_VIBuffer_Cube", L"Com_VIBuffer_Cube", (CComponent**)&m_pVIBuffer)))
 		return E_FAIL;
@@ -48,12 +52,26 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 		return E_FAIL;
 
 	m_pTransform->SetUp_Position(m_tDesc.tBaseDesc.vPos);
-
 	m_pTransform->SetUp_Scale(m_tDesc.tBaseDesc.vSize);
 
 	CKeyMgr::Get_Instance()->RegisterObserver(m_tDesc.eSceneID, this);
 
+	m_pAICon->Set_State(CAIState::STATE_IDLE, new CAIIdle(this));
+	m_pAICon->Set_State(CAIState::STATE_HUNTING, new CAIHunting(this));
+	m_pAICon->Set_State(CAIState::STATE_RETREAT, new CAIRetreat(this));
+	m_pAICon->Set_State(CAIState::STATE_WAIT, new CAIWait(this));
+
+	m_pAICon->Set_Default_State(CAIState::STATE_HUNTING, CAIState::STATEDESC(), CManagement::Get_Instance()->Get_TimeDelta(L"Timer_60"));
+
+
+
 	m_bFriendly = true;
+	m_iRecogRange = 10;
+	
+	m_tUnitStats.iAtt = CValue<int>(20);
+
+	//피킹매니저에 등록. 
+	CPickingMgr::Get_Instance()->Register_Observer(this);
 
 	return S_OK;
 }
@@ -66,14 +84,17 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
-	//피킹매니저에 등록. Update에서 해야함.
-	CPickingMgr::Get_Instance()->Add_Interactable(this);
-
 	return CUnit::Update_GameObject(TimeDelta);
 }
 
 _int CMarine::Late_Update_GameObject(_double TimeDelta)
 {
+
+
+	if (nullptr == m_pAICon) return -1;
+	m_pAICon->Update(CAIState::STATEDESC(), TimeDelta);
+
+
 	//렌더러에 등록
 	if (nullptr == m_pRenderer) return -1;
 	m_pRenderer->Add_RenderGroup(CRenderer::RENDER_NONALPHA, this);
@@ -82,6 +103,7 @@ _int CMarine::Late_Update_GameObject(_double TimeDelta)
 	CManagement* pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement) return -1;
 	pManagement->Add_CollisionGroup(CCollisionMgr::COL_BOX, this);
+
 
 	return _int();
 }
@@ -120,7 +142,6 @@ HRESULT CMarine::Render_GameObject()
 		return E_FAIL;
 	return S_OK;
 
-	return S_OK;
 }
 
 HRESULT CMarine::OnKeyDown(_int KeyCode)
@@ -165,15 +186,15 @@ CGameObject * CMarine::Clone_GameObject(void * pArg)
 }
 void CMarine::Free()
 {
+	CPickingMgr::Get_Instance()->UnRegister_Observer(this);
 	CKeyMgr::Get_Instance()->UnRegisterObserver(m_tDesc.eSceneID, this);
 
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pShader);
 	Safe_Release(m_pTexture);
-	Safe_Release(m_pTransform);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pBoxCollider);
-	CGameObject::Free();
+	CUnit::Free();
 }
 
 _bool CMarine::Picking(POINT _ViewPortPoint, _float3 * pHitPos)

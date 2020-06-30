@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Headers\Barricade.h"
 #include "Management.h"
+#include "PickingMgr.h"
 
 CBarricade::CBarricade(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
@@ -43,17 +44,17 @@ HRESULT CBarricade::Ready_GameObject(void * pArg)
 	m_pTransformCom->SetUp_Scale(_float3(m_fRealScaleMag, m_fRealScaleMag, m_fRealScaleMag));
 	m_pTransformCom->SetUp_Position(((CBuilding::BUILDING_DESC*)pArg)->vPos);
 
+	
+
+	CPickingMgr::Get_Instance()->Register_Observer(this);
+
 	return S_OK;
 }
 
 _int CBarricade::Update_GameObject(_double TimeDelta)
 {
-	CManagement*	pManagement = CManagement::Get_Instance();
-	if (nullptr == pManagement)
-		return E_FAIL;
 
-	//m_pTransformCom->SetUp_Position(pManagement->Get_CamPosition());
-	return _int();
+	return 0;
 }
 
 _int CBarricade::Late_Update_GameObject(_double TimeDelta)
@@ -171,6 +172,7 @@ CGameObject * CBarricade::Clone_GameObject(void * pArg)
 
 void CBarricade::Free()
 {
+	CPickingMgr::Get_Instance()->UnRegister_Observer(this);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);

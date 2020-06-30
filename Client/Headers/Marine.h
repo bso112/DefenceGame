@@ -7,7 +7,6 @@ public:
 	typedef	struct tagStateDesc
 	{
 		BASEDESC			tBaseDesc;
-		UNITSTATS			tUnitStats;
 		SCENEID				eTextureSceneID = SCENE_END;
 		SCENEID				eSceneID = SCENE_END;
 		const _tchar*		pTextureTag = nullptr;

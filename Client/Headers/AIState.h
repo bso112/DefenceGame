@@ -22,6 +22,9 @@ public:
 public:
 	explicit CAIState(CUnit* _pActor) { m_pActor = _pActor; Safe_AddRef(m_pActor); }
 
+protected:
+	
+
 public:
 	virtual STATE	Update(STATEDESC _tDesc, _double _timeDelta) = 0;
 	virtual STATE	Start(STATEDESC _tDesc, _double _timeDelta) = 0;

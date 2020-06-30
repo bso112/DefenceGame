@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Headers\Unit.h"
 #include "PickingMgr.h"
+#include "AIStateController.h"
 
 CUnit::CUnit(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CInteractable(pGraphic_Device)
@@ -68,6 +69,8 @@ void CUnit::OnTakeDamage(_int iDamage, _int iInfection)
 
 void CUnit::Free()
 {
+	Safe_Release(m_pAICon);
+	Safe_Release(m_pTransform);
 	CInteractable::Free();
 }
 

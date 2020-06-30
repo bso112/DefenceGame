@@ -22,25 +22,29 @@ HRESULT CPickingMgr::Ready_PickingMgr(CTerrain * pTerrain)
 	return S_OK;
 }
 
-_int CPickingMgr::Clear_PickingMgr()
-{
-	//쓴다음에는 비운다.
-	for (auto& obj : m_listObject)
-		Safe_Release(obj);
-
-	m_listObject.clear();
-
-	return 0;
-}
 
 
-HRESULT CPickingMgr::Add_Interactable(CInteractable * pObj)
+HRESULT CPickingMgr::Register_Observer(CInteractable * pObj)
 {
 	if (nullptr == pObj)
 		return E_FAIL;
 
-	Safe_AddRef(pObj);
 	m_listObject.push_back(pObj);
+	return S_OK;
+}
+
+HRESULT CPickingMgr::UnRegister_Observer(CInteractable * pObj)
+{
+	auto& iter = m_listObject.begin();
+	while (iter != m_listObject.end())
+	{
+		if (*iter == pObj)
+		{
+			iter = m_listObject.erase(iter);
+		}
+		else
+			++iter;
+	}
 	return S_OK;
 }
 
@@ -72,11 +76,14 @@ _bool CPickingMgr::Get_WorldMousePos(POINT _pt, _float3* _vWorldMouse)
 	return m_pTerrain->Picking(_pt, _vWorldMouse);
 }
 
-vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius)
+vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius, CGameObject* pSelf)
 {
 	vector<CGameObject*> vecGameObject;
 	for (auto& obj : m_listObject)
 	{
+		if (obj == pSelf)
+			continue;
+
 		CTransform* pObjTransform = (CTransform*)obj->Find_Component(L"Com_Transform");
 		if (nullptr == pObjTransform) return vector<CGameObject*>();
 		_float fDist = D3DXVec3Length(&(vPos - pObjTransform->Get_State(CTransform::STATE_POSITION)));
@@ -89,6 +96,30 @@ vector<CGameObject*> CPickingMgr::OverlapSphere(_float3 vPos, _float _fRadius)
 		return vector<CGameObject*>();
 
 	return vecGameObject;
+}
+
+CGameObject * CPickingMgr::OverlapSphere_Closest(_float3 vPos, _float _fRadius, _float* pDist, CGameObject* pSelf)
+{
+	_float minDist = FLT_MAX;
+	CGameObject* pClosest = nullptr;
+	for (auto& obj : m_listObject)
+	{
+		if (obj == pSelf)
+			continue;
+		CTransform* pObjTransform = (CTransform*)obj->Find_Component(L"Com_Transform");
+		if (nullptr == pObjTransform) return nullptr;
+		_float fDist = D3DXVec3Length(&(vPos - pObjTransform->Get_State(CTransform::STATE_POSITION)));
+		if (fDist > _fRadius)
+			continue;
+		if (minDist > fDist)
+		{
+			minDist = fDist;
+			pClosest = obj;
+		}
+	}
+
+	*pDist = minDist;
+	return pClosest;
 }
 
 HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
@@ -120,11 +151,6 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 
 	}
 
-	//쓴다음에는 비운다.
-	for (auto& obj : m_listObject)
-		Safe_Release(obj);
-
-	m_listObject.clear();
 	return S_OK;
 }
 
@@ -247,9 +273,6 @@ void CPickingMgr::Free()
 	CKeyMgr::Get_Instance()->UnRegisterObserver(SCENE_STATIC, this);
 
 	Safe_Release(m_pTerrain);
-
-	for (auto& obj : m_listObject)
-		Safe_Release(obj);
 
 	m_listObject.clear();
 
