@@ -2,6 +2,7 @@
 #include "..\Headers\Unit.h"
 #include "PickingMgr.h"
 #include "AIStateController.h"
+#include "StageUIMgr.h"
 
 CUnit::CUnit(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CInteractable(pGraphic_Device)
@@ -61,6 +62,11 @@ void CUnit::GoToDst(POINT _pt)
 void CUnit::TakeDamage(_int iDamage, _int iInfection)
 {
 
+}
+
+void CUnit::Interact()
+{
+	CStageUIMgr::Get_Instance()->Set_StateToPanel(m_tUnitStats);
 }
 
 void CUnit::OnTakeDamage(_int iDamage, _int iInfection)

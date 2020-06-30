@@ -1,6 +1,7 @@
 #pragma once
 #include "Base.h"
 #include "Layer.h"
+#include "UI.h"
 
 
 
@@ -11,6 +12,7 @@ class CPickingMgr : public CBase
 {
 	DECLARE_SINGLETON(CPickingMgr)
 
+public:
 	enum CONTROL_MODE
 	{
 		MODE_NORMAL,
@@ -19,7 +21,17 @@ class CPickingMgr : public CBase
 		MODE_UNIT,
 		MODE_BUILDING_INTERACT,
 		MODE_UNIT_INTERACT,
+		MODE_IN_WAVE,
 		MODE_END
+	};
+
+	enum UI_TYPE
+	{
+		UI_ALWAYS,
+		UI_INTERACT_ONLY,
+		UI_PURCHASE_ONLY,
+		UI_NORMAL_ONLY,
+		UI_END
 	};
 
 private:
@@ -43,14 +55,18 @@ public:
 	CGameObject* OverlapSphere_Closest(_float3 vPos, _float _fRadius, _float* pDist, CGameObject* pSelf = nullptr);
 	CTerrain* Get_Terrain() { return m_pTerrain; }
 	HRESULT	Pick_Object(POINT _ViewPortPoint, _float3* pHitPos);
+	void Set_Mode(CONTROL_MODE _eMode) { m_eMode = _eMode; }
 
 public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);
 	virtual void Check_Mouse();
-
+	void Add_UI(CUI* _pUI, UI_TYPE _eType) { m_listUI[_eType].push_back(_pUI); }
+	void Update_UI();
 private:
 	HRESULT	PickObject();
 	HRESULT	InstallObject();
+	void InActiveAllUI();
+	void ActiveUI(UI_TYPE _eType);
 private:
 	CTerrain*					m_pTerrain = nullptr;
 	list<CInteractable*>		m_listObject;
@@ -60,5 +76,6 @@ public:
 
 private:
 	CONTROL_MODE m_eMode = MODE_NORMAL;
+	list<CUI*> m_listUI[UI_END];
 };
 END

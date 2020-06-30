@@ -8,6 +8,8 @@
 #include "KeyMgr.h"
 #include "Marine.h"
 #include "StageUIMgr.h"
+#include "GameManager.h"
+
 IMPLEMENT_SINGLETON(CPickingMgr)
 CPickingMgr::CPickingMgr()
 {
@@ -185,7 +187,10 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 	if (KeyCode == VK_LBUTTON)
 	{
 		//피킹
-		PickObject();
+		if (m_eMode != MODE_BARRICADE &&
+			m_eMode != MONE_COMMANDCENTER &&
+			m_eMode != MODE_UNIT)
+			PickObject();
 		//설치
 		InstallObject();
 
@@ -216,18 +221,18 @@ HRESULT CPickingMgr::InstallObject()
 	POINT tTemp;
 	GetCursorPos(&tTemp);
 	ScreenToClient(g_hWnd, &tTemp);
-	
+
 	CStageUIMgr* pStageUIMgr = CStageUIMgr::Get_Instance();
 	vector<RECT> vecRc = pStageUIMgr->Get_UIRect();
 	for (auto& rc : vecRc)
 	{
-		if (PtInRect(&rc,tTemp))
+		if (PtInRect(&rc, tTemp))
 			return NO_ERROR;
 	}
 
 	Get_WorldMousePos(tTemp, &vDest);
 	vDest.y = 0;
-	
+
 
 	CManagement* pManagement = CManagement::Get_Instance();
 	//_float3 vDest = vHitPos;
@@ -271,7 +276,7 @@ HRESULT CPickingMgr::InstallObject()
 		tMarineDesc.eTextureSceneID = SCENE_STATIC;
 		tMarineDesc.eSceneID = SCENE_STAGE1;
 		tMarineDesc.tBaseDesc = BASEDESC(vDest, _float3(1.f, 1.f, 1.f));
-		
+
 		CMarine* pMarine = nullptr;
 		if (nullptr == (pMarine = (CMarine*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Marine", SCENE_STAGE1, L"Layer_Unit", &tMarineDesc)))
 			return E_FAIL;
@@ -282,6 +287,25 @@ HRESULT CPickingMgr::InstallObject()
 		break;
 	}
 	return S_OK;
+}
+
+void CPickingMgr::InActiveAllUI()
+{
+	for (auto& UIList : m_listUI)
+	{
+		for (auto& UI : UIList)
+		{
+			UI->Set_Active(false);
+		}
+	}
+}
+
+void CPickingMgr::ActiveUI(UI_TYPE _eType)
+{
+	for (auto& UI : m_listUI[_eType])
+	{
+		UI->Set_Active(true);
+	}
 }
 
 void CPickingMgr::Check_Mouse()
@@ -315,6 +339,27 @@ void CPickingMgr::Check_Mouse()
 	default:
 		break;
 	}
+}
+
+void CPickingMgr::Update_UI()
+{
+	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)
+		m_eMode = MODE_IN_WAVE;
+
+	InActiveAllUI();
+	ActiveUI(UI_ALWAYS);
+
+	if (m_eMode == MODE_NORMAL)
+		ActiveUI(UI_NORMAL_ONLY);
+
+	if (m_eMode == MODE_BUILDING_INTERACT ||
+		m_eMode == MODE_UNIT_INTERACT)
+		ActiveUI(UI_INTERACT_ONLY);
+
+	if (m_eMode == MODE_BARRICADE ||
+		m_eMode == MONE_COMMANDCENTER ||
+		m_eMode == MODE_UNIT)
+		ActiveUI(UI_PURCHASE_ONLY);
 }
 
 void CPickingMgr::Free()

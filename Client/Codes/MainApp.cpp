@@ -260,7 +260,33 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Terrain", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/Terrain/grass%d.tga", 1))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Barricade", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/barricade.png"))))
+		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_CommandCenter", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/commandcenter.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Unit1", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/unit1.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Unit2", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/unit2.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Unit3", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/unit3.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Wave", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/wave_indicator.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Gold", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/gold.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_StatsUI", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/statsUI.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Resell", CTexture::Create(m_pGraphic_Device, L"../../Client/Bin/Resources/Textures/UI/Button/Resell.png"))))
+		return E_FAIL;
+	
 #pragma endregion
 
 

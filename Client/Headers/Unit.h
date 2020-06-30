@@ -2,7 +2,9 @@
 #include "Interactable.h"
 #include "Value.h"
 #include "Management.h"
+//#include "StageUIMgr.h"
 BEGIN(Client)
+class CStateUIMgr;
 class CAIStateController;
 class CUnit abstract : public CInteractable
 {
@@ -39,6 +41,9 @@ public:
 	void	Set_Friendly(_bool _bFriendly) {
 		m_tUnitStats.bFriendly = _bFriendly;
 	}
+
+public:
+	void virtual Interact();
 
 public:
 	_bool	IsControllable() { return m_tUnitStats.bFriendly && m_bControlMode; }

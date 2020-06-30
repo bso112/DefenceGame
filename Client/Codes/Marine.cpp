@@ -7,6 +7,7 @@
 #include "AIState.h"
 #include "Building.h"
 #include "GameManager.h"
+#include "StageUIMgr.h"
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
@@ -283,4 +284,5 @@ void CMarine::Interact()
 {
 	m_bControlMode = true;
 	int a = 0;
+	CUnit::Interact();
 }

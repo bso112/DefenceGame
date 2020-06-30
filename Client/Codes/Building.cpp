@@ -2,6 +2,8 @@
 #include "..\Headers\Building.h"
 #include "Management.h"
 #include "PickingMgr.h"
+#include "StageUIMgr.h"
+
 CBuilding::CBuilding(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CInteractable(pGraphic_Device)
 {
@@ -73,8 +75,18 @@ void CBuilding::Get_Damage(_int iDmg)
 		m_bDead = 1;
 }
 
+void CBuilding::Interact()
+{
+	CStageUIMgr::Get_Instance()->Set_StateToPanel_Building(m_tagStat);
+}
+
 void CBuilding::Upgrade()
 {
+}
+
+_bool CBuilding::Picking(POINT _ViewPortPoint, _float3 * _vHitPos)
+{
+	return m_pVIBufferCom->Picking(_ViewPortPoint, g_hWnd, m_pTransformCom->Get_WorldMatrix(), _vHitPos);
 }
 
 

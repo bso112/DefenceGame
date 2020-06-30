@@ -3,6 +3,7 @@
 #include "Interactable.h"
 #include "Management.h"
 #include "Value.h"
+//#include "StageUIMgr.h"
 
 
 BEGIN(Client)
@@ -44,9 +45,11 @@ public:
 public:
 	_int Get_TileSize() { return m_iTileSize; }
 	void Get_Damage(_int iDmg);
+	void virtual Interact();
 
 public:
 	virtual void Upgrade();
+	virtual _bool Picking(POINT _ViewPortPoint, _float3* _vHitPos) override;
 
 protected:
 	CShader*			m_pShaderCom = nullptr;
@@ -60,7 +63,6 @@ protected:
 	_int m_iTileSize;
 	_float m_fScale;
 	_float m_fRealScaleMag;
-
 
 
 private:
