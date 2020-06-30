@@ -4,6 +4,7 @@
 #include "AIStateController.h"
 #include "StageUIMgr.h"
 #include "FontManager.h"
+#include "GameManager.h"
 
 CUnit::CUnit(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CInteractable(pGraphic_Device)
@@ -65,6 +66,11 @@ void CUnit::GoToDst(POINT _pt)
 
 void CUnit::TakeDamage(_int iDamage, _int iInfection)
 {
+	if (m_bDead)
+		return;
+
+
+
 	CManagement* pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement) return;
 	m_tUnitStats.iCurrHp -= iDamage * pManagement->Get_TimeDelta(L"Timer_60");
@@ -72,7 +78,7 @@ void CUnit::TakeDamage(_int iDamage, _int iInfection)
 	{
 		m_bDead = true;
 		m_tUnitStats.iCurrHp = 0;
-
+		CGameManager::Get_Instance()->Add_Gold(20);
 	}
 }
 

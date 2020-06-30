@@ -192,6 +192,7 @@
     <ClInclude Include="..\Headers\AttackTower.h" />
     <ClInclude Include="..\Headers\BackGround.h" />
     <ClInclude Include="..\Headers\Barricade.h" />
+    <ClInclude Include="..\Headers\BombTower.h" />
     <ClInclude Include="..\Headers\Building.h" />
     <ClInclude Include="..\Headers\CommandCenter.h" />
     <ClInclude Include="..\Headers\Cube.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="..\Codes\AttackTower.cpp" />
     <ClCompile Include="..\Codes\BackGround.cpp" />
     <ClCompile Include="..\Codes\Barricade.cpp" />
+    <ClCompile Include="..\Codes\BombTower.cpp" />
     <ClCompile Include="..\Codes\Building.cpp" />
     <ClCompile Include="..\Codes\CommandCenter.cpp" />
     <ClCompile Include="..\Codes\Cube.cpp" />

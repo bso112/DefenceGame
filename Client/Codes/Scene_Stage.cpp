@@ -80,6 +80,7 @@ HRESULT CScene_Stage::Render_Scene()
 	CKeyMgr::Get_Instance()->Key_Down('2', SCENE_STAGE1);
 
 	CKeyMgr::Get_Instance()->Key_Down('3', SCENE_STAGE1);
+	CKeyMgr::Get_Instance()->Key_Down('4', SCENE_STAGE1);
 
 
 	CKeyMgr::Get_Instance()->Key_Down(VK_ESCAPE, SCENE_STAGE1);

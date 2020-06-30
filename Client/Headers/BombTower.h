@@ -6,12 +6,12 @@
 
 BEGIN(Client)
 
-class CAttackTower final : public CBuilding
+class CBombTower final : public CBuilding
 {
 private:
-	explicit CAttackTower(PDIRECT3DDEVICE9 pGraphic_Device);
-	explicit CAttackTower(const CAttackTower& rhs);
-	virtual ~CAttackTower() = default;
+	explicit CBombTower(PDIRECT3DDEVICE9 pGraphic_Device);
+	explicit CBombTower(const CBombTower& rhs);
+	virtual ~CBombTower() = default;
 public:
 	virtual HRESULT Ready_GameObject_Prototype();
 	virtual HRESULT Ready_GameObject(void* pArg);
@@ -22,7 +22,6 @@ public:
 public:
 	virtual void Upgrade();
 	virtual void Interact();
-
 public:
 	virtual void OnCollisionEnter(CGameObject* _pOther);
 	virtual void OnCollisionStay(CGameObject* _pOther);
@@ -30,7 +29,7 @@ private:
 	HRESULT Add_Component();
 	HRESULT SetUp_ConstantTable();
 public:
-	static CAttackTower* Create(PDIRECT3DDEVICE9 pGraphic_Device);
+	static CBombTower* Create(PDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone_GameObject(void* pArg);
 	virtual void Free();
 };
