@@ -8,6 +8,7 @@
 CBombTower::CBombTower(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
 {
+	m_tagStat.iPrice = 40;
 
 }
 
@@ -16,6 +17,7 @@ CBombTower::CBombTower(const CBombTower & rhs)
 {
 	m_iTileSize = rhs.m_iTileSize;
 	m_fScale = rhs.m_fScale;
+	m_tagStat.iPrice = rhs.m_tagStat.iPrice;
 }
 
 HRESULT CBombTower::Ready_GameObject_Prototype()
@@ -39,7 +41,6 @@ HRESULT CBombTower::Ready_GameObject(void * pArg)
 	m_tagStat.iMaxHP = CValue<int>(60);
 	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
 	m_tagStat.iLevel = 1;
-	m_tagStat.iPrice = 20;
 	//m_pVIBufferCom->SetAnchor(_float3(0.f,-0.5f,0.f));
 
 	m_fRealScaleMag = m_fScale * m_iTileSize;
@@ -115,7 +116,7 @@ HRESULT CBombTower::Render_GameObject()
 		return E_FAIL;
 
 	m_pShaderCom->Begin_Shader();
-	m_pShaderCom->Begin_Pass(RENDER_WARNING);
+	m_pShaderCom->Begin_Pass(RENDER_BOMBTOWER);
 
 	m_pVIBufferCom->Render_VIBuffer();
 

@@ -31,12 +31,12 @@ HRESULT CScene_Stage::Ready_Scene()
 #pragma region 朝五虞持失
 
 	CCamera::STATEDESC			StateDesc;
-	StateDesc.vEye = _float3(TILEX * 0.5f, 15.f, TILEZ * 0.5f);
+	StateDesc.vEye = _float3(TILEX * 0.5f, 20.f, TILEZ * 0.5f);
 	//StateDesc.vAt = _float3(TILEX * 0.5f, 0.f, TILEZ * 0.5f);
 	StateDesc.vAt = _float3(TILEX * 0.5f, 0.f, TILEZ * 0.5f - 1.f);
 	StateDesc.vAxisY = _float3(0.f, 1.f, 0.f);
 
-	StateDesc.fFovy = D3DXToRadian(90.0f);
+	StateDesc.fFovy = D3DXToRadian(60.0f);
 	StateDesc.fAspect = _float(g_iWinSizeX) / g_iWinSizeY;
 	StateDesc.fNear = 0.2f;
 	StateDesc.fFar = 300.f;

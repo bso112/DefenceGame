@@ -15,7 +15,8 @@ CGameManager::CGameManager()
 
 _int CGameManager::Update()
 {
-	if (!m_bInWait)
+	//웨이브 상태일때 체크
+	if (m_bInWait)
 	{
 		CManagement* pManagement = CManagement::Get_Instance();
 		if (nullptr == pManagement) return -1;

@@ -65,18 +65,18 @@ HRESULT CStageUIMgr::Ready_StageUIMgr()
 	CPickingMgr::Get_Instance()->Add_UI(m_pCreateUnit1Btn, CPickingMgr::UI_NORMAL_ONLY);
 
 
-	////유닛2 생성 모드 버튼
-	//if (nullptr == pManagement) return E_FAIL;
-	//gameStartBtnDesc;
-	//gameStartBtnDesc.m_eSceneID = SCENE_STAGE1;
-	//gameStartBtnDesc.m_iTextureSceneID = SCENE_STATIC;
-	//gameStartBtnDesc.m_pTextureTag = L"Component_Texture_Unit2";
-	//gameStartBtnDesc.m_tBaseDesc = BASEDESC(_float3(350.f, g_iWinSizeY - 50.f, 0.f), _float3(100.f, 100.f, 1.f));
-	//if (nullptr == (m_pCreateUnit2Btn = (CMyButton*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_MyButton", SCENE_STAGE1, L"Layer_UI", &gameStartBtnDesc)))
-	//	return E_FAIL;
-	//m_pCreateUnit2Btn->Add_Listener([] { CPickingMgr::Get_Instance()->Set_Mode(CPickingMgr::MONE_COMMANDCENTER); });
-	//CPickingMgr::Get_Instance()->Add_UI(m_pCreateUnit2Btn, CPickingMgr::UI_NORMAL_ONLY);
-	//m_pCreateUnit2Btn->Set_Active(0);
+	//유닛2 생성 모드 버튼
+	if (nullptr == pManagement) return E_FAIL;
+	gameStartBtnDesc;
+	gameStartBtnDesc.m_eSceneID = SCENE_STAGE1;
+	gameStartBtnDesc.m_iTextureSceneID = SCENE_STATIC;
+	gameStartBtnDesc.m_pTextureTag = L"Component_Texture_Unit2";
+	gameStartBtnDesc.m_tBaseDesc = BASEDESC(_float3(350.f, g_iWinSizeY - 50.f, 0.f), _float3(100.f, 100.f, 1.f));
+	if (nullptr == (m_pCreateUnit2Btn = (CMyButton*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_MyButton", SCENE_STAGE1, L"Layer_UI", &gameStartBtnDesc)))
+		return E_FAIL;
+	m_pCreateUnit2Btn->Add_Listener([] { CPickingMgr::Get_Instance()->Set_Mode(CPickingMgr::MODE_BOMBTOWER); });
+	CPickingMgr::Get_Instance()->Add_UI(m_pCreateUnit2Btn, CPickingMgr::UI_NORMAL_ONLY);
+	m_pCreateUnit2Btn->Set_Active(0);
 
 	////유닛3 생성 모드 버튼
 	//if (nullptr == pManagement) return E_FAIL;
@@ -177,8 +177,8 @@ vector<RECT> CStageUIMgr::Get_UIRect()
 	pTransform = (CTransform*)m_pCreateUnit1Btn->Find_Component(L"Com_Transform");
 	vecRc.push_back(pTransform->Get_Rect());
 
-	//pTransform = (CTransform*)m_pCreateUnit2Btn->Find_Component(L"Com_Transform");
-	//vecRc.push_back(pTransform->Get_Rect());
+	pTransform = (CTransform*)m_pCreateUnit2Btn->Find_Component(L"Com_Transform");
+	vecRc.push_back(pTransform->Get_Rect());
 
 	//pTransform = (CTransform*)m_pCreateUnit3Btn->Find_Component(L"Com_Transform");
 	//vecRc.push_back(pTransform->Get_Rect());

@@ -39,6 +39,10 @@ HRESULT CCommandCenter::Ready_GameObject(void * pArg)
 	m_fRealScaleMag = m_fScale * m_iTileSize;
 	m_pTransformCom->SetUp_Scale(_float3(m_fRealScaleMag, m_fRealScaleMag, m_fRealScaleMag));
 	m_pTransformCom->SetUp_Position(((CBuilding::BUILDING_DESC*)pArg)->vPos);
+	
+	m_tagStat.iMaxHP = CValue<int>(300);
+	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
+	m_tagStat.iLevel = 1;
 
 	m_tagStat.iMaxHP = CValue<int>(1);
 	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
