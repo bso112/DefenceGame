@@ -14,7 +14,7 @@ private:
 	virtual ~CGameManager() = default;
 
 public:
-	void	SetWaveStart(_bool IsStart) { m_bGameStart = IsStart;  m_bInWait = false; if (IsStart) { OnGameStart(); } else { OnGameEnd(); ++m_iWave;} }
+	void	SetWaveStart(_bool IsStart) { m_bGameStart = IsStart; if (IsStart) { OnGameStart(); m_bInWait = true;} else { OnGameEnd(); ++m_iWave;} }
 
 public:
 	_int	Update();
