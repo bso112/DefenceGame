@@ -276,6 +276,7 @@
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect_NoImg.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Solid.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_ViewPort.fx" />

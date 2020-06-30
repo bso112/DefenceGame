@@ -22,7 +22,6 @@ public:
 public:
 	static CScene_Stage* Create(PDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free();
-
 };
 
 END

@@ -10,7 +10,7 @@ class CGameObject;
 class ENGINE_DLL CRenderer final : public CComponent
 {
 public:
-	enum RENDERGROUP { RENDER_PRIORITY, RENDER_NONALPHA, RENDER_ALPHABLEND, RENDER_UI, RENDER_END };
+	enum RENDERGROUP { RENDER_PRIORITY, RENDER_NONALPHA, RENDER_ALPHABLEND, RENDER_3DUI, RENDER_UI, RENDER_END };
 private:
 	explicit CRenderer(PDIRECT3DDEVICE9	 pGraphic_Device);	
 	virtual ~CRenderer() = default;
@@ -27,6 +27,7 @@ private:
 	HRESULT Render_Priority();
 	HRESULT Render_NonAlpha();
 	HRESULT Render_AlphaBlend();
+	HRESULT Render_3DUI();
 	HRESULT Render_UI();
 
 public:

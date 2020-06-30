@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "..\Headers\Terrain.h"
+#include "TileUI.h"
+#include "Layer.h"
 
 CTerrain::CTerrain(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject(pGraphic_Device)
@@ -308,6 +310,10 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 {
 	NODE tTempNode;
 
+	CManagement* pManagement = CManagement::Get_Instance();
+
+	_bool bIsFalse = 0;
+
 	if (vPoint->x >= TILEX ||
 		vPoint->z >= TILEZ ||
 		vPoint->x < 0 ||
@@ -323,12 +329,36 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 	tTempNode.X = _uint(vPoint->x);
 	tTempNode.Z = _uint(vPoint->z);
 
+	CTileUI::STATEDESC tStateDesc;
+	CLayer* tempLayer = pManagement->Find_Layer(SCENE_STATIC, L"Layer_TileUI");
+
 	for (int i = tTempNode.Z - ScaleInTiles + 1; i <= tTempNode.Z; ++i)
 	{
 		for (int j = tTempNode.X - ScaleInTiles + 1; j <= tTempNode.X; ++j)
 		{
+			tStateDesc.m_bIsOccupied = 0;
+			tStateDesc.m_vPos = _float3((_float)j + 0.5f, 0.f, (_float)i + 0.5f);
+
+			_int iTileUICnt = 0;
+			if (tempLayer != nullptr)
+				iTileUICnt = tempLayer->Get_Size();
+
 			if (m_Nodes[i][j]->bOccupied == 1)
-				return false;
+			{
+				tStateDesc.m_bIsOccupied = 1;
+				if (iTileUICnt < ScaleInTiles*ScaleInTiles)
+				{
+					if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", SCENE_STATIC, L"Layer_TileUI", &tStateDesc)))
+						return E_FAIL;
+
+					bIsFalse = 1;
+				}
+			}
+			if (iTileUICnt < ScaleInTiles*ScaleInTiles)
+			{
+				if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_TileUI", SCENE_STATIC, L"Layer_TileUI", &tStateDesc)))
+					return E_FAIL;
+			}
 		}
 	}
 
@@ -344,7 +374,7 @@ _bool CTerrain::BuildCheck(_float3* vPoint, _int ScaleInTiles)
 		vPoint->z = _float(tTempNode.Z - _uint(ScaleInTiles*0.5f)) + 0.5f;
 	}
 
-	return true;
+	return !bIsFalse;
 }
 
 void CTerrain::Set_Occupation(_float3 * vPoint, _int ScaleInTiles, _bool bOccupation)

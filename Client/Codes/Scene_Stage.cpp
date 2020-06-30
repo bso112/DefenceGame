@@ -53,6 +53,8 @@ HRESULT CScene_Stage::Ready_Scene()
 
 _int CScene_Stage::Update_Scene(_double TimeDelta)
 {
+	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
+	pPickMgr->Check_Mouse();
 
 	CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON, SCENE_STAGE1);
 	CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON, SCENE_STAGE1);
@@ -71,67 +73,12 @@ _int CScene_Stage::Update_Scene(_double TimeDelta)
 
 HRESULT CScene_Stage::Render_Scene()
 {
-	
+
 	return S_OK;
 }
 
 HRESULT CScene_Stage::OnKeyDown(_int KeyCode)
 {
-	CManagement*	pManagement = CManagement::Get_Instance();
-	CPickingMgr* pPickingMgr = CPickingMgr::Get_Instance();
-
-	if (KeyCode == '1')
-	{
-		_float3 vDest;
-		POINT tTemp;
-		GetCursorPos(&tTemp);
-		ScreenToClient(g_hWnd, &tTemp);
-		pPickingMgr->Get_WorldMousePos(tTemp, &vDest);
-		vDest.y = 0;
-
-		CTerrain* pTerrain = pPickingMgr->Get_Terrain();
-		int iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
-		//CObject_Manager* pObjMgr = CObject_Manager::Get_Instance();
-		//int iTileSize = ((CBuilding*)pObjMgr->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
-
-		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
-			return S_OK;//설치 실패
-
-		CBuilding::BUILDING_DESC BuildingDesc;
-		BuildingDesc.vPos = vDest;
-		//BuildingDesc.vPos = _float3(0.f,0.f,0.f);
-		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
-			return E_FAIL;
-
-		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
-	}
-
-	if (KeyCode == '2')
-	{
-		_float3 vDest;
-		POINT tTemp;
-		GetCursorPos(&tTemp);
-		ScreenToClient(g_hWnd, &tTemp);
-		pPickingMgr->Get_WorldMousePos(tTemp, &vDest);
-		vDest.y = 0;
-
-		CTerrain* pTerrain = pPickingMgr->Get_Terrain();
-		int iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
-		//CObject_Manager* pObjMgr = CObject_Manager::Get_Instance();
-		//int iTileSize = ((CBuilding*)pObjMgr->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
-
-		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
-			return S_OK;//설치 실패
-
-		CBuilding::BUILDING_DESC BuildingDesc;
-		BuildingDesc.vPos = vDest;
-		//BuildingDesc.vPos = _float3(0.f,0.f,0.f);
-		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
-			return E_FAIL;
-
-		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
-	}
-
 	return S_OK;
 }
 

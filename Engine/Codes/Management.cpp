@@ -55,7 +55,6 @@ _int CManagement::Update_Engine(_double TimeDelta)
 	if (1 == m_pObject_Manager->Update_Object_Manager(TimeDelta))
 		return 1;
 	
-	//피킹매니저 때문에 오브젝트 매니저 밑으로 내려야함
 	if (0x80000000 & m_pScene_Manager->Update_CurrentScene(TimeDelta))
 		return -1;
 
@@ -274,6 +273,11 @@ HRESULT CManagement::Clear_Component_Manager(_uint eSceneID)
 		return E_FAIL;
 
 	return m_pComponent_Manager->Clear_Component_Manager(eSceneID);
+}
+
+CLayer * CManagement::Find_Layer(_uint iSceneID, const _tchar * pLayerTag)
+{
+	return m_pObject_Manager->Find_Layer(iSceneID, pLayerTag);
 }
 
 #pragma endregion

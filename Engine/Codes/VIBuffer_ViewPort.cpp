@@ -17,8 +17,8 @@ CVIBuffer_ViewPort::CVIBuffer_ViewPort(CVIBuffer_ViewPort& _rhs)
 
 HRESULT CVIBuffer_ViewPort::Render()
 {
-	if (nullptr == m_pGraphic_Device	||
-		nullptr == m_pVBuffer			||
+	if (nullptr == m_pGraphic_Device ||
+		nullptr == m_pVBuffer ||
 		nullptr == m_pIBuffer)
 		return E_FAIL;
 
@@ -89,7 +89,7 @@ HRESULT CVIBuffer_ViewPort::Initialize_Prototype()
 	m_vBasePos[2] = pVertices[2].vPosition = D3DXVECTOR4(0.5f, 0.5f, 0.f, 1.f);
 	pVertices[2].vTexUV = D3DXVECTOR2(1.f, 1.f);
 
-	m_vBasePos[3] = pVertices[3].vPosition = D3DXVECTOR4(-0.5f , 0.5f, 0.f, 1.f);
+	m_vBasePos[3] = pVertices[3].vPosition = D3DXVECTOR4(-0.5f, 0.5f, 0.f, 1.f);
 	pVertices[3].vTexUV = D3DXVECTOR2(0.f, 1.f);
 
 	m_pVBuffer->Unlock();

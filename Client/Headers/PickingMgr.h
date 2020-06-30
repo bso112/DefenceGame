@@ -10,6 +10,17 @@ class CInteractable;
 class CPickingMgr : public CBase
 {
 	DECLARE_SINGLETON(CPickingMgr)
+
+	enum CONTROL_MODE
+	{
+		MODE_NORMAL,
+		MODE_BARRICADE,
+		MONE_COMMANDCENTER,
+		MODE_BUILDING_INTERACT,
+		MODE_UNIT_INTERACT,
+		MODE_END
+	};
+
 private:
 	explicit CPickingMgr();
 	virtual ~CPickingMgr() = default;
@@ -33,6 +44,7 @@ public:
 
 public:
 	virtual HRESULT	OnKeyDown(_int KeyCode);
+	virtual void Check_Mouse();
 
 private:
 	CTerrain*					m_pTerrain = nullptr;
@@ -40,5 +52,8 @@ private:
 	CInteractable*				m_pFocus = nullptr;
 public:
 	virtual void Free() override;
+
+private:
+	CONTROL_MODE m_eMode = MODE_NORMAL;
 };
 END

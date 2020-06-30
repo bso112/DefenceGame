@@ -382,5 +382,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Solid.fx">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect_NoImg.fx">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
