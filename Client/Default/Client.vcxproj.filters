@@ -130,14 +130,14 @@
     <Filter Include="02.GameObject\UI\UI\Image">
       <UniqueIdentifier>{5d4bb0d1-1507-44fb-9ab8-d3aeeec8d854}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\UI\Mananger">
-      <UniqueIdentifier>{9c21f4d5-71e2-4fc0-889e-6848467bcca5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\UI\UI\TileUI">
       <UniqueIdentifier>{bbfa546e-e48c-4bcb-9a58-9307fe01103d}</UniqueIdentifier>
     </Filter>
     <Filter Include="07.GameMgr">
       <UniqueIdentifier>{d4f18578-af93-4e0c-8bbc-cd0ce1e4fb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08.StageUIMananger">
+      <UniqueIdentifier>{9c21f4d5-71e2-4fc0-889e-6848467bcca5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -251,7 +251,7 @@
       <Filter>02.GameObject\UI\UI</Filter>
     </ClInclude>
     <ClInclude Include="StageUIMgr.h">
-      <Filter>02.GameObject\UI\Mananger</Filter>
+      <Filter>08.StageUIMananger</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\TileUI.h">
       <Filter>02.GameObject\UI\UI\TileUI</Filter>
@@ -353,7 +353,7 @@
       <Filter>02.GameObject\UI\UI</Filter>
     </ClCompile>
     <ClCompile Include="StageUIMgr.cpp">
-      <Filter>02.GameObject\UI\Mananger</Filter>
+      <Filter>08.StageUIMananger</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\TileUI.cpp">
       <Filter>02.GameObject\UI\UI\TileUI</Filter>

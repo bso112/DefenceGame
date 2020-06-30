@@ -6,6 +6,7 @@
 #include "AIStateController.h"
 #include "AIState.h"
 #include "Building.h"
+#include "GameManager.h"
 
 CMarine::CMarine(PDIRECT3DDEVICE9 pGraphic_Device)
 	:CUnit(pGraphic_Device)
@@ -68,8 +69,6 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 	//m_pAICon->Set_Default_State(CAIState::STATE_HUNTING, CAIState::STATEDESC(), CManagement::Get_Instance()->Get_TimeDelta(L"Timer_60"));
 
 
-
-	//m_tUnitStats.bFriendly = true;
 	m_iRecogRange = 10;
 
 	m_tUnitStats.iAtt = CValue<int>(20);
@@ -88,6 +87,9 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 
 #pragma region AIHunting
+
+	if (!CGameManager::Get_Instance()->IsGameStart())
+		return 0;
 
 	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
 	if (nullptr == pPickMgr) return-1;

@@ -11,7 +11,7 @@
 #include "PickingMgr.h"
 #include "Terrain.h"
 #include "Object_Manager.h"
-
+#include "StageUIMgr.h"
 CScene_Stage::CScene_Stage(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
 {
@@ -49,6 +49,8 @@ HRESULT CScene_Stage::Ready_Scene()
 
 	CKeyMgr::Get_Instance()->RegisterObserver(SCENE_STAGE1, this);
 
+	CStageUIMgr::Get_Instance()->Ready_StageUIMgr();
+
 	return S_OK;
 }
 
@@ -69,6 +71,8 @@ HRESULT CScene_Stage::Render_Scene()
 
 	CKeyMgr::Get_Instance()->Key_Down('1', SCENE_STAGE1);
 	CKeyMgr::Get_Instance()->Key_Down('2', SCENE_STAGE1);
+	CKeyMgr::Get_Instance()->Key_Down('3', SCENE_STAGE1);
+
 
 	CKeyMgr::Get_Instance()->Key_Update();
 
