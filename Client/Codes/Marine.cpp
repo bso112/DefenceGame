@@ -86,7 +86,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
-
+	/*
 #pragma region AIHunting
 
 	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
@@ -157,7 +157,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 
 #pragma endregion
-
+	*/
 
 	return CUnit::Update_GameObject(TimeDelta);
 }

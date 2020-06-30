@@ -157,6 +157,9 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 
 HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 {
+	if (KeyCode == VK_ESCAPE)
+		m_eMode = MODE_NORMAL;
+
 	//¼³Ä¡
 	if (m_eMode == MODE_NORMAL)
 	{
@@ -168,7 +171,6 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		case '2':
 			m_eMode = MONE_COMMANDCENTER;
 			break;
-
 		default:
 			break;
 		}
@@ -230,7 +232,7 @@ HRESULT CPickingMgr::InstallObject()
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
 			return E_FAIL;
 
-		m_eMode = MODE_NORMAL;
+		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 		break;
 
@@ -244,7 +246,7 @@ HRESULT CPickingMgr::InstallObject()
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
 			return E_FAIL;
 
-		m_eMode = MODE_NORMAL;
+		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 		break;
 
