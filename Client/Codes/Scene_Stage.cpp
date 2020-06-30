@@ -29,7 +29,7 @@ HRESULT CScene_Stage::Ready_Scene()
 #pragma region 朝五虞持失
 
 	CCamera::STATEDESC			StateDesc;
-	StateDesc.vEye = _float3(TILEX * 0.5f, 10.f, TILEZ * 0.5f);
+	StateDesc.vEye = _float3(TILEX * 0.5f, 20.f, TILEZ * 0.5f);
 	//StateDesc.vAt = _float3(TILEX * 0.5f, 0.f, TILEZ * 0.5f);
 	StateDesc.vAt = _float3(TILEX * 0.5f, 0.f, TILEZ * 0.5f - 1.f);
 	StateDesc.vAxisY = _float3(0.f, 1.f, 0.f);
