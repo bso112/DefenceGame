@@ -64,8 +64,31 @@ PS_OUT PS_MAIN(PS_IN In/*ÇÈ¼¿*/)
 {
 	PS_OUT	Out = (PS_OUT)0;
 
-	Out.vColor = vector(1.f, 0.1f, 0.1f, 0.5f);
 	//Out.vColor = tex2D(DiffuseSampler, In.vTexUV);
+	Out.vColor = vector(0.25f, 0.25f, 0.35f, 1.f);
+
+	if ((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) <0.5f &&
+		(In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) >-0.5f)
+		Out.vColor = vector(0.65f, 0.65f, 0.75f, 1.f);
+
+	//if ((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) >-0.5f)
+	//	Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
+
+	//if ((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) >1.f &&
+	//	(In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) <1.5f)
+	//	Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
+
+	bool xy = (In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f);
+	bool yz = (In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f);
+	bool zx = (In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f);
+
+	//if (!(In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f &&
+	//	In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f &&
+	//	In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f))
+	if (xy + yz + zx != 2)
+		Out.vColor = vector(0.15f, 0.15f, 0.15f, 1.f);
+
+	//pow(Out.vColor.rgb, 10.f);
 
 	return Out;
 }
@@ -75,7 +98,7 @@ PS_OUT PS_MAIN_WARNING(PS_IN In/*ÇÈ¼¿*/)
 	PS_OUT	Out = (PS_OUT)0;
 
 	//Out.vColor = tex2D(DiffuseSampler, In.vTexUV);
-	Out.vColor = vector(0.35f, 0.35f, 0.35f, 1.f);	
+	Out.vColor = vector(0.35f, 0.35f, 0.35f, 1.f);
 
 	if (((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) * 10 + 15) % 4 > 2)
 		Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
@@ -89,6 +112,39 @@ PS_OUT PS_MAIN_WARNING(PS_IN In/*ÇÈ¼¿*/)
 	//	In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f))
 	if (xy + yz + zx != 2)
 		Out.vColor = vector(0.35f, 0.35f, 0.35f, 1.f);
+
+	//pow(Out.vColor.rgb, 10.f);
+
+	return Out;
+}
+
+PS_OUT PS_MAIN_TOWER(PS_IN In/*ÇÈ¼¿*/)
+{
+	PS_OUT	Out = (PS_OUT)0;
+
+	//Out.vColor = tex2D(DiffuseSampler, In.vTexUV);
+	Out.vColor = vector(0.25f, 0.45f, 0.15f, 1.f);
+
+	//if (((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) * 10 + 15) % 4 > 2)
+	//	Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
+
+	//if (((In.vTexUV.y + In.vTexUV.x + In.vTexUV.z) * 10 + 15) % 2 == 1)
+	//	Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
+
+	if (((int)((In.vTexUV.x + 0.5f)* 10.f) + (int)((In.vTexUV.y + 0.5f)* 10.f) + (int)((In.vTexUV.z + 0.5f) * 10.f)) % 2 == 1)
+		Out.vColor = vector(0.75f, 0.75f, 0.35f, 1.f);
+
+
+	bool xy = (In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f);
+	bool yz = (In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f);
+	bool zx = (In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f);
+
+	//if (!(In.vTexUV.y > -0.4f && In.vTexUV.y < 0.4f &&
+	//	In.vTexUV.x > -0.4f && In.vTexUV.x < 0.4f &&
+	//	In.vTexUV.z > -0.4f && In.vTexUV.z < 0.4f))
+	if (xy + yz + zx != 2)
+		Out.vColor = vector(0.25f, 0.45f, 0.15f, 1.f);
+
 
 	//pow(Out.vColor.rgb, 10.f);
 
@@ -131,6 +187,17 @@ technique Default_Technique
 		VertexShader = compile vs_3_0 VS_MAIN();
 		PixelShader = compile ps_3_0 PS_MAIN_WARNING();
 	}
+
+	pass Tower
+	{
+		cullmode = ccw;
+		aLPHAbLENDeNABLE = true;
+		SrcBlend = SrcAlpha;
+		DestBlend = InvSrcAlpha;
+		VertexShader = compile vs_3_0 VS_MAIN();
+		PixelShader = compile ps_3_0 PS_MAIN_TOWER();
+	}
+
 	//pass Frendly_ShipInFog
 	//{
 	//	aLPHAbLENDeNABLE = true;
