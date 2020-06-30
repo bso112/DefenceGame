@@ -77,7 +77,7 @@ technique Default_Technique
 	// 내가 표현하고자하는 기법들의ㅡ 집합.(명암, 스펙큘러, 그림자, 림라이트, 모션블러)
 	pass Default_Rendering
 	{
-		fillmode = wireframe;
+		//fillmode = wireframe;
 		VertexShader = compile vs_3_0 VS_MAIN();
 		PixelShader = compile ps_3_0 PS_MAIN();
 	}

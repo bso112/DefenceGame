@@ -36,12 +36,14 @@ _int CCamera_Free::Update_GameObject(_double TimeDelta)
 
 	if (pManagement->Get_DIKeyState(DIK_W) & 0x80)
 	{
-		m_pTransformCom->Go_Straight(TimeDelta);
+		//m_pTransformCom->Go_Straight(TimeDelta);
+		m_pTransformCom->GO_ZPositive(TimeDelta);
 	}
 
 	if (pManagement->Get_DIKeyState(DIK_S) & 0x80)
 	{
-		m_pTransformCom->Go_BackWard(TimeDelta);
+		//m_pTransformCom->Go_BackWard(TimeDelta);
+		m_pTransformCom->GO_ZNegative(TimeDelta);
 	}
 
 	if (pManagement->Get_DIKeyState(DIK_A) & 0x80)
@@ -54,18 +56,19 @@ _int CCamera_Free::Update_GameObject(_double TimeDelta)
 		m_pTransformCom->Go_Right(TimeDelta);
 	}
 
-	_long	MouseMove = 0;
+	//카메라 회전
+	//_long	MouseMove = 0;
 
-	if (MouseMove = pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_X))
-	{
-		m_pTransformCom->Rotation_Axis(_float3(0.f, 1.f, 0.f), TimeDelta * (MouseMove / 7.0));
-	}
+	//if (MouseMove = pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_X))
+	//{
+	//	m_pTransformCom->Rotation_Axis(_float3(0.f, 1.f, 0.f), TimeDelta * (MouseMove / 7.0));
+	//}
 
-	if (MouseMove = pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_Y))
-	{
-		m_pTransformCom->Rotation_Axis(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), TimeDelta * (MouseMove / 7.0));
+	//if (MouseMove = pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_Y))
+	//{
+	//	m_pTransformCom->Rotation_Axis(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), TimeDelta * (MouseMove / 7.0));
 
-	}
+	//}
 
 
 	if (0 < pManagement->Get_DIMouseMoveState(CInput_Device::DIMM_WHEEL))

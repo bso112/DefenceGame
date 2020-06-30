@@ -21,6 +21,7 @@
 #include "TileUI.h"
 #include "AIStateController.h"
 #include <time.h>
+#include "StageUIMgr.h"
 
 
 USING(Client)
@@ -285,6 +286,7 @@ void CMainApp::Free()
 	Safe_Release(m_pManagement);
 
 	CPickingMgr::Get_Instance()->Destroy_Instance();
+	CStageUIMgr::Get_Instance()->Destroy_Instance();
 	
 	CManagement::Release_Engine();
 }

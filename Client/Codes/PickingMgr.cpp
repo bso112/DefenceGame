@@ -7,6 +7,7 @@
 #include "Barricade.h"
 #include "KeyMgr.h"
 #include "Marine.h"
+#include "StageUIMgr.h"
 IMPLEMENT_SINGLETON(CPickingMgr)
 CPickingMgr::CPickingMgr()
 {
@@ -157,6 +158,9 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 
 HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 {
+	if (KeyCode == VK_ESCAPE)
+		m_eMode = MODE_NORMAL;
+
 	//¼³Ä¡
 	if (m_eMode == MODE_NORMAL)
 	{
@@ -171,6 +175,7 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		case '3':
 			m_eMode = MODE_UNIT;
 			break;
+
 		default:
 			break;
 		}
@@ -211,8 +216,18 @@ HRESULT CPickingMgr::InstallObject()
 	POINT tTemp;
 	GetCursorPos(&tTemp);
 	ScreenToClient(g_hWnd, &tTemp);
+	
+	CStageUIMgr* pStageUIMgr = CStageUIMgr::Get_Instance();
+	vector<RECT> vecRc = pStageUIMgr->Get_UIRect();
+	for (auto& rc : vecRc)
+	{
+		if (PtInRect(&rc,tTemp))
+			return NO_ERROR;
+	}
+
 	Get_WorldMousePos(tTemp, &vDest);
 	vDest.y = 0;
+	
 
 	CManagement* pManagement = CManagement::Get_Instance();
 	//_float3 vDest = vHitPos;
@@ -232,7 +247,7 @@ HRESULT CPickingMgr::InstallObject()
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
 			return E_FAIL;
 
-		m_eMode = MODE_NORMAL;
+		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 		break;
 	case MONE_COMMANDCENTER:
@@ -245,7 +260,7 @@ HRESULT CPickingMgr::InstallObject()
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
 			return E_FAIL;
 
-		m_eMode = MODE_NORMAL;
+		//m_eMode = MODE_NORMAL;
 		pTerrain->Set_Occupation(&vDest, iTileSize, 1);
 		break;
 	case MODE_UNIT:

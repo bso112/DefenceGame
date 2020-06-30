@@ -85,7 +85,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
-
+	
 #pragma region AIHunting
 
 	if (!CGameManager::Get_Instance()->IsGameStart())
@@ -159,7 +159,7 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 
 #pragma endregion
-
+	
 
 	return CUnit::Update_GameObject(TimeDelta);
 }

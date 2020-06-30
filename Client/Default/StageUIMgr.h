@@ -15,6 +15,8 @@ public:
 public:
 	virtual HRESULT Ready_StageUIMgr();
 
+public:
+	vector<RECT>	Get_UIRect();
 private:
 	CMyButton*	m_pGameStartBtn = nullptr;
 

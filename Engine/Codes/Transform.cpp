@@ -133,6 +133,42 @@ HRESULT CTransform::Go_Dst(_float3 _vDst, _double TimeDelta)
 	return S_OK;
 }
 
+HRESULT CTransform::GO_ZPositive(_double TimeDelta)
+{
+	_float3		vPosition, vLook;
+
+	vLook = Get_State(CTransform::STATE_LOOK);
+	vPosition = Get_State(CTransform::STATE_POSITION);
+	vLook.y = 0.f;
+	//_float3 tmp = vLook - vPosition;
+	_float3 tmp;
+	tmp = *D3DXVec3Normalize(&vLook, &vLook) * _float(m_StateDesc.SpeedPerSec * TimeDelta);
+	// vPosition += 방향벡터1 * 스피드 * 타임델타.;
+	vPosition += tmp;
+
+	Set_State(CTransform::STATE_POSITION, vPosition);
+
+	return S_OK;
+}
+
+HRESULT CTransform::GO_ZNegative(_double TimeDelta)
+{
+	_float3		vPosition, vLook;
+
+	vLook = Get_State(CTransform::STATE_LOOK);
+	vPosition = Get_State(CTransform::STATE_POSITION);
+	vLook.y = 0.f;
+	//_float3 tmp = vLook - vPosition;
+	_float3 tmp;
+	tmp = *D3DXVec3Normalize(&vLook, &vLook) * _float(m_StateDesc.SpeedPerSec * TimeDelta);
+	// vPosition += 방향벡터1 * 스피드 * 타임델타.;
+	vPosition -= tmp;
+
+	Set_State(CTransform::STATE_POSITION, vPosition);
+
+	return S_OK;
+}
+
 HRESULT CTransform::SetUp_Position(_float3 _vPos)
 {
 
