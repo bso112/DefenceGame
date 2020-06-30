@@ -112,7 +112,7 @@ void CAttackTower::OnCollisionStay(CGameObject * _pOther)
 	CUnit* pUnit = dynamic_cast<CUnit*>(_pOther);
 	if (nullptr != pUnit)
 	{
-		pUnit->TakeDamage(1000.f, 1000.f);
+		pUnit->TakeDamage(100.f, 100.f);
 	}
 }
 
