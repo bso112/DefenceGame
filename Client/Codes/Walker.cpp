@@ -62,7 +62,7 @@ HRESULT CWalker::Ready_GameObject(void * pArg)
 	CPickingMgr::Get_Instance()->Register_Observer(this);
 	
 	m_iRecogRange = 10;
-	m_tUnitStats.iAtt = CValue<int>(20);
+	m_tUnitStats.iAtt = CValue<int>(60);
 	m_tUnitStats.iMaxHp = CValue<int>(30.f);
 	m_tUnitStats.iCurrHp = m_tUnitStats.iMaxHp.GetValue();
 	m_tUnitStats.bFriendly = false;

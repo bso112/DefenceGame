@@ -23,6 +23,9 @@ public:
 	virtual void Upgrade();
 	virtual void Interact();
 
+protected:
+	void	OnDead() override;
+
 private:
 	HRESULT Add_Component();
 	HRESULT SetUp_ConstantTable();

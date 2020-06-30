@@ -55,6 +55,8 @@ public:
 	virtual _bool Picking(POINT _ViewPortPoint, _float3* _vHitPos) override;
 
 protected:
+	virtual void	OnDead() {}
+protected:
 	CShader*			m_pShaderCom = nullptr;
 	CRenderer*			m_pRendererCom = nullptr;
 	CTransform*			m_pTransformCom = nullptr;

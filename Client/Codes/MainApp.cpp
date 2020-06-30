@@ -311,6 +311,9 @@ HRESULT CMainApp::Ready_Default_Component()
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Explosion", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/Effect/explosion%d.png", 1))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_GameOver", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/UI/gameOver%d.png", 1))))
+		return E_FAIL;
+
 #pragma endregion
 
 

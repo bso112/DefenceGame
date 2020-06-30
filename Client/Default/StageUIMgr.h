@@ -24,6 +24,7 @@ public:
 public:
 	void Set_StateToPanel(CUnit::UNITSTATS tagStats);
 	void Set_StateToPanel_Building(CBuilding::BUILDING_STAT tagStats_building);
+	void Set_Active_GameOverPanel();
 
 private:
 
@@ -38,6 +39,7 @@ private:
 	CMyImage*	m_pWaveIndicator = nullptr;
 	CMyImage*	m_pGoldIndicator = nullptr;
 	CMyImage*	m_pStatsUI = nullptr;
+	CMyImage*	m_pGameOverBanner = nullptr;
 	
 	
 	// CBase을(를) 통해 상속됨

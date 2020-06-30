@@ -75,7 +75,10 @@ void CBuilding::Get_Damage(_int iDmg)
 	if (nullptr == pManagement) return;
 	m_tagStat.iHp -= iDmg * pManagement->Get_TimeDelta(L"Timer_60");
 	if (m_tagStat.iHp <= 0)
+	{
 		m_bDead = 1;
+		OnDead();
+	}
 }
 
 void CBuilding::Interact()

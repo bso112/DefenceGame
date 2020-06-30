@@ -74,7 +74,7 @@ _int CBombTower::Update_GameObject(_double TimeDelta)
 			}
 		}
 
-		CImage3D* pEffect = nullptr;
+		/*CImage3D* pEffect = nullptr;
 		
 		CManagement* pManagement = CManagement::Get_Instance();
 		if (nullptr == pManagement) return -1;
@@ -83,7 +83,7 @@ _int CBombTower::Update_GameObject(_double TimeDelta)
 		desc.pTextureTag = L"Component_Texture_Explosion";
 		desc.tBaseDesc = BASEDESC(m_pTransformCom->Get_State(CTransform::STATE_POSITION), _float3(100.f,100.f,1.f));
 		CGameObject* pImage = pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Image3D",SCENE_STAGE1, L"Layer_Effect", &desc);
-		return -1;
+		return -1;*/
 	}
 
 	m_pBoxCollider->Update_Collider(m_pTransformCom->Get_WorldMatrix());

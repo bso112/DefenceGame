@@ -22,7 +22,7 @@ HRESULT CStageUIMgr::Ready_StageUIMgr()
 	gameStartBtnDesc.m_tBaseDesc = BASEDESC(_float3(g_iWinSizeX - 200.f, g_iWinSizeY - 200.f, 0.f), _float3(100.f, 100.f, 1.f));
 	if (nullptr == (m_pGameStartBtn = (CMyButton*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_MyButton", SCENE_STAGE1, L"Layer_UI", &gameStartBtnDesc)))
 		return E_FAIL;
-	m_pGameStartBtn->Add_Listener([] { CGameManager::Get_Instance()->SetGameStart(true); });
+	m_pGameStartBtn->Add_Listener([] { CGameManager::Get_Instance()->SetWaveStart(true); });
 	CPickingMgr::Get_Instance()->Add_UI(m_pGameStartBtn, CPickingMgr::UI_NORMAL_ONLY);
 
 
@@ -144,7 +144,18 @@ HRESULT CStageUIMgr::Ready_StageUIMgr()
 		return E_FAIL;
 	CPickingMgr::Get_Instance()->Add_UI(m_pStatsUI, CPickingMgr::UI_INTERACT_ONLY);
 
+	//게임오버
+	if (nullptr == pManagement) return E_FAIL;
+	gameImgDesc;
+	gameImgDesc.m_eSceneID = SCENE_STAGE1;
+	gameImgDesc.m_iTextureSceneID = SCENE_STATIC;
+	gameImgDesc.m_pTextureTag = L"Component_Texture_GameOver";
+	gameImgDesc.m_tBaseDesc = BASEDESC(_float3(g_iWinSizeX * 0.5f + 70.f, g_iWinSizeY * 0.5f, 0.f), _float3(600.f, 300.f, 1.f));
+	if (nullptr == (m_pGameOverBanner = (CMyImage*)pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_MyImage", SCENE_STAGE1, L"Layer_UI", &gameImgDesc)))
+		return E_FAIL;
 
+	m_pGameOverBanner->Set_Active(false);
+	
 	return S_OK;
 }
 
@@ -186,6 +197,11 @@ void CStageUIMgr::Set_StateToPanel(CUnit::UNITSTATS tagStats)
 void CStageUIMgr::Set_StateToPanel_Building(CBuilding::BUILDING_STAT tagStats_building)
 {
 	CPickingMgr::Get_Instance()->Set_Mode(CPickingMgr::MODE_UNIT_INTERACT);
+}
+
+void CStageUIMgr::Set_Active_GameOverPanel()
+{
+	if (nullptr == m_pGameOverBanner) return; m_pGameOverBanner->Set_Active(true);
 }
 
 void CStageUIMgr::Free()

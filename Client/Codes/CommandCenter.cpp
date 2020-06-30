@@ -2,6 +2,7 @@
 #include "..\Headers\CommandCenter.h"
 #include "Management.h"
 #include "PickingMgr.h"
+#include "StageUIMgr.h"
 
 CCommandCenter::CCommandCenter(PDIRECT3DDEVICE9 pGraphic_Device)
 	: CBuilding(pGraphic_Device)
@@ -39,19 +40,23 @@ HRESULT CCommandCenter::Ready_GameObject(void * pArg)
 	m_pTransformCom->SetUp_Scale(_float3(m_fRealScaleMag, m_fRealScaleMag, m_fRealScaleMag));
 	m_pTransformCom->SetUp_Position(((CBuilding::BUILDING_DESC*)pArg)->vPos);
 
+	m_tagStat.iMaxHP = CValue<int>(1);
+	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
+	m_tagStat.iLevel = 1;
 	CPickingMgr::Get_Instance()->Register_Observer(this);
 	return S_OK;
 }
 
 _int CCommandCenter::Update_GameObject(_double TimeDelta)
 {
+	if (m_bDead)
+	{
+		return -1;
+	}
 	CManagement*	pManagement = CManagement::Get_Instance();
 	if (nullptr == pManagement)
 		return E_FAIL;
 
-	m_tagStat.iMaxHP = CValue<int>(300);
-	m_tagStat.iHp = m_tagStat.iMaxHP.GetValue();
-	m_tagStat.iLevel = 1;
 
 	m_pBoxCollider->Update_Collider(m_pTransformCom->Get_WorldMatrix());
 
@@ -102,6 +107,11 @@ void CCommandCenter::Interact()
 {
 	CBuilding::Interact();
 
+}
+
+void CCommandCenter::OnDead()
+{
+	CStageUIMgr::Get_Instance()->Set_Active_GameOverPanel();
 }
 
 HRESULT CCommandCenter::Add_Component()

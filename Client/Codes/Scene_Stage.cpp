@@ -58,6 +58,9 @@ HRESULT CScene_Stage::Ready_Scene()
 
 _int CScene_Stage::Update_Scene(_double TimeDelta)
 {
+	CGameManager* pGameMgr = CGameManager::Get_Instance();
+	if (nullptr == pGameMgr) return -1;
+	pGameMgr->Update();
 	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
 	pPickMgr->Update_UI();
 	pPickMgr->Check_Mouse();
