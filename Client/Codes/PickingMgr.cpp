@@ -150,8 +150,8 @@ HRESULT CPickingMgr::Pick_Object(POINT _ViewPortPoint, _float3* pHitPos)
 		});
 
 
-		vecPicked.front()->Interact();
-
+		m_pFocus = vecPicked.front();
+		m_pFocus->Interact();
 	}
 
 	return S_OK;
@@ -186,6 +186,8 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 
 	if (KeyCode == VK_LBUTTON)
 	{
+		//인터렉트
+		InteractObject();
 		//피킹
 		if (m_eMode != MODE_BARRICADE &&
 			m_eMode != MONE_COMMANDCENTER &&
@@ -194,8 +196,9 @@ HRESULT CPickingMgr::OnKeyDown(_int KeyCode)
 		//설치
 		InstallObject();
 
-		return S_OK;
 	}
+
+	return S_OK;
 }
 
 HRESULT CPickingMgr::PickObject()
@@ -307,6 +310,25 @@ void CPickingMgr::ActiveUI(UI_TYPE _eType)
 		UI->Set_Active(true);
 	}
 }
+HRESULT CPickingMgr::InteractObject()
+{
+	if (nullptr == m_pFocus)
+		return S_OK;
+
+	CUnit* pUnit = dynamic_cast<CUnit*>(m_pFocus);
+	if (nullptr != pUnit)
+	{
+		if (pUnit->IsControllable())
+		{
+			POINT pt;
+			GetCursorPos(&pt);
+			ScreenToClient(g_hWnd, &pt);
+			pUnit->GoToDst(pt);
+		}
+	}
+
+	return S_OK;
+}
 
 void CPickingMgr::Check_Mouse()
 {
@@ -360,6 +382,13 @@ void CPickingMgr::Update_UI()
 		m_eMode == MONE_COMMANDCENTER ||
 		m_eMode == MODE_UNIT)
 		ActiveUI(UI_PURCHASE_ONLY);
+}
+void CPickingMgr::Clear_DeadFocus()
+{
+	if (nullptr == m_pFocus)
+		return;
+	if (m_pFocus->Get_Dead())
+		m_pFocus = nullptr;
 }
 
 void CPickingMgr::Free()

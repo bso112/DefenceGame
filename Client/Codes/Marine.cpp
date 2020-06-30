@@ -31,7 +31,7 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 	CTransform::STATEDESC tTransformDesc;
 	tTransformDesc.RotatePerSec = D3DXToRadian(90.f);
-	tTransformDesc.SpeedPerSec = 0.5;
+	tTransformDesc.SpeedPerSec = 5.0;
 	if (FAILED(Add_Component(SCENE_STATIC, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &tTransformDesc)))
 		return E_FAIL;
 
@@ -71,7 +71,6 @@ HRESULT CMarine::Ready_GameObject(void * pArg)
 
 
 	m_iRecogRange = 10;
-
 	m_tUnitStats.iAtt = CValue<int>(20);
 
 
@@ -86,81 +85,136 @@ _int CMarine::Update_GameObject(_double TimeDelta)
 
 	m_pBoxCollider->Update_Collider(m_pTransform->Get_WorldMatrix());
 
-	
+
+	//컨트롤 모드
+	if (m_bControlMode)
+		return CUnit::Update_GameObject(TimeDelta);
+
 #pragma region AIHunting
 
-	if (!CGameManager::Get_Instance()->IsGameStart())
-		return 0;
-
-	CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
-	if (nullptr == pPickMgr) return-1;
-	if (nullptr == m_pTransform) return -1;
-
-	if (m_bControlMode)
-		return 0;
-
-	//주변을 조사해서 게임오브젝트를 얻는다.
-	vector<CGameObject*> pTargetVector = pPickMgr->OverlapSphere(m_pTransform->Get_State(CTransform::STATE_POSITION), FLT_MAX, this);
-	if (pTargetVector.empty()) return 0;
-
-	for (auto& go : pTargetVector)
+	//타깃이 있을떄
+	if (nullptr != m_pTarget)
 	{
-		_float dist = 0.f;
-		CTransform* pTargetTransform = (CTransform*)go->Find_Component(L"Com_Transform");
-		if (nullptr == pTargetTransform) return -1;
-		dist = D3DXVec3Length(&(pTargetTransform->Get_State(CTransform::STATE_POSITION) - m_pTransform->Get_State(CTransform::STATE_POSITION)));
 
-		//유닛일 경우
-		CUnit*		pUnit = dynamic_cast<CUnit*>(go);
-		if (nullptr != pUnit)
+		//타깃으로 간다.
+		m_bMoving = true;
+
+
+
+		CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
+		if (nullptr == pTargetTransform) return -1;
+		_float fDist = D3DXVec3Length(&(pTargetTransform->Get_State(CTransform::STATE_POSITION) - m_pTransform->Get_State(CTransform::STATE_POSITION)));
+		//타깃과의 거리가 좁으면
+		if (fDist < 2.f)
 		{
-			//아군일 경우 무시
-			if (pUnit->Get_Friendly() == Get_Friendly())
-				continue;
-			//적군일 경우
+			//공격
+			CUnit* pUnit = dynamic_cast<CUnit*>(m_pTarget);
+			CBuilding* pBuilding = dynamic_cast<CBuilding*>(m_pTarget);
+			if (nullptr != pUnit)
+			{
+				pUnit->TakeDamage(m_tUnitStats.iAtt.GetValue(), m_tUnitStats.iAtt.GetValue());
+			}
+			else if (nullptr != pBuilding)
+			{
+				pBuilding->Get_Damage(m_tUnitStats.iAtt.GetValue());
+			}
+
+
+		}
+	}
+
+	//게임이 시작되었고, 타깃이 없을때만
+	if (CGameManager::Get_Instance()->IsGameStart() && nullptr == m_pTarget)
+	{
+
+		CPickingMgr* pPickMgr = CPickingMgr::Get_Instance();
+		if (nullptr == pPickMgr) return-1;
+		if (nullptr == m_pTransform) return -1;
+
+
+		//주변을 조사해서 게임오브젝트를 얻는다.
+		vector<CGameObject*> pTargetVector = pPickMgr->OverlapSphere(m_pTransform->Get_State(CTransform::STATE_POSITION), FLT_MAX, this);
+		if (pTargetVector.empty()) return 0;
+
+		CUnit* pTargetUnit = nullptr;
+		CBuilding* pTargetBuilding = nullptr;
+
+		//최소거리 오브젝트 구하기
+		_float fMindist = FLT_MAX;
+		for (auto& go : pTargetVector)
+		{
+			//유닛일 경우
+			CUnit*		pUnit = dynamic_cast<CUnit*>(go);
+			if (nullptr != pUnit)
+			{
+				//아군일 경우 무시
+				if (pUnit->Get_Friendly() == Get_Friendly())
+					continue;
+			}
+			//빌딩일 경우
 			else
 			{
-				//다가간다.
-				CTransform* pTargetTransform = (CTransform*)pUnit->Find_Component(L"Com_Transform");
-				if (nullptr == pTargetTransform) return -1;
-				m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), TimeDelta);
-
-
-				//도착이면 공격
-				if (dist < 2.f)
-					pUnit->TakeDamage(m_tUnitStats.iAtt.GetValue(), m_tUnitStats.iAtt.GetValue());
+				//아군은 빌딩으로 갈 필요가 없다.
+				if (m_tUnitStats.bFriendly)
+					continue;
 			}
+
+
+			CTransform* pTargetTransform = (CTransform*)go->Find_Component(L"Com_Transform");
+			if (nullptr == pTargetTransform) return -1;
+			_float fDist = D3DXVec3Length(&(pTargetTransform->Get_State(CTransform::STATE_POSITION) - m_pTransform->Get_State(CTransform::STATE_POSITION)));
+			if (fMindist > fDist)
+			{
+				fMindist = fDist;
+				m_pTarget = go;
+			}
+
 		}
+
+		if (nullptr == m_pTarget)
+			return 0;
+
+		//타깃과의 거리가 2보다 작으면
+		if (fMindist < 2.f)
+		{
+			//공격
+			if (pTargetUnit != nullptr)
+				pTargetUnit->TakeDamage(m_tUnitStats.iAtt.GetValue(), m_tUnitStats.iAtt.GetValue());
+			else if (pTargetBuilding != nullptr)
+				pTargetBuilding->Get_Damage(m_tUnitStats.iAtt.GetValue());
+
+		}
+		//아니면
 		else
 		{
-			//아군은 빌딩을 공격하지 않는다
-			if (m_tUnitStats.bFriendly)
-				continue;
+			//다가간다.
+			CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
+			if (nullptr == pTargetTransform) return -1;
+			//A*
+			GoToDst(pTargetTransform->Get_State(CTransform::STATE_POSITION));
 
-			//빌딩일 경우
-			CBuilding* pBuilding = dynamic_cast<CBuilding*>(go);
-			if (nullptr != pBuilding)
+			if (m_Route.empty())
 			{
-				//다가간다.
-				CTransform* pTargetTransform = (CTransform*)pBuilding->Find_Component(L"Com_Transform");
-				if (nullptr == pTargetTransform) return -1;
-				m_pTransform->Go_Dst(pTargetTransform->Get_State(CTransform::STATE_POSITION), TimeDelta);
-
-				//도착이면 공격
-				if (dist < 2.f)
-					pBuilding->Get_Damage(m_tUnitStats.iAtt.GetValue());
-
+				int a = 10;
 			}
 		}
-
-
 
 
 	}
 
+	//왠지 모르겠지만 타깃이 있는데 루트가 비면
+	if (m_pTarget != nullptr && m_Route.empty())
+	{
+		CTransform* pTargetTransform = (CTransform*)m_pTarget->Find_Component(L"Com_Transform");
+		if (nullptr == pTargetTransform) return -1;
+		//다시 A*
+		GoToDst(pTargetTransform->Get_State(CTransform::STATE_POSITION));
+	}
+
+
 
 #pragma endregion
-	
+
 
 	return CUnit::Update_GameObject(TimeDelta);
 }
@@ -182,6 +236,12 @@ _int CMarine::Late_Update_GameObject(_double TimeDelta)
 	if (nullptr == pManagement) return -1;
 	pManagement->Add_CollisionGroup(CCollisionMgr::COL_BOX, this);
 
+	if (nullptr != m_pTarget)
+	{
+		if (m_pTarget->Get_Dead())
+			m_pTarget = nullptr;
+
+	}
 
 	return _int();
 }
@@ -224,17 +284,7 @@ HRESULT CMarine::Render_GameObject()
 
 HRESULT CMarine::OnKeyDown(_int KeyCode)
 {
-	if (KeyCode == VK_LBUTTON)
-	{
-		if (IsControllable())
-		{
-			POINT pt;
-			GetCursorPos(&pt);
-			ScreenToClient(g_hWnd, &pt);
-			GoToDst(pt);
 
-		}
-	}
 	return S_OK;
 }
 

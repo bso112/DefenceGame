@@ -62,15 +62,24 @@ public:
 	virtual void Check_Mouse();
 	void Add_UI(CUI* _pUI, UI_TYPE _eType) { m_listUI[_eType].push_back(_pUI); }
 	void Update_UI();
+public:
+	void	Clear_DeadFocus();
+
 private:
 	HRESULT	PickObject();
 	HRESULT	InstallObject();
 	void InActiveAllUI();
 	void ActiveUI(UI_TYPE _eType);
+
+private:
+	//HRESULT	PickObject();
+	//HRESULT	InstallObject();
+	HRESULT	InteractObject();
 private:
 	CTerrain*					m_pTerrain = nullptr;
 	list<CInteractable*>		m_listObject;
 	CInteractable*				m_pFocus = nullptr;
+
 public:
 	virtual void Free() override;
 

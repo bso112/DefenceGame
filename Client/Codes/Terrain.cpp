@@ -117,7 +117,7 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 
 
 	_int currX = srcX;
-	_int currY = srcZ;
+	_int currZ = srcZ;
 
 	_int minFcost = INT_MAX;
 	//Fcost가 같으면 Hcost 기준으로 루트정함
@@ -157,7 +157,7 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 				minFcost = node->Fcost;
 				pCurrNode = node;
 				currX = node->X;
-				currY = node->Z;
+				currZ = node->Z;
 			}
 			else if (minFcost == node->Fcost)
 			{
@@ -166,7 +166,7 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 					minHcost = node->Hcost;
 					pCurrNode = node;
 					currX = node->X;
-					currY = node->Z;
+					currZ = node->Z;
 				}
 			}
 
@@ -183,11 +183,11 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 
 
 		//현재노드의 왼쪽 위 타일의 인덱스
-		int tmpY = currY - 1;
+		int tmpZ = currZ - 1;
 		int tmpX = currX - 1;
 
 		//주변 8 타일을 검사해서 cost를 셋팅한다.
-		for (int i = tmpY; i <= tmpY + 2; ++i)
+		for (int i = tmpZ; i <= tmpZ + 2; ++i)
 		{
 			for (int j = tmpX; j <= tmpX + 2; ++j)
 			{
@@ -204,7 +204,7 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 				if (find(closed.begin(), closed.end(), m_Nodes[i][j]) != closed.end())
 					continue;
 				//자기자신 제외
-				if (i == currY && j == currX)
+				if (i == currZ && j == currX)
 					continue;
 				//자기자신이 nullptr면 끝냄
 				if (nullptr == pCurrNode)
@@ -232,7 +232,7 @@ HRESULT CTerrain::Get_Route(_float3 _src, _float3 _dst, vector<_float3>& _out)
 
 				//현재노드와의 거리
 				distX = abs(currX - j);
-				distY = abs(currY - i);
+				distY = abs(currZ - i);
 
 				if (distX > distY)
 					Gcost = pCurrNode->Gcost + (diaCost * distY + (distX - distY) * TILESIZE);

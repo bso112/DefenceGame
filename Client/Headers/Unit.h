@@ -43,11 +43,9 @@ public:
 	}
 
 public:
-	void virtual Interact();
-
-public:
 	_bool	IsControllable() { return m_tUnitStats.bFriendly && m_bControlMode; }
 	_bool	Get_Friendly() { return m_tUnitStats.bFriendly; }
+	virtual	void		Interact();
 	
 protected:
 	virtual	void OnTakeDamage(_int iDamage, _int iInfection);
