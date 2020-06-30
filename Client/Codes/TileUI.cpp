@@ -51,8 +51,8 @@ HRESULT CTileUI::Ready_GameObject(void* pArg)
 _int CTileUI::Update_GameObject(_double _timeDelta)
 {
 
-	if (m_bDead)
-		return -1;
+	//if (m_bDead)
+	//	return -1;
 
 	//if (m_bExpand)
 	//{

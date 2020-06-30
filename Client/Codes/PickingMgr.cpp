@@ -226,7 +226,7 @@ HRESULT CPickingMgr::InstallObject()
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_Barricade"))->Get_TileSize();
 
 		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
-			return S_OK;//설치 실패
+			break; //설치 실패
 
 		BuildingDesc.vPos = vDest;
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Barricade", SCENE_STAGE1, L"Layer_Barricade", &BuildingDesc)))
@@ -240,7 +240,7 @@ HRESULT CPickingMgr::InstallObject()
 		iTileSize = ((CBuilding*)pManagement->Find_Prototype(SCENE_STATIC, L"GameObject_CommandCenter"))->Get_TileSize();
 
 		if (pTerrain->BuildCheck(&vDest, iTileSize) == false)
-			return S_OK;//설치 실패
+			break;//설치 실패
 
 		BuildingDesc.vPos = vDest;
 		if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_CommandCenter", SCENE_STAGE1, L"Layer_CommandCenter", &BuildingDesc)))
@@ -253,6 +253,7 @@ HRESULT CPickingMgr::InstallObject()
 	default:
 		break;
 	}
+	return S_OK;
 }
 
 void CPickingMgr::Check_Mouse()

@@ -60,7 +60,13 @@ PS_OUT PS_MAIN(PS_IN In/*ÇÈ¼¿*/)
 {
 	PS_OUT	Out = (PS_OUT)0;
 
-	Out.vColor = vector(0.85f,0.f,0.f,0.5f);
+	Out.vColor = vector(0.85f, 0.f, 0.f, 0.5f);
+
+	if (In.vTexUV.x < 0.1f ||
+		In.vTexUV.y < 0.1f ||
+		In.vTexUV.x > 0.9 ||
+		In.vTexUV.y > 0.9)
+		Out.vColor = vector(1.f, 1.f, 1.f, 0.5f);
 
 	return Out;
 }
@@ -70,6 +76,12 @@ PS_OUT PS_MAIN_GREEN(PS_IN In/*ÇÈ¼¿*/)
 	PS_OUT	Out = (PS_OUT)0;
 
 	Out.vColor = vector(0.f, 0.85f, 0.f, 0.5f);
+
+	if (In.vTexUV.x < 0.1f ||
+		In.vTexUV.y < 0.1f ||
+		In.vTexUV.x > 0.9 ||
+		In.vTexUV.y > 0.9)
+		Out.vColor = vector(1.f, 1.f, 1.f, 0.5f);
 
 	return Out;
 }
@@ -82,7 +94,7 @@ PS_OUT PS_GOAL(PS_IN In/*ÇÈ¼¿*/)
 	Out.vColor.r = 1;
 	Out.vColor.g = 1;
 	Out.vColor.b = 0.3;
-	
+
 	return Out;
 }
 
