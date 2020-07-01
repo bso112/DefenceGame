@@ -14,6 +14,7 @@ CUnit::CUnit(PDIRECT3DDEVICE9 pGraphic_Device)
 CUnit::CUnit(const CUnit & _rhs)
 	: CInteractable(_rhs)
 {
+	m_bIsFriendly = false;
 }
 
 _int CUnit::Update_GameObject(_double TimeDelta)
@@ -54,7 +55,7 @@ void CUnit::GoToDst(_float3 _vDst)
 	CPickingMgr::Get_Instance()->Get_Route(m_pTransform->Get_State(CTransform::STATE_POSITION), _vDst, m_Route, this);
 	if (m_Route.size() > 0)
 		m_bMoving = true;
-
+	
 }
 
 void CUnit::GoToDst(POINT _pt)

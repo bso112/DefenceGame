@@ -88,6 +88,29 @@ PS_OUT PS_GOAL(PS_IN In/*ÇÈ¼¿*/)
 	return Out;
 }
 
+PS_OUT PS_RED(PS_IN In/*ÇÈ¼¿*/)
+{
+	PS_OUT	Out = (PS_OUT)0;
+
+	Out.vColor = tex2D(BaseSampler, In.vTexUV);
+
+	Out.vColor.g *= 0.f;
+	Out.vColor.b *= 0.f;
+
+	return Out;
+}
+
+PS_OUT PS_GREEN(PS_IN In/*ÇÈ¼¿*/)
+{
+	PS_OUT	Out = (PS_OUT)0;
+
+	Out.vColor = tex2D(BaseSampler, In.vTexUV);
+
+	Out.vColor.r *= 0.f;
+	Out.vColor.b *= 0.f;
+
+	return Out;
+}
 
 
 
@@ -109,6 +132,20 @@ technique Default_Technique
 	{
 		VertexShader = compile vs_3_0 VS_MAIN();
 		PixelShader = compile ps_3_0 PS_GOAL();
+		cullmode = none;
+	}
+
+	pass Red
+	{
+		VertexShader = compile vs_3_0 VS_MAIN();
+		PixelShader = compile ps_3_0 PS_RED();
+		cullmode = none;
+	}
+
+	pass Greed
+	{
+		VertexShader = compile vs_3_0 VS_MAIN();
+		PixelShader = compile ps_3_0 PS_GREEN();
 		cullmode = none;
 	}
 }

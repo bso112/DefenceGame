@@ -50,6 +50,7 @@ public:
 	_bool	IsMoving() { return  m_bMoving; }
 	virtual _int Get_Cost() { return m_tUnitStats.iCost; }
 	virtual	void		Interact();
+	virtual CTransform* Get_Transform() { return m_pTransform; }
 
 protected:
 	virtual	void OnTakeDamage(_int iDamage, _int iInfection);

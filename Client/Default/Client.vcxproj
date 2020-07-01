@@ -210,6 +210,7 @@
     <ClInclude Include="..\Headers\Marine.h" />
     <ClInclude Include="..\Headers\MyImage.h" />
     <ClInclude Include="..\Headers\PickingMgr.h" />
+    <ClInclude Include="..\Headers\Rim.h" />
     <ClInclude Include="..\Headers\Runner.h" />
     <ClInclude Include="..\Headers\Scene_Loading.h" />
     <ClInclude Include="..\Headers\Scene_Stage.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="..\Codes\Marine.cpp" />
     <ClCompile Include="..\Codes\MyImage.cpp" />
     <ClCompile Include="..\Codes\PickingMgr.cpp" />
+    <ClCompile Include="..\Codes\Rim.cpp" />
     <ClCompile Include="..\Codes\Runner.cpp" />
     <ClCompile Include="..\Codes\Scene_Loading.cpp" />
     <ClCompile Include="..\Codes\Scene_Stage.cpp" />

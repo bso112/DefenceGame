@@ -9,6 +9,8 @@
 #include "Marine.h"
 #include "StageUIMgr.h"
 #include "GameManager.h"
+#include "Rim.h"
+#include "Transform.h"
 
 IMPLEMENT_SINGLETON(CPickingMgr)
 CPickingMgr::CPickingMgr()
@@ -352,6 +354,24 @@ void CPickingMgr::ActiveUI(UI_TYPE _eType)
 		UI->Set_Active(true);
 	}
 }
+void CPickingMgr::Rim()
+{
+	if (m_pFocus == nullptr)
+		return;
+	if (m_eMode != MODE_BUILDING_INTERACT &&
+		m_eMode != MODE_UNIT_INTERACT)
+		return;
+
+	CRim::STATEDESC tDesc;
+	tDesc.m_bIsFriendly = m_pFocus->Get_Friendly();
+	tDesc.m_vPos = ((CTransform*)m_pFocus->Get_Transform())->Get_State(Engine::CTransform::STATE_POSITION);
+	tDesc.m_vScale = ((CTransform*)m_pFocus->Get_Transform())->Get_Scaled();
+
+	CManagement* pManagement = CManagement::Get_Instance();
+	SCENEID eCurScene = SCENEID(pManagement->Get_CurrScene());
+	if (FAILED(pManagement->Add_Object_ToLayer(SCENE_STATIC, L"GameObject_Rim", eCurScene, L"Layer_Rim", &tDesc)))
+		return;
+}
 HRESULT CPickingMgr::InteractObject()
 {
 	if (nullptr == m_pFocus)
@@ -417,6 +437,7 @@ void CPickingMgr::Check_Mouse()
 
 void CPickingMgr::Update_UI()
 {
+	Rim();
 	m_bStatWinOpen = false;
 
 	if (CGameManager::Get_Instance()->IsGameStart() && m_eMode == MODE_NORMAL)

@@ -2,6 +2,7 @@
 #include "Base.h"
 #include "Layer.h"
 #include "UI.h"
+//#include "Transform.h"
 
 
 
@@ -74,6 +75,7 @@ private:
 	HRESULT	InstallObject();
 	void InActiveAllUI();
 	void ActiveUI(UI_TYPE _eType);
+	void Rim();
 
 private:
 	//HRESULT	PickObject();

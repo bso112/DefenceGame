@@ -26,6 +26,7 @@
 #include "Runner.h"
 #include "AttackTower.h"
 #include "BombTower.h"
+#include "Rim.h"
 
 USING(Client)
 
@@ -191,6 +192,9 @@ HRESULT CMainApp::Ready_Default_GameObject()
 	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Runner", CRunner::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pManagement->Add_GameObject_Prototype(SCENE_STATIC, L"GameObject_Rim", CRim::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -312,6 +316,9 @@ HRESULT CMainApp::Ready_Default_Component()
 		return E_FAIL;
 
 	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_GameOver", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/UI/gameOver%d.png", 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Add_Component_Prototype(SCENE_STATIC, L"Component_Texture_Rim", CTexture::Create(m_pGraphic_Device, L"../Bin/Resources/Textures/UI/Button/Rim.png"))))
 		return E_FAIL;
 
 #pragma endregion

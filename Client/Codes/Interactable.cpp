@@ -5,3 +5,8 @@ _bool CInteractable::Picking(POINT _ViewPortPoint, _float3 * pHitPos)
 {
 	return false;
 }
+
+//CTransform * CInteractable::Get_Transform()
+//{
+//	return nullptr;
+//}

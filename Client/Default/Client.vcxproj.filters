@@ -288,6 +288,9 @@
     <ClInclude Include="..\Headers\BombTower.h">
       <Filter>02.GameObject\Interactable\Building\BombTower</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Rim.h">
+      <Filter>02.GameObject\UI\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -409,6 +412,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\BombTower.cpp">
       <Filter>02.GameObject\Interactable\Building\BombTower</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Rim.cpp">
+      <Filter>02.GameObject\UI\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

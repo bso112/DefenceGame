@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
+#include "Component_Manager.h"
 BEGIN(Client)
+//class CTransform;
 class CInteractable abstract: public CGameObject
 {
 protected:
@@ -13,5 +15,10 @@ public:
 	virtual	void		Interact() = 0;
 	virtual void Display_Stats() = 0;
 	virtual _int Get_Cost() = 0;
+	_bool Get_Friendly() { return m_bIsFriendly; };
+	virtual CTransform* Get_Transform() = 0;
+
+protected:
+	_bool m_bIsFriendly = true;
 };
 END

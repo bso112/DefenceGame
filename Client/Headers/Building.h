@@ -48,6 +48,7 @@ public:
 	_int Get_TileSize() { return m_iTileSize; }
 	void Get_Damage(_int iDmg);
 	virtual _int Get_Cost() { return m_tagStat.iPrice; }
+	virtual CTransform* Get_Transform() { return m_pTransformCom; }
 	void virtual Interact();
 	void virtual Display_Stats();
 
