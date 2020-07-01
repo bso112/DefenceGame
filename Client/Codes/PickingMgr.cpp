@@ -258,6 +258,7 @@ HRESULT CPickingMgr::InstallObject()
 	CTerrain* pTerrain = Get_Terrain();
 	int iTileSize = 0;
 	CBuilding::BUILDING_DESC BuildingDesc;
+	CBuilding* pBuilding = nullptr;
 
 	switch (m_eMode)
 	{
